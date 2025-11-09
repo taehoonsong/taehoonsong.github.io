@@ -4,7 +4,7 @@
   "last_name": "Song",
   "nickname": "Tae",
   "label": "Data Engineer / Statistician",
-  "image_path": "static/img/profile.jpeg",
+  "image_path": "img/profile.jpeg",
   "contact": {
     "email": "DataEngineer@TaehoonSong.com",
     "location": "Washington, DC"
@@ -16,17 +16,17 @@
     {
       "label": "TaehoonSong.com",
       "url": "https://taehoonsong.com",
-      "svg_path": "static/img/globe.svg"
+      "svg_path": "img/globe.svg"
     },
     {
       "label": "LinkedIn",
       "url": "https://www.linkedin.com/in/taehoonsong",
-      "svg_path": "static/img/linkedin.svg"
+      "svg_path": "img/linkedin.svg"
     },
     {
       "label": "Github",
       "url": "https://github.com/taehoonsong",
-      "svg_path": "static/img/github.svg"
+      "svg_path": "img/github.svg"
     }
   ],
   "work_experience": [
@@ -158,11 +158,11 @@
       "name": "Home Server",
       "images": [
         {
-          "img_path": "static/img/proxmox-dashboard.png",
+          "img_path": "img/proxmox-dashboard.png",
           "caption": "Dashboard showing running containers and virtual machines"
         },
         {
-          "img_path": "static/img/dashy.png",
+          "img_path": "img/dashy.png",
           "caption": "Dashboard of available applications and services"
         }
       ]
