@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Website description -->
+    <title>{{ website_title }}</title>
+    <meta name="description" content="{{ name }} - {{ summary }}" />
+    <meta name="author" content="{{ name }}" />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="{{ name }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ base_url }}/index.html" />
+    <meta property="og:image" content="{{ base_url }}/{{ image_path }}" />
+    <meta property="og:image:alt" content="{{ name }} Profile Image" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="static/css/modern_normalize.css" />
+    <link rel="stylesheet" href="static/css/html5bp.css" />
+    <link rel="stylesheet" href="static/css/main.css" />
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#fafafa" />
+
+    <!-- Content Security Policy: Update if adding external sources (e.g., Google Fonts, Bootstrap CDN, analytics, etc). -->
+    <!-- style-src, script-src, img-src: separate sources with spaces -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content=" default-src 'self'; "
+    />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="page-header">
+      <div class="container">
+        <div class="header-top flex-responsive">
+          {% if image_path %}
+          <img
+            class="header-image"
+            width="256"
+            height="256"
+            src="{{ image_path }}"
+            alt="{{ name }} Profile Image"
+          />
+          {% endif %}
+          <div class="header-info">
+            <h1>{{ first_name }} {% if nickname %} ({{ nickname }}) {% endif %} {{ last_name }}</h1>
+            {% if label %}
+            <h2 class="header-label">{{ label }}</h2>
+            {% endif %} {% if contact.email or contact.phone or contact.location %}
+            <address>
+              <ul class="inline-list flex-responsive">
+                {% if contact.email %}
+                <li>
+                  <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+                </li>
+                {% endif %} {% if contact.location %}
+                <li>{{ contact.location }}</li>
+                {% endif %}
+              </ul>
+            </address>
+            {% endif %} {% if social_media_links %}
+            <ul class="inline-list flex-responsive">
+              {% for link in social_media_links %}
+              <li>
+                <a
+                  href="{{ link.url }}"
+                  rel="noopener noreferrer"
+                  aria-label="{{ link.label }}"
+                  class="link-with-icon"
+                >
+                  {% if link.svg_data %}{{ link.svg_data | safe }}{% endif %} {{ link.label }}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %} {% if summary %}
+            <p class="header-summary">{{ summary }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Resume body -->
+    <div class="page-content">
+      <div class="container">
+        <main>
+          {% if work_experience %}
+          <section>
+            <h2 class="section-heading">Professional Experience</h2>
+            {% for job in work_experience %}
+            <section>
+              <h3>
+                {% if job.url %} <a href="{{ job.url }}">{{ job.company }}</a>
+                {% else %} {{ job.company }} {% endif %}
+                <span class="section-label right">{{ job.location }}</span>
+              </h3>
+              <p>
+                <span class="section-label left"><i>{{ job.position }}</i></span>
+                {% if job.start_date and job.end_date %}
+                <span class="section-label right">{{ job.start_date }} - {{ job.end_date }}</span>
+                {% endif %}
+              </p>
+              <br>
+              {% if job.highlights %}
+              <ul>
+                {% for highlight in job.highlights %}
+                <li>{{ highlight }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </section>
+            {% endfor %}
+          </section>
+          {% endif %}
+        </main>
+
+        <!-- Sidebar -->
+        <aside>
+          {% if education %}
+          <section>
+            <h2 class="section-heading">Education</h2>
+            {% for edu in education %}
+            <section>
+              <h3>
+                {% if edu.url %}
+                <a href="{{ edu.url }}">{{ edu.institution }}</a>
+                {% else %} {{ edu.institution }} {% endif %}
+              </h3>
+              {% if edu.graduation_date %}
+              <p class="section-label">{{ edu.graduation_date }}</p>
+              {% endif %} {% if edu.degrees %}
+              <ul>
+                {% for deg in edu.degrees %}
+                <li>{{ deg }}</li>
+                {% endfor %}
+                {% if edu.gpa %}
+                <li>GPA: {{ edu.gpa }}/4.0 </li>
+                {% endif %}
+              </ul>
+              {% endif %} {% if edu.honors %}
+              <h4>Honors</h4>
+              <ul>
+                {% for hon in edu.honors %}
+                <li>{{ hon }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </section>
+            {% endfor %}
+          </section>
+          {% endif %}
+          {% if skills %}
+          <section>
+            <h2 class="section-heading">Technical Proficiencies</h2>
+            <ul class="unstyled-list">
+              {% for skill in skills %}
+              <li>
+                <h3>{{ skill.name }}</h3>
+                <div class="skill-bar">
+                  <div
+                    class="skill-bar-fill w-{{ skill.proficiency }}"
+                    role="meter"
+                    aria-valuenow="{{ skill.proficiency }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    <span class="skill-bar-label">{{ skill.proficiency_label }}</span>
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </section>
+          {% endif %} {% if languages %}
+          <section>
+            <h2 class="section-heading">Languages</h2>
+            <ul class="unstyled-list">
+              {% for lang in languages %}
+              <li>
+                <h3>{{ lang.language }}</h3>
+                <p class="section-label">{{ lang.fluency }}</p>
+              </li>
+              {% endfor %}
+            </ul>
+          </section>
+          {% endif %} {% if interests %}
+          <section>
+            <h2 class="section-heading">Interests</h2>
+            {% for interest in interests %}
+            <section>
+              <h3>{{ interest.name }}</h3>
+              {% if interest.summary %}
+              <p>{{ interest.summary }}</p>
+              {% endif %} {% if interest.images %}
+              <div class="gallery side-gallery">
+                {% for img in interest.images %}
+                <figure>
+                  <img
+                    width="600"
+                    height="338"
+                    src="{{ img.img_path }}"
+                    alt="{{ img.caption }}"
+                  />
+                  <figcaption>{{ img.caption }}</figcaption>
+                </figure>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </section>
+            {% endfor %}
+          </section>
+          {% endif %}
+        </aside>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <div class="container">
+        <p>© {{ current_year }} {{ name }}. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

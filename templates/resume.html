@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Website description -->
+    <title>{{ name }} - Resume</title>
+    <meta name="description" content="{{ name }} - {{ summary }}" />
+    <meta name="author" content="{{ name }}" />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="{{ name }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ base_url }}/resume.html" />
+    <meta property="og:image" content="{{ base_url }}/{{ image_path }}" />
+    <meta property="og:image:alt" content="{{ name }} Profile Image" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="static/css/modern_normalize.css" />
+    <link rel="stylesheet" href="static/css/html5bp.css" />
+    <link rel="stylesheet" href="static/css/main.css" />
+    <link rel="stylesheet" href="static/css/resume.css" />
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#fafafa" />
+
+    <!-- Content Security Policy: Update if adding external sources (e.g., Google Fonts, Bootstrap CDN, analytics, etc). -->
+    <!-- style-src, script-src, img-src: separate sources with spaces -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content=" default-src 'self'; "
+    />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="page-header">
+      <div class="container">
+        <div class="header-top flex-responsive">
+          <div class="header-info">
+            <h1>
+              {{ first_name }} {% if nickname %} ({{ nickname }}) {% endif %} {{
+              last_name }}
+            </h1>
+            {% if contact.email or contact.phone or contact.location or base_url
+            %}
+            <address>
+              <ul class="inline-list flex-responsive">
+                {% if base_url %}
+                <li>
+                  <a
+                    href="{{ base_url }}"
+                    rel="noopener noreferrer"
+                    aria-label="{{ base_url_label }}"
+                    class="link-with-icon"
+                  >
+                    {{ base_url_label }}
+                  </a>
+                </li>
+                {% endif %} {% if contact.email %}
+                <li>
+                  <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+                </li>
+                {% endif %} {% if contact.location %}
+                <li>{{ contact.location }}</li>
+                {% endif %}
+              </ul>
+            </address>
+            {% endif %} {% if summary %}
+            <p class="header-summary">{{ summary }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Resume body -->
+    <div class="page-content">
+      <div class="container">
+        <main>
+          {% if work_experience %}
+          <section>
+            <h2 class="section-heading">Professional Experience</h2>
+            {% for job in work_experience %}
+            <section>
+              <h3>
+                {% if job.url %} <a href="{{ job.url }}">{{ job.company }}</a>
+                {% else %} {{ job.company }} {% endif %}
+              </h3>
+              {% if job.position %}
+              <p class="section-label">
+                {{ job.position }} {% if job.start_date and job.end_date %}
+                <span text-align="right">
+                  ({{ job.start_date }} - {{ job.end_date }})
+                </span>
+                {% endif %}
+              </p>
+              {% endif %} {% if job.highlights %}
+              <ul>
+                {% for highlight in job.highlights %}
+                <li>{{ highlight }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </section>
+            {% endfor %}
+          </section>
+          {% endif %} {% if education %}
+          <section>
+            <h2 class="section-heading">Education</h2>
+            {% for edu in education %}
+            <section>
+              <h3>
+                {% if edu.url %}<a href="{{ edu.url }}"
+                  >{{ edu.institution }}</a
+                >
+                {% else %} {{ edu.institution }} {% endif %}
+              </h3>
+              {% if edu.location %}
+              <p class="section-label">{{ edu.location }}</p>
+              {% endif %} {% if edu.degrees %}
+              <h4>Degrees</h4>
+              <ul>
+                {% for deg in edu.degrees %}
+                <li>{{ deg }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %} {% if edu.honors %}
+              <h4>Honors</h4>
+              <ul>
+                {% for hon in edu.honors %}
+                <li>{{ hon }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %} {% if edu.gpa or edu.graduation_date %}
+              <p>
+                {% if edu.gpa %}<span class="block">GPA: {{ edu.gpa }}</span>{%
+                endif %} {% if edu.graduation_date %}<span class="block"
+                  >Graduation Date: {{ edu.graduation_date }}</span
+                >{% endif %}
+              </p>
+              {% endif %}
+            </section>
+            {% endfor %}
+          </section>
+          {% endif %} {% if skills %}
+          <section>
+            <h2 class="section-heading">Technical Proficiencies</h2>
+            {% for skill in skills %} {{ skill.name }}<small>
+              ({{ skill.proficiency_label }})</small
+            >; {% endfor %}
+          </section>
+          {% endif %} {% if languages %}
+          <section>
+            <h2 class="section-heading">Languages</h2>
+            {% for lang in languages %} {{ lang.language }}<small>
+              ({{ lang.fluency }})</small
+            >; {% endfor %}
+          </section>
+          {% endif %}
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

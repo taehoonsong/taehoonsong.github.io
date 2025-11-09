@@ -1,0 +1,171 @@
+{
+  "website_title": "Taehoon Song",
+  "first_name": "Taehoon",
+  "last_name": "Song",
+  "nickname": "Tae",
+  "label": "Data Engineer / Statistician",
+  "image_path": "static/img/profile.jpeg",
+  "contact": {
+    "email": "DataEngineer@TaehoonSong.com",
+    "location": "Washington, DC"
+  },
+  "summary": "Advocate for free and open-source software, digital privacy, and personal data ownership.",
+  "base_url": "https://taehoonsong.com",
+  "base_url_label": "TaehoonSong.com",
+  "social_media_links": [
+    {
+      "label": "TaehoonSong.com",
+      "url": "https://taehoonsong.com",
+      "svg_path": "static/img/globe.svg"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/taehoonsong",
+      "svg_path": "static/img/linkedin.svg"
+    },
+    {
+      "label": "Github",
+      "url": "https://github.com/taehoonsong",
+      "svg_path": "static/img/github.svg"
+    }
+  ],
+  "work_experience": [
+    {
+      "company": "Cohen Milstein Sellers & Toll, PLLC",
+      "position": "Data Engineer",
+      "location": "Washington, DC",
+      "url": "https://www.cohenmilstein.com",
+      "start_date": "Sep 2022",
+      "end_date": "Present",
+      "highlights": [
+        "Lead the design, implementation, maintenance, and optimization of data pipelines, databases, and application infrastructures.",
+        "Develop Python apps that automate existing processes, create data solutions for ligitation support, or assist in case development.",
+        "Refactor, modernize, and optimize legacy Python, SQL, and VBA code to be more secure and performant.",
+        "Evaluate AI solutions for the Firm with respect to data privacy, security, and usefulness as a member of the Firm's AI Committee."
+      ]
+    },
+    {
+      "company": "Grant Thornton LLP",
+      "position": "Statistician",
+      "location": "Washington, DC",
+      "url": "https://www.grantthornton.com",
+      "start_date": "May 2021",
+      "end_date": "Aug 2022",
+      "highlights": [
+        "Designed efficient statistical samples for federal and state taxes, audits, and other program analytic purposes, saving hundreds to thousands of staff hours per engagement.",
+        "Helped win over $8 million in government contract awards in 2022 by authoring technical sections related to statistical sampling and data analytics in RFPs.",
+        "Researched and implemented efficient sampling methodologies and automated internal processes via R and Python scripting; conducted simulation studies to estimate sampling efficiency, statistical inference and prediction performance, and confidence coverage."
+      ]
+    },
+    {
+      "company": "Cohen Milstein Sellers & Toll, PLLC",
+      "position": "Data Analyst",
+      "location": "Washington, DC",
+      "url": "https://www.cohenmilstein.com",
+      "start_date": "Jun 2016",
+      "end_date": "May 2019",
+      "highlights": [
+        "Researched securities frauds and market manipulation involving various financial instruments; frequently worked with Antitrust or ERISA practice group attorneys to assist with financial data analysis.",
+        "Analyzed trading data sets, recognized trends and patterns, validated data integrity; audited and monitored investment data for institutional investors to calculate potential damages relating to securities class actions.",
+        "Developed custom solutions by integrating Bloomberg API, Excel, VBA, SQL, and Python to automate and assist with efficient data analysis, formatting, and validation."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "George Mason University - Volgenau School of Engineering",
+      "url": "https://statistics.gmu.edu",
+      "degrees": ["Master of Science - Statistics"],
+      "gpa": "4.0",
+      "graduation_date": "May 2021"
+    },
+    {
+      "institution": "New York University - Stern School of Business",
+      "url": "https://www.stern.nyu.edu",
+      "degrees": ["Bachelor of Science - Accounting and Business Statistics"],
+      "gpa": "3.6",
+      "graduation_date": "May 2016"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Python",
+      "proficiency": 100,
+      "proficiency_label": "Expert"
+    },
+    {
+      "name": "SQL",
+      "proficiency": 90,
+      "proficiency_label": "Advanced"
+    },
+    {
+      "name": "Linux",
+      "proficiency": 85,
+      "proficiency_label": "Advanced"
+    },
+    {
+      "name": "Bash",
+      "proficiency": 80,
+      "proficiency_label": "Advanced"
+    },
+    {
+      "name": "VBA",
+      "proficiency": 75,
+      "proficiency_label": "Advanced"
+    },
+    {
+      "name": "Git",
+      "proficiency": 65,
+      "proficiency_label": "Intermediate"
+    },
+    {
+      "name": "R",
+      "proficiency": 55,
+      "proficiency_label": "Intermediate"
+    },
+    {
+      "name": "Azure",
+      "proficiency": 50,
+      "proficiency_label": "Intermediate"
+    },
+    {
+      "name": "SAS",
+      "proficiency": 30,
+      "proficiency_label": "Beginner"
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native-level fluency"
+    },
+    {
+      "language": "Korean",
+      "fluency": "Native speaker"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Mechanical Keyboards",
+      "images": [
+        {
+          "img_path": "https://picsum.photos/600/338?random=7",
+          "caption": "Image Caption 7"
+        }
+      ]
+    },
+    {
+      "name": "Home Server",
+      "images": [
+        {
+          "img_path": "static/img/proxmox-dashboard.png",
+          "caption": "Dashboard showing running containers and virtual machines"
+        },
+        {
+          "img_path": "static/img/dashy.png",
+          "caption": "Dashboard of available applications and services"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+@page {
+  size: letter;
+  margin: 0in;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Georgia", "Times New Roman";
+}
+
+h1,
+h2,
+h3 {
+  font-variant: small-caps;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+a[href]::after {
+  content: "";
+}
+
+section {
+  page-break-inside: avoid;
+}
+
+.section-heading {
+  text-align: left;
+  margin-bottom: 0.5rem;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #666;
+}
+
+.section-heading::before,
+.section-heading::after {
+  all: unset;
+}
+
+header {
+  padding: 0.2in;
+  padding-bottom: 0.2rem;
+}
+
+.header-info {
+  margin-top: 0;
+}
+
+main,
+footer {
+  padding: 2rem;
+}
+
+main {
+  padding-left: 0.5in;
+  padding-bottom: 0.5in;
+}
+
+.page-header,
+.page-footer {
+  background: #fff;
+  border-bottom: 0px;
+}
+
+.flex-responsive {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.page-content .container {
+  grid-template-columns: 1fr 0fr;
+}
+
+.header-top {
+  gap: 2rem;
+}
+
+.page-header ul {
+  margin: 0.5rem 0;
+}
+
+.inline-list {
+  flex-direction: row;
+  justify-content: center;
+  gap: var(--spacing-inline);
+}
+
+.inline-list li:not(:last-child)::after {
+  content: "|";
+  margin-left: var(--spacing-inline);
+  color: #ccc;
+}
+
+/* Don't color hyperlinks in resume */
+h3 a,
+h3 a:link,
+h3 a:hover,
+h3 a:visited,
+h3 a:active {
+  color: #000;
+}
