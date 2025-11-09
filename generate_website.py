@@ -86,9 +86,9 @@ def clean_output_path() -> None:
 def copy_static_to_output() -> None:
     for item in STATIC_DIR.iterdir():
         if item.is_dir():
-            shutil.copytree(item, f"{OUTPUT_PATH}/{item}")
+            shutil.copytree(item, f"{OUTPUT_PATH}/{item.name}")
         else:
-            shutil.copy(item, f"{OUTPUT_PATH}/{item}")
+            shutil.copy(item, f"{OUTPUT_PATH}/{item.name}")
 
 
 def export_outputs(render_results: list[tuple[str, str]]) -> None:
