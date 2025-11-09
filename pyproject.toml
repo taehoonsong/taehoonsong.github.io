@@ -1,9 +1,14 @@
 [project]
-name = "website"
+name = "resume-website-generator"
 version = "0.1.0"
-description = "Add your description here"
+description = "Generate a static website that hosts my resume and blog"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "jinja2>=3.1.6",
     "markdown>=3.9",
+    "markupsafe>=3.0.3",
+    "pygments>=2.19.2",
+    "pyyaml>=6.0.3",
+    "watchdog>=6.0.0",
 ]
