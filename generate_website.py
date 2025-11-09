@@ -58,7 +58,7 @@ def get_data() -> dict:
         if svg_path is None:
             continue
 
-        with Path(svg_path).open(encoding="utf-8", errors="ignore") as f:
+        with Path(STATIC_DIR, svg_path).open(encoding="utf-8", errors="ignore") as f:
             link["svg_data"] = f.read()
 
     return data
