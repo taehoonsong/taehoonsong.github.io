@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import TypedDict
 
 import pypandoc
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from slugify import slugify
 
 SRC_PATH = Path("content")
@@ -81,7 +81,8 @@ def render_resume(loader: FileSystemLoader, data: dict) -> None:
         block_end_string="</BLOCK>",
         variable_start_string="<VAR>",
         variable_end_string="</VAR>",
-        autoescape=True,
+        trim_blocks=True,
+        autoescape=select_autoescape(),
     )
 
     file_name = "resume.tex"
@@ -136,7 +137,7 @@ def main() -> None:
     data = get_data()
 
     # Render landing page
-    index_env = Environment(loader=loader, autoescape=True)
+    index_env = Environment(loader=loader, autoescape=select_autoescape())
     render_template("index.html", index_env, data)
 
     # Render tex that will be converted to PDF later by pdflatex
