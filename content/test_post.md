@@ -7,7 +7,15 @@ date: November 9, 2025
 ## Subtitle 1
 Hello world! Let's use some math! $a^2+b^2=c^2$.
 
-What about some Euler's identity: $$e^{\pi i}+1 = 0$$
+What about some Euler's identity:
+
+```math
+e^{\pi i}+1 = 0
+```
+
+Or **Cauchy-Schwarz Inequality**:
+
+$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
 
 ## Subtitle 2
 ```python
