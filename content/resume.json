@@ -163,15 +163,6 @@
   ],
   "interests": [
     {
-      "name": "Mechanical Keyboards",
-      "images": [
-        {
-          "img_path": "https://picsum.photos/600/338?random=7",
-          "caption": "Image Caption 7"
-        }
-      ]
-    },
-    {
       "name": "Home Server",
       "images": [
         {
