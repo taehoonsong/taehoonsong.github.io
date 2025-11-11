@@ -29,7 +29,7 @@
       "svg_path": "img/github.svg"
     }
   ],
-  "work_experience": [
+  "current_work": [
     {
       "company": "Cohen Milstein Sellers & Toll, PLLC",
       "position": "Data Engineer",
@@ -43,7 +43,9 @@
         "Refactor, modernize, and optimize legacy Python, SQL, and VBA code to be more secure and performant.",
         "Evaluate AI solutions for the Firm with respect to data privacy, security, and usefulness as a member of the Firm's AI Committee."
       ]
-    },
+    }
+  ],
+  "relevant_work": [
     {
       "company": "Grant Thornton LLP",
       "position": "Statistician",
@@ -68,6 +70,19 @@
         "Researched securities frauds and market manipulation involving various financial instruments; frequently worked with Antitrust or ERISA practice group attorneys to assist with financial data analysis.",
         "Analyzed trading data sets, recognized trends and patterns, validated data integrity; audited and monitored investment data for institutional investors to calculate potential damages relating to securities class actions.",
         "Developed custom solutions by integrating Bloomberg API, Excel, VBA, SQL, and Python to automate and assist with efficient data analysis, formatting, and validation."
+      ]
+    },
+    {
+      "company": "RiskEcon Lab, New York University Courant Institute",
+      "position": "Research Intern",
+      "location": "New York, NY",
+      "url": "https://wp.nyu.edu/riskeconlab",
+      "start_date": "Oct 2015",
+      "end_date": "May 2016",
+      "highlights": [
+        "Aggregated and analyzed biodiversity data from proprietary and federal databases; reviewed literature on biodiversity data collection methods.",
+        "Analyzed quantitative data from the railroad transporation industry to implement a financial model that considers potential economic and environmental losses due to derailments.",
+        "Impacted policies and legislation at the state level by identifying challenges and problems through data-driven analysis; prepared and presented statistical reports to advocacy groups."
       ]
     }
   ],

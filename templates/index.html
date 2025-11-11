@@ -89,10 +89,10 @@
     <div class="page-content">
       <div class="container">
         <main>
-          {% if work_experience %}
+          {% if current_work %}
           <section>
-            <h2 class="section-heading">Professional Experience</h2>
-            {% for job in work_experience %}
+            <h2 class="section-heading">Current Work Experience</h2>
+            {% for job in current_work %}
             <section>
               <h3>
                 {% if job.url %} <a href="{{ job.url }}">{{ job.company }}</a>
@@ -116,7 +116,35 @@
             </section>
             {% endfor %}
           </section>
-          {% endif %}
+        {% endif %}
+        {% if relevant_work %}
+          <section>
+            <h2 class="section-heading">Relevant Work Experience</h2>
+            {% for job in relevant_work %}
+            <section>
+              <h3>
+                {% if job.url %} <a href="{{ job.url }}">{{ job.company }}</a>
+                {% else %} {{ job.company }} {% endif %}
+                <span class="section-label right">{{ job.location }}</span>
+              </h3>
+              <p>
+                <span class="section-label left"><i>{{ job.position }}</i></span>
+                {% if job.start_date and job.end_date %}
+                <span class="section-label right">{{ job.start_date }} - {{ job.end_date }}</span>
+                {% endif %}
+              </p>
+              <br>
+              {% if job.highlights %}
+              <ul>
+                {% for highlight in job.highlights %}
+                <li>{{ highlight }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </section>
+            {% endfor %}
+          </section>
+        {% endif %}
         </main>
 
         <!-- Sidebar -->
