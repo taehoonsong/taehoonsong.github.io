@@ -12,10 +12,10 @@
 \pagenumbering{gobble}
 \geometry{left=0.5in, top=0.3in, right=0.5in, bottom=0.3in}
 \hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    filecolor=magenta,
-    urlcolor=black,
+  colorlinks=true,
+  linkcolor=black,
+  filecolor=magenta,
+  urlcolor=black,
 }
 
 \begin{document}
@@ -24,15 +24,16 @@
 
 \begin{LARGE}
 
-\textsc{\textbf{<VAR>first_name</VAR><BLOCK>if nickname</BLOCK> (<VAR>nickname</VAR>) <BLOCK>endif</BLOCK><VAR>last_name</VAR>}}
+  \textsc{\textbf{<VAR>first_name</VAR><BLOCK>if nickname</BLOCK>
+  (<VAR>nickname</VAR>) <BLOCK>endif</BLOCK><VAR>last_name</VAR>}}
 
 \end{LARGE}
 
 \vspace{1mm}
 
 \begin{small}
-\qquad
-\href{<VAR>base_url</VAR>}{<VAR>base_url_label</VAR>}\qquad\textbar\qquad\href{mailto:<VAR>contact.email</VAR>}{<VAR>contact.email</VAR>}\qquad\textbar\qquad{<VAR>contact.location</VAR>}\ \qquad
+  \qquad
+  \href{<VAR>base_url</VAR>}{<VAR>base_url_label</VAR>}\qquad\textbar\qquad\href{mailto:<VAR>contact.email</VAR>}{<VAR>contact.email</VAR>}\qquad\textbar\qquad{<VAR>contact.location</VAR>}\ \qquad
 \end{small}
 
 \raggedright
@@ -43,28 +44,28 @@
 \hrulefill
 
 \begin{large}
-\textsc{\textbf{Current Work Experience}}
-\vspace{-3mm}
+  \textsc{\textbf{Current Work Experience}}
+  \vspace{-3mm}
 \end{large}
 
 \textcolor{lightgray}{\hrulefill}\\
-\vspace{1mm}
-
 
 \begin{small}
-<BLOCK>for job in current_work</BLOCK>
-\textbf{<VAR>job.company|replace("&","\\&")|safe</VAR>} \hfill \textcolor{gray}{<VAR>job.location</VAR>}\\
-\textit{<VAR>job.position</VAR>} \hfill \textcolor{gray}{<VAR>job.start_date</VAR> -- <VAR>job.end_date</VAR>}\\
-\vspace{-1mm}
+  <BLOCK>for job in current_work</BLOCK>
+  \textbf{<VAR>job.company|replace("&","\\&")|safe</VAR>} \hfill
+  \textcolor{gray}{<VAR>job.location</VAR>}\\
+  \textit{<VAR>job.position</VAR>} \hfill
+  \textcolor{gray}{<VAR>job.start_date</VAR> -- <VAR>job.end_date</VAR>}\\
+  \vspace{-1mm}
 
-\begin{itemize}
-\setlength\itemsep{-1mm}
-<BLOCK>for highlight in job.highlights</BLOCK>
-\item <VAR>highlight|replace("$","\\$")|replace("&","\\&")|safe</VAR>
-<BLOCK>endfor</BLOCK>
-\end{itemize}
-\vspace{-1mm}
-<BLOCK>endfor</BLOCK>
+  \begin{itemize}
+      \setlength\itemsep{-1mm}
+      <BLOCK>for highlight in job.highlights</BLOCK>
+    \item <VAR>highlight|replace("$","\\$")|replace("&","\\&")|safe</VAR>
+      <BLOCK>endfor</BLOCK>
+  \end{itemize}
+  \vspace{-2mm}
+  <BLOCK>endfor</BLOCK>
 \end{small}
 \vspace{-2mm}
 <BLOCK>endif</BLOCK>
@@ -73,27 +74,28 @@
 \hrulefill
 
 \begin{large}
-\textsc{\textbf{Relevant Work Experience}}
-\vspace{-3mm}
+  \textsc{\textbf{Relevant Work Experience}}
+  \vspace{-3mm}
 \end{large}
 
 \textcolor{lightgray}{\hrulefill}\\
-\vspace{1mm}
 
 \begin{small}
-<BLOCK>for job in relevant_work</BLOCK>
-\textbf{<VAR>job.company|replace("&","\\&")|safe</VAR>} \hfill \textcolor{gray}{<VAR>job.location</VAR>}\\
-\textit{<VAR>job.position</VAR>} \hfill \textcolor{gray}{<VAR>job.start_date</VAR> -- <VAR>job.end_date</VAR>}\\
-\vspace{-2mm}
+  <BLOCK>for job in relevant_work</BLOCK>
+  \textbf{<VAR>job.company|replace("&","\\&")|safe</VAR>} \hfill
+  \textcolor{gray}{<VAR>job.location</VAR>}\\
+  \textit{<VAR>job.position</VAR>} \hfill
+  \textcolor{gray}{<VAR>job.start_date</VAR> -- <VAR>job.end_date</VAR>}\\
+  \vspace{-2mm}
 
-\begin{itemize}
-\setlength\itemsep{-1mm}
-<BLOCK>for highlight in job.highlights</BLOCK>
-\item <VAR>highlight|replace("$","\\$")|replace("&","\\&")|safe</VAR>
-<BLOCK>endfor</BLOCK>
-\end{itemize}
-\vspace{-1mm}
-<BLOCK>endfor</BLOCK>
+  \begin{itemize}
+      \setlength\itemsep{-1mm}
+      <BLOCK>for highlight in job.highlights</BLOCK>
+    \item <VAR>highlight|replace("$","\\$")|replace("&","\\&")|safe</VAR>
+      <BLOCK>endfor</BLOCK>
+  \end{itemize}
+  \vspace{-2mm}
+  <BLOCK>endfor</BLOCK>
 \end{small}
 \vspace{-2mm}
 <BLOCK>endif</BLOCK>
@@ -102,22 +104,23 @@
 \hrulefill
 
 \begin{large}
-\textsc{\textbf{Education}}
-\vspace{-3mm}
+  \textsc{\textbf{Education}}
+  \vspace{-3mm}
 \end{large}
 
 \textcolor{lightgray}{\hrulefill}\\
-\vspace{1mm}
 
 \begin{small}
-<BLOCK>for edu in education</BLOCK>
-\textbf{<VAR>edu.institution</VAR>} \hfill \textcolor{gray}{<VAR>edu.location</VAR>}
+  <BLOCK>for edu in education</BLOCK>
+  \textbf{<VAR>edu.institution</VAR>} \hfill
+  \textcolor{gray}{<VAR>edu.location</VAR>}
 
-\textit{<VAR>edu.degree|replace("-","--")|safe</VAR>} \hfill \textcolor{gray}{Gradudated <VAR>edu.graduation_date</VAR>}
+  \textit{<VAR>edu.degree|replace("-","--")|safe</VAR>} \hfill
+  \textcolor{gray}{Gradudated <VAR>edu.graduation_date</VAR>}
 
-\vspace{2mm}
-<BLOCK>endfor</BLOCK>
-\vspace{-2mm}
+  \vspace{1mm}
+  <BLOCK>endfor</BLOCK>
+  \vspace{-2mm}
 \end{small}
 <BLOCK>endif</BLOCK>
 
@@ -125,19 +128,19 @@
 \hrulefill
 
 \begin{large}
-\textsc{\textbf{Technical Skills}}
-\vspace{-3mm}
+  \textsc{\textbf{Technical Skills}}
+  \vspace{-3mm}
 \end{large}
 
 \textcolor{lightgray}{\hrulefill}\\
-\vspace{1mm}
 
 \begin{small}
-<BLOCK>for skill in skills -</BLOCK>
-<VAR>skill.name</VAR><BLOCK>if not loop.last</BLOCK>, <BLOCK>endif</BLOCK>
-<BLOCK>- endfor</BLOCK>
+  <BLOCK>for skill in skills -</BLOCK>
+  <VAR>skill.name</VAR><BLOCK>if not loop.last</BLOCK>, <BLOCK>endif</BLOCK>
+  <BLOCK>- endfor</BLOCK>
 \end{small}
 
 <BLOCK>endif</BLOCK>
 
 \end{document}
+

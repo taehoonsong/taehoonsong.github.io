@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -15,6 +15,12 @@
     <meta property="og:url" content="{{ base_url }}/index.html" />
     <meta property="og:image" content="{{ base_url }}/{{ image_path }}" />
     <meta property="og:image:alt" content="{{ name }} Profile Image" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon.png" />
+    <link rel="icon" sizes="32x32" href="img/favicon-32x32.png" />
+    <link rel="icon" sizes="16x16" href="img/favicon-16x16.png" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="css/modern_normalize.css" />
@@ -48,10 +54,14 @@
           />
           {% endif %}
           <div class="header-info">
-            <h1>{{ first_name }} {% if nickname %} ({{ nickname }}) {% endif %} {{ last_name }}</h1>
+            <h1>
+              {{ first_name }} {% if nickname %} ({{ nickname }}) {% endif %} {{
+              last_name }}
+            </h1>
             {% if label %}
             <h2 class="header-label">{{ label }}</h2>
-            {% endif %} {% if contact.email or contact.phone or contact.location %}
+            {% endif %} {% if contact.email or contact.phone or contact.location
+            %}
             <address>
               <ul class="inline-list flex-responsive">
                 {% if contact.email %}
@@ -73,7 +83,8 @@
                   aria-label="{{ link.label }}"
                   class="link-with-icon"
                 >
-                  {% if link.svg_data %}{{ link.svg_data | safe }}{% endif %} {{ link.label }}
+                  {% if link.svg_data %}{{ link.svg_data | safe }}{% endif %} {{
+                  link.label }}
                 </a>
               </li>
               {% endfor %}
@@ -102,17 +113,25 @@
             {% for job in current_work %}
             <section>
               <h3>
-                {% if job.url %} <a href="{{ job.url }}">{{ job.company }}</a>
-                {% else %} {{ job.company }} {% endif %}
+                <span class="left"
+                  >{% if job.url %}
+                  <a href="{{ job.url }}">{{ job.company }}</a> {% else %} {{
+                  job.company }} {% endif %}</span
+                >
                 <span class="section-label right">{{ job.location }}</span>
+                <br />
               </h3>
               <p>
-                <span class="section-label left"><i>{{ job.position }}</i></span>
+                <span class="section-label left"
+                  ><i>{{ job.position }}</i></span
+                >
                 {% if job.start_date and job.end_date %}
-                <span class="section-label right">{{ job.start_date }} - {{ job.end_date }}</span>
+                <span class="section-label right"
+                  >{{ job.start_date }} - {{ job.end_date }}</span
+                >
                 {% endif %}
               </p>
-              <br>
+              <br />
               {% if job.highlights %}
               <ul>
                 {% for highlight in job.highlights %}
@@ -123,24 +142,31 @@
             </section>
             {% endfor %}
           </section>
-        {% endif %}
-        {% if relevant_work %}
+          {% endif %} {% if relevant_work %}
           <section>
             <h2 class="section-heading">Relevant Work Experience</h2>
             {% for job in relevant_work %}
             <section>
               <h3>
-                {% if job.url %} <a href="{{ job.url }}">{{ job.company }}</a>
-                {% else %} {{ job.company }} {% endif %}
+                <span class="left"
+                  >{% if job.url %}
+                  <a href="{{ job.url }}">{{ job.company }}</a> {% else %} {{
+                  job.company }} {% endif %}</span
+                >
                 <span class="section-label right">{{ job.location }}</span>
+                <br />
               </h3>
               <p>
-                <span class="section-label left"><i>{{ job.position }}</i></span>
+                <span class="section-label left"
+                  ><i>{{ job.position }}</i></span
+                >
                 {% if job.start_date and job.end_date %}
-                <span class="section-label right">{{ job.start_date }} - {{ job.end_date }}</span>
+                <span class="section-label right"
+                  >{{ job.start_date }} - {{ job.end_date }}</span
+                >
                 {% endif %}
               </p>
-              <br>
+              <br />
               {% if job.highlights %}
               <ul>
                 {% for highlight in job.highlights %}
@@ -151,7 +177,7 @@
             </section>
             {% endfor %}
           </section>
-        {% endif %}
+          {% endif %}
         </main>
 
         <!-- Sidebar -->
@@ -172,7 +198,7 @@
               <ul>
                 <li>{{ edu.degree }}</li>
                 {% if edu.gpa %}
-                <li>GPA: {{ edu.gpa }}/4.0 </li>
+                <li>GPA: {{ edu.gpa }}/4.0</li>
                 {% endif %}
               </ul>
               {% endif %} {% if edu.honors %}
@@ -186,8 +212,7 @@
             </section>
             {% endfor %}
           </section>
-          {% endif %}
-          {% if skills %}
+          {% endif %} {% if skills %}
           <section>
             <h2 class="section-heading">Technical Proficiencies</h2>
             <ul class="unstyled-list">
@@ -202,7 +227,9 @@
                     aria-valuemin="0"
                     aria-valuemax="100"
                   >
-                    <span class="skill-bar-label">{{ skill.proficiency_label }}</span>
+                    <span class="skill-bar-label"
+                      >{{ skill.proficiency_label }}</span
+                    >
                   </div>
                 </div>
               </li>
@@ -235,7 +262,7 @@
                 <figure>
                   <img
                     width="600"
-                    height="338"
+                    height="400"
                     src="{{ img.img_path }}"
                     alt="{{ img.caption }}"
                   />
@@ -254,7 +281,19 @@
 
     <footer class="page-footer">
       <div class="container">
-        <p>© {{ current_year }} {{ name }}. All rights reserved.</p>
+        This work is marked
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
+          >CC0 1.0 Universal</a
+        ><img
+          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        /><img
+          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        />
+        <!-- <p>© {{ current_year }} {{ name }}. All rights reserved.</p> -->
       </div>
     </footer>
   </body>
