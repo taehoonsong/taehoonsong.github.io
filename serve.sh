@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
-OUTPUT_DIR=pages
+cd pages
 
-cd "$OUTPUT_DIR" && uvx python -m http.server
+uvx python -m http.server &
+
+http_server_pid="$!"
+trap 'kill "$http_server_pid"' exit
+
+cd -
+
+xdg-open "http://localhost:8000"
+watchman-make -p "content/*" "static/*" "templates/*" "generate_website.py" -r "./build.sh"
