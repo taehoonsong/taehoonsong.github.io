@@ -1,0 +1,38 @@
+#mySidenav a {
+  transition: 0.1s;
+  position: fixed;
+  right: -100px;
+  width: 140px;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 12px;
+  color: white;
+  border-radius: 5px 0 0 5px; /* top-left, top-right bottom-right, bottom-left */
+  --link-color: white;
+  --link-color-hover: white;
+}
+
+#mySidenav a:hover {
+  right: 0;
+}
+
+#home {
+  top: 10px;
+  background-color: #7da651;
+}
+
+#blog {
+  top: 70px;
+  background-color: #e9a94a;
+}
+
+#resume {
+  top: 130px;
+  background-color: #6391f3;
+}
+
+#contact {
+  top: 190px;
+  background-color: #a276f3;
+}
+
