@@ -4,12 +4,12 @@ import shutil
 from pathlib import Path
 from typing import TypedDict
 
-import jinja2 as jj
-from markdown import markdownFromFile
+import pypandoc
+from jinja2 import Environment, FileSystemLoader
+from slugify import slugify
 
 SRC_PATH = Path("content")
 OUTPUT_PATH = Path("pages")
-POSTS_PATH = OUTPUT_PATH / "posts"
 TEMPLATE_PATH = Path("templates")
 STATIC_DIR = Path("static")
 
@@ -21,19 +21,19 @@ class SocialMediaLink(TypedDict):
     svg_data: str
 
 
-def prep_jinja() -> jj.Environment:
-    loader = jj.FileSystemLoader(TEMPLATE_PATH)
-    env = jj.Environment(loader=loader, autoescape=True)
+def clean_output_path() -> None:
+    if not OUTPUT_PATH.exists():
+        return
 
-    return env
+    shutil.rmtree(OUTPUT_PATH)
 
 
-# ! TODO: convert markdown files in SRC_PATH to html.
-# Implement syntax highlighting in code blocks.
-# Should support Python, SQL at minimum. Look into LaTeX rendering later.
-def markdown_to_html(md_file: Path) -> None:
-    output_path_str = f"{POSTS_PATH}/{md_file.stem}.html"
-    markdownFromFile(input=str(md_file), output=output_path_str, encoding="utf-8")
+def copy_static_to_output() -> None:
+    for item in STATIC_DIR.iterdir():
+        if item.is_dir():
+            shutil.copytree(item, f"{OUTPUT_PATH}/{item.name}")
+        else:
+            shutil.copy(item, f"{OUTPUT_PATH}/{item.name}")
 
 
 def get_data() -> dict:
@@ -64,59 +64,94 @@ def get_data() -> dict:
     return data
 
 
-def render_templates(env: jj.Environment, data: dict) -> list[tuple[str, str]]:
-    results = []
-    for t in TEMPLATE_PATH.iterdir():
-        if not t.suffix.lower().endswith(".html"):
-            continue
+def render_template(template_name: str, env: Environment, data: dict) -> None:
+    jinja_temp = env.get_template(template_name)
 
-        jinja_temp = env.get_template(t.name)
-        results.append((t.name, jinja_temp.render(**data)))
+    export_path = OUTPUT_PATH / template_name
+    content = jinja_temp.render(**data)
 
-    return results
+    with export_path.open("w", encoding="utf-8") as f:
+        f.write(content)
 
 
-def clean_output_path() -> None:
-    if not OUTPUT_PATH.exists():
-        return
+def render_resume(loader: FileSystemLoader, data: dict) -> None:
+    env = Environment(
+        loader=loader,
+        block_start_string="<BLOCK>",
+        block_end_string="</BLOCK>",
+        variable_start_string="<VAR>",
+        variable_end_string="</VAR>",
+        autoescape=True,
+    )
 
-    shutil.rmtree(OUTPUT_PATH)
+    file_name = "resume.tex"
+    jinja_temp = env.get_template(file_name)
 
-
-def copy_static_to_output() -> None:
-    for item in STATIC_DIR.iterdir():
-        if item.is_dir():
-            shutil.copytree(item, f"{OUTPUT_PATH}/{item.name}")
-        else:
-            shutil.copy(item, f"{OUTPUT_PATH}/{item.name}")
-
-
-def export_outputs(render_results: list[tuple[str, str]]) -> None:
-    OUTPUT_PATH.mkdir(exist_ok=True)
-    copy_static_to_output()
-
-    for result in render_results:
-        file_name, html = result
-        export_path = OUTPUT_PATH / file_name
-        with Path(export_path).open("w", encoding="utf-8") as f:
-            f.write(html)
+    export_path = OUTPUT_PATH / file_name
+    tex = jinja_temp.render(**data)
+    with export_path.open("w", encoding="utf-8") as f:
+        f.write(tex)
 
 
-def export_posts() -> None:
-    POSTS_PATH.mkdir(exist_ok=True)
-    blog_posts = [f for f in SRC_PATH.iterdir() if f.suffix.lower() == ".md"]
-    for post in blog_posts:
-        markdown_to_html(post)
+def render_index(loader: FileSystemLoader, data: dict) -> None:
+    env = Environment(loader=loader, autoescape=True)
+
+    file_name = "index.html"
+    jinja_temp = env.get_template(file_name)
+
+    export_path = OUTPUT_PATH / file_name
+    html = jinja_temp.render(**data)
+
+    with Path(export_path).open("w", encoding="utf-8") as f:
+        f.write(html)
+
+
+def render_posts() -> None:
+    t = TEMPLATE_PATH / "post.html"
+    out_path = OUTPUT_PATH / "posts"
+    out_path.mkdir(exist_ok=True)
+
+    [
+        pypandoc.convert_file(
+            source_file=file,
+            to="html5",
+            format="gfm",
+            extra_args=(f"--template={t!s}", "--toc"),
+            outputfile=out_path / f"{slugify(file.stem)}.html",
+        )
+        for file in SRC_PATH.iterdir()
+        if file.suffix.lower() == ".md"
+    ]
 
 
 def main() -> None:
-    data = get_data()
-    env = prep_jinja()
     clean_output_path()
 
-    render_results = render_templates(env, data)
-    export_outputs(render_results)
-    export_posts()
+    OUTPUT_PATH.mkdir(exist_ok=True)
+    copy_static_to_output()
+
+    loader = FileSystemLoader(TEMPLATE_PATH)
+
+    # Read resume data from JSON file
+    data = get_data()
+
+    # Render landing page
+    index_env = Environment(loader=loader, autoescape=True)
+    render_template("index.html", index_env, data)
+
+    # Render tex that will be converted to PDF later by pdflatex
+    resume_env = Environment(
+        loader=loader,
+        block_start_string="<BLOCK>",
+        block_end_string="</BLOCK>",
+        variable_start_string="<VAR>",
+        variable_end_string="</VAR>",
+        autoescape=True,
+    )
+    render_template("resume.tex", resume_env, data)
+
+    # Render markdown posts to html using pypandoc
+    render_posts()
 
 
 if __name__ == "__main__":
