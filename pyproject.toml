@@ -8,7 +8,7 @@ dependencies = [
     "jinja2>=3.1.6",
     "markdown>=3.9",
     "markupsafe>=3.0.3",
-    "pygments>=2.19.2",
+    "pypandoc>=1.16",
+    "python-slugify>=8.0.4",
     "pyyaml>=6.0.3",
-    "watchdog>=6.0.0",
 ]
