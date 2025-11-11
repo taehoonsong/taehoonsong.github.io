@@ -161,11 +161,9 @@
               </h3>
               {% if edu.graduation_date %}
               <p class="section-label">{{ edu.graduation_date }}</p>
-              {% endif %} {% if edu.degrees %}
+              {% endif %} {% if edu.degree %}
               <ul>
-                {% for deg in edu.degrees %}
-                <li>{{ deg }}</li>
-                {% endfor %}
+                <li>{{ edu.degree }}</li>
                 {% if edu.gpa %}
                 <li>GPA: {{ edu.gpa }}/4.0 </li>
                 {% endif %}

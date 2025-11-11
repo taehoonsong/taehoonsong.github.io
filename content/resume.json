@@ -90,16 +90,18 @@
     {
       "institution": "George Mason University - Volgenau School of Engineering",
       "url": "https://statistics.gmu.edu",
-      "degrees": ["Master of Science - Statistics"],
+      "degree": "Master of Science - Statistics",
       "gpa": "4.0",
-      "graduation_date": "May 2021"
+      "graduation_date": "May 2021",
+      "location": "Fairfax, VA"
     },
     {
       "institution": "New York University - Stern School of Business",
       "url": "https://www.stern.nyu.edu",
-      "degrees": ["Bachelor of Science - Accounting and Business Statistics"],
+      "degree": "Bachelor of Science - Accounting and Business Statistics",
       "gpa": "3.6",
-      "graduation_date": "May 2016"
+      "graduation_date": "May 2016",
+      "location": "New York, NY"
     }
   ],
   "skills": [
