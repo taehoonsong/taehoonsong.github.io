@@ -3,11 +3,12 @@
 cd pages
 
 uvx python -m http.server &
-
-http_server_pid="$!"
-trap 'kill "$http_server_pid"' exit
-
-cd -
+http_server_pid=$!
+# Trap sigint and kill all background processes
+trap 'kill "$http_server_pid"' SIGINT
 
 xdg-open "http://localhost:8000"
-watchman-make -p "content/*" "static/*" "templates/*" "generate_website.py" -r "./build.sh"
+
+# Watch for file changes
+cd -
+watchman-make -p "content/*" "static/**/*" "templates/*" "generate_website.py" -r "./build.sh all"
