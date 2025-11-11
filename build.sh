@@ -9,8 +9,8 @@ if [ ! -f "./pages/resume.tex" ]; then
 fi
 
 # Convert resume.tex to pdf using pdflatex
-pdflatex --output-directory=pages ./pages/resume.tex 1> /dev/null
+pdflatex --output-directory=pages ./pages/resume.tex
 
 # clean up
 cd pages
-latexmk -c 1> /dev/null
+latexmk -c
