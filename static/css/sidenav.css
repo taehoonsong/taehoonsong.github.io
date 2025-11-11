@@ -1,11 +1,11 @@
 #mySidenav a {
-  position: absolute;
-  right: -80px;
   transition: 0.1s;
-  padding: 12px;
+  position: fixed;
+  right: -100px;
   width: 140px;
-  text-decoration: none;
   font-size: 20px;
+  text-decoration: none;
+  padding: 12px;
   color: white;
   border-radius: 5px 0 0 5px; /* top-left, top-right bottom-right, bottom-left */
   --link-color: white;
@@ -35,3 +35,4 @@
   top: 190px;
   background-color: #a276f3;
 }
+
