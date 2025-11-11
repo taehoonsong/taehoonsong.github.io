@@ -40,8 +40,8 @@
       "highlights": [
         "Lead the design, implementation, maintenance, and optimization of data pipelines, databases, and application infrastructures.",
         "Develop Python apps that automate existing processes, create data solutions for ligitation support, or assist in case development.",
-        "Refactor, modernize, and optimize legacy Python, SQL, and VBA code to be more secure and performant.",
-        "Evaluate AI solutions for the Firm with respect to data privacy, security, and usefulness as a member of the Firm's AI Committee."
+        "Modernize legacy Python, SQL, and VBA code to be more secure and performant; migrate all authentication systems to use SSO.",
+        "Evaluate AI solutions for the Firm with respect to data privacy, security, and impact as a member of the Firm's AI Committee."
       ]
     }
   ],
@@ -69,7 +69,7 @@
       "highlights": [
         "Researched securities frauds and market manipulation involving various financial instruments; frequently worked with Antitrust or ERISA practice group attorneys to assist with financial data analysis.",
         "Analyzed trading data sets, recognized trends and patterns, validated data integrity; audited and monitored investment data for institutional investors to calculate potential damages relating to securities class actions.",
-        "Developed custom solutions by integrating Bloomberg API, Excel, VBA, SQL, and Python to automate and assist with efficient data analysis, formatting, and validation."
+        "Developed custom data pipelines by integrating Bloomberg API, VBA, SQL, and Python to automate and assist with efficient data analysis, formatting, and validation."
       ]
     },
     {
@@ -81,7 +81,7 @@
       "end_date": "May 2016",
       "highlights": [
         "Aggregated and analyzed biodiversity data from proprietary and federal databases; reviewed literature on biodiversity data collection methods.",
-        "Analyzed quantitative data from the railroad transporation industry to implement a financial model that considers potential economic and environmental losses due to derailments.",
+        "Analyzed quantitative data from the railroad transportation industry to implement a financial model that considers potential economic and environmental losses due to derailments.",
         "Impacted policies and legislation at the state level by identifying challenges and problems through data-driven analysis; prepared and presented statistical reports to advocacy groups."
       ]
     }
@@ -163,15 +163,28 @@
   ],
   "interests": [
     {
+      "name": "Keyboards",
+      "images": [
+        {
+          "img_path": "img/wooting.png",
+          "caption": "Wooting 80HE"
+        },
+        {
+          "img_path": "img/moonlander.png",
+          "caption": "ZSA Moonlander"
+        }
+      ]
+    },
+    {
       "name": "Home Server",
       "images": [
         {
           "img_path": "img/proxmox-dashboard.png",
-          "caption": "Dashboard showing running containers and virtual machines"
+          "caption": "Running containers and virtual machines"
         },
         {
           "img_path": "img/dashy.png",
-          "caption": "Dashboard of available applications and services"
+          "caption": "Available applications and services"
         }
       ]
     }
