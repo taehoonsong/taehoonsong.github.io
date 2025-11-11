@@ -1,0 +1,84 @@
+header {
+  padding: 2rem;
+  padding-bottom: 1.5rem;
+}
+
+.page-header {
+  background: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #ccc;
+}
+
+.header-info {
+  margin-top: 0.5rem;
+}
+
+.header-label {
+  font-size: 2.2rem;
+  color: #444;
+  margin-top: 0.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+footer {
+  padding: 2rem;
+  text-align: center;
+}
+
+.page-footer {
+  background: #f0f0f0;
+  border-top: 1px solid #ccc;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+h5 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+p {
+  margin: 0.3rem 0;
+}
