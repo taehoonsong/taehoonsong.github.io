@@ -80,23 +80,19 @@
     $if(title)$
     <header class="page-header">
       <div class="container">
-        <div class="header-info">
-          <h1>$title$</h1>
+        <div class="header-top flex-responsive">
+          <h1 class="header-info">$title$</h1>
           <br />
           $if(date)$
           <h2 class="header-label">$date$</h2>
+          $endif$
+          $if(summary)$
+          <p class="header-summary">$summary$</p>
           $endif$
         </div>
       </div>
     </header>
     $endif$
-
-    <div id="mySidenav" class="sidenav">
-      <a href="../index.html" id="home">Home</a>
-      <a href="posts" id="blog">Blog</a>
-      <a href="../resume.pdf" id="resume">Resume</a>
-      <a href="https://example.com" id="contact">Contact</a>
-    </div>
 
     <div
       class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom"
@@ -121,23 +117,30 @@
       </div>
       <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
     </div>
-  </body>
-  <footer class="page-footer">
-    <div class="container">
-      This work is marked
-      <a href="https://creativecommons.org/publicdomain/zero/1.0/"
-        >CC0 1.0 Universal</a
-      ><img
-        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
-        alt=""
-        style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
-      /><img
-        src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
-        alt=""
-        style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
-      />
-      <!-- <p>© {{ current_year }} {{ name }}. All rights reserved.</p> -->
-    </div>
-  </footer>
-</html>
 
+    <div id="mySidenav">
+      <a href="../index.html" id="home">Home</a>
+      <a href="../posts" id="blog">Blog</a>
+      <a href="../resume.pdf" id="resume">Resume</a>
+      <a href="https://example.com" id="contact">Contact</a>
+    </div>
+
+    <footer class="page-footer">
+      <div class="container">
+        This work is marked
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
+          >CC0 1.0 Universal</a
+        ><img
+          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        /><img
+          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        />
+        <!-- <p>© {{ current_year }} {{ name }}. All rights reserved.</p> -->
+      </div>
+    </footer>
+  </body>
+</html>
