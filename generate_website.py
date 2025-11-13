@@ -3,7 +3,9 @@ import json
 import shutil
 from pathlib import Path
 from typing import TypedDict
+from zoneinfo import ZoneInfo
 
+import frontmatter
 import pypandoc
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from slugify import slugify
@@ -21,6 +23,17 @@ class SocialMediaLink(TypedDict):
     svg_data: str
 
 
+class BlogPost(TypedDict):
+    title: str
+    date: dt.datetime
+    summary: str
+    file_path: str
+
+
+class BlogPostIndex(TypedDict):
+    posts: list[BlogPost]
+
+
 def clean_output_path() -> None:
     if not OUTPUT_PATH.exists():
         return
@@ -36,7 +49,20 @@ def copy_static_to_output() -> None:
             shutil.copy(item, f"{OUTPUT_PATH}/{item.name}")
 
 
-def get_data() -> dict:
+def get_blog_metadata(file: Path) -> BlogPost:
+    meta: BlogPost = frontmatter.load(file).metadata
+    meta["file_path"] = f"{slugify(meta.get('title'))}.html"
+    return meta
+
+
+def get_blog_post_data() -> BlogPostIndex:
+    post_list = [get_blog_metadata(post) for post in SRC_PATH.iterdir() if post.suffix.lower() == ".md"]
+    post_list.sort(key=lambda x: x.get("date"), reverse=True)
+
+    return {"posts": post_list}
+
+
+def get_portfolio_data() -> dict:
     path = SRC_PATH / "resume.json"
     with path.open(encoding="utf-8", errors="ignore") as f:
         data = json.load(f)
@@ -64,11 +90,11 @@ def get_data() -> dict:
     return data
 
 
-def render_template(template_name: str, env: Environment, data: dict) -> None:
+def render_template(template_name: str, export_path: Path, env: Environment, data: dict) -> None:
     jinja_temp = env.get_template(template_name)
-
-    export_path = OUTPUT_PATH / template_name
     content = jinja_temp.render(**data)
+
+    export_path.parent.mkdir(exist_ok=True, parents=True)
 
     with export_path.open("w", encoding="utf-8") as f:
         f.write(content)
@@ -94,19 +120,6 @@ def render_resume(loader: FileSystemLoader, data: dict) -> None:
         f.write(tex)
 
 
-def render_index(loader: FileSystemLoader, data: dict) -> None:
-    env = Environment(loader=loader, autoescape=True)
-
-    file_name = "index.html"
-    jinja_temp = env.get_template(file_name)
-
-    export_path = OUTPUT_PATH / file_name
-    html = jinja_temp.render(**data)
-
-    with Path(export_path).open("w", encoding="utf-8") as f:
-        f.write(html)
-
-
 def render_posts() -> None:
     t = TEMPLATE_PATH / "post.html"
     out_path = OUTPUT_PATH / "posts"
@@ -118,7 +131,7 @@ def render_posts() -> None:
             to="html5",
             format="gfm",
             extra_args=(f"--template={t!s}", "--toc"),
-            outputfile=out_path / f"{slugify(file.stem)}.html",
+            outputfile=out_path / f"{get_blog_metadata(file).get('file_path')}",
         )
         for file in SRC_PATH.iterdir()
         if file.suffix.lower() == ".md"
@@ -133,12 +146,23 @@ def main() -> None:
 
     loader = FileSystemLoader(TEMPLATE_PATH)
 
-    # Read resume data from JSON file
-    data = get_data()
+    # Data to pass into Jinja templates
+    portfolio_data = get_portfolio_data()
+    blog_data = get_blog_post_data()
+    time_data = {
+        "now": dt.datetime.now(tz=ZoneInfo("America/New_York")),
+        "strftime": dt.datetime.strftime,
+        "to_date": dt.datetime.fromisoformat,
+    }
+
+    data = portfolio_data | blog_data | time_data
 
     # Render landing page
     index_env = Environment(loader=loader, autoescape=select_autoescape())
-    render_template("index.html", index_env, data)
+    render_template("index.html", OUTPUT_PATH / "index.html", index_env, data)
+
+    # Render index of blog posts
+    render_template("post_index.html", OUTPUT_PATH / "posts" / "index.html", index_env, data)
 
     # Render tex that will be converted to PDF later by pdflatex
     resume_env = Environment(
@@ -149,7 +173,7 @@ def main() -> None:
         variable_end_string="</VAR>",
         autoescape=True,
     )
-    render_template("resume.tex", resume_env, data)
+    render_template("resume.tex", OUTPUT_PATH / "resume.tex", resume_env, data)
 
     # Render markdown posts to html using pypandoc
     render_posts()
