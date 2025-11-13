@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
+uv run generate_website.py
+
 cd pages
 
-uvx python -m http.server &
+uv run python -m http.server &
 http_server_pid=$!
-# Trap sigint and kill all background processes
-trap 'kill "$http_server_pid"' SIGINT
 
-xdg-open "http://localhost:8000"
+# Trap sigint and kill all background processes
+trap 'kill "$http_server_pid"; exit' SIGINT
+
+# xdg-open "http://localhost:8000"
 
 # Watch for file changes
 cd -
