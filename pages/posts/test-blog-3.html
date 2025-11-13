@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Test blog</title>
+    <title>Test blog 3</title>
 
         <link
       rel="stylesheet"
@@ -16,8 +16,8 @@
       rel="apple-touch-icon-precomposed"
       href="../img/apple-touch-icon.png"
     />
-    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png" />
-    <link rel="icon" sizes="16x16" href="../img/favicon-16x16.png" />
+    <link rel="icon" size="32x32" href="../img/favicon-32x32.png" />
+    <link rel="icon" size="16x16" href="../img/favicon-16x16.png" />
 
     <script
       id="MathJax-script"
@@ -29,7 +29,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css"
     />
-    <link rel="stylesheet" href="../css/sidenav.css" />
     <link rel="stylesheet" href="../css/posts.css" />
     <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
@@ -41,8 +40,8 @@
     <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
 
     <meta name="generator" content="pandoc-uikit" />
-         <meta name="date" content="2025-11-09" />
-        <title>Test blog</title>
+         <meta name="date" content="2024-09-10" />
+        <title>Test blog 3</title>
     <style type="text/css">
       code {
         white-space: pre;
@@ -120,21 +119,16 @@
   <body>
         <header class="page-header">
       <div class="container">
-        <div class="header-info">
-          <h1>Test blog</h1>
+        <div class="header-top flex-responsive">
+          <h1 class="header-info">Test blog 3</h1>
           <br />
-                    <h2 class="header-label">November 9, 2025</h2>
+                    <h2 class="header-label">2024-09-10</h2>
+                              <p class="header-summary">Let's test some
+code rendering!</p>
                   </div>
       </div>
     </header>
     
-    <div id="mySidenav" class="sidenav">
-      <a href="../index.html" id="home">Home</a>
-      <a href="posts" id="blog">Blog</a>
-      <a href="../resume.pdf" id="resume">Resume</a>
-      <a href="https://example.com" id="contact">Contact</a>
-    </div>
-
     <div
       class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom"
     >
@@ -150,13 +144,8 @@
 a blog post</a>
 <ul>
 <li><a href="#subtitle-1" id="toc-subtitle-1">Subtitle 1</a></li>
-<li><a href="#subtitle-2" id="toc-subtitle-2">Subtitle 2</a>
-<ul>
-<li><a href="#subsubtitle" id="toc-subsubtitle">Subsubtitle</a></li>
+<li><a href="#subtitle-2" id="toc-subtitle-2">Subtitle 2</a></li>
 </ul></li>
-</ul></li>
-<li><a href="#major-title-2" id="toc-major-title-2">Major title
-2</a></li>
 </ul> 
             </div>
           </div>
@@ -174,6 +163,15 @@ class="math display"><em>e</em><sup><em>π</em><em>i</em></sup> + 1 = 0<
 <p><span class="math display">$$\left( \sum_{k=1}^n a_k b_k \right)^2
 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2
 \right)$$</span></p>
+<p>Dorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur
+adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+magna aliqua.</p>
 <h2 id="subtitle-2">Subtitle 2</h2>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
@@ -181,31 +179,46 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a hr
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_df(file_path: Path) <span class="op">-&gt;</span> pl.DataFrame:</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> pl.from_csv(file_path, separator<span class="op">=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span></code></pre></div>
-<h3 id="subsubtitle">Subsubtitle</h3>
-<p>Here's a photo of me: <img src="../img/profile.jpeg"
-alt="Profile pic of me in 2021" /></p>
-<h1 id="major-title-2">Major title 2</h1>
-<p>LINUX!</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span> @criterion <span class="kw">as</span> [<span class="dt">int</span>] <span class="op">=</span> <span class="dv">2</span>;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">with</span> tmp (<span class="kw">id</span>, sort_order) <span class="kw">as</span> (</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">select</span> <span class="kw">id</span>, <span class="fu">row_number</span> <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> <span class="fu">group_id</span> <span class="kw">order</span> <span class="kw">by</span> tran_date)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">from</span> trx</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> tran_date <span class="kw">between</span> dateadd(<span class="dt">month</span>, <span class="op">-</span><span class="dv">2</span>, getdate()) <span class="kw">and</span> getdate()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> t1.<span class="kw">id</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> table1 <span class="kw">as</span> t1</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">inner</span> <span class="kw">join</span> tmp <span class="kw">on</span> tmp.<span class="kw">id</span> <span class="op">=</span> t1.<span class="kw">id</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> tmp.sort_order <span class="op">=</span> @criterion</span></code></pre></div>
         </div>
       </div>
       <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
     </div>
-  </body>
-  <footer class="page-footer">
-    <div class="container">
-      This work is marked
-      <a href="https://creativecommons.org/publicdomain/zero/1.0/"
-        >CC0 1.0 Universal</a
-      ><img
-        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
-        alt=""
-        style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
-      /><img
-        src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
-        alt=""
-        style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
-      />
-      <!-- <p>© {{ current_year }} {{ name }}. All rights reserved.</p> -->
+
+    <div id="mySidenav">
+      <a href="../index.html" id="home">Home</a>
+      <a href="../posts" id="blog">Blog</a>
+      <a href="../resume.pdf" id="resume">Resume</a>
+      <a href="https://example.com" id="contact">Contact</a>
     </div>
-  </footer>
+
+    <footer class="page-footer">
+      <div class="container">
+        This work is marked
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
+          >CC0 1.0 Universal</a
+        ><img
+          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        /><img
+          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        />
+        <!-- <p>© {{ current_year }} {{ name }}. All rights reserved.</p> -->
+      </div>
+    </footer>
+  </body>
 </html>
