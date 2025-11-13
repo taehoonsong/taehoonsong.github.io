@@ -12,6 +12,7 @@ header {
 
 .header-info {
   margin-top: 0.5rem;
+  font-size: 2.5rem;
 }
 
 .header-label {
@@ -19,6 +20,11 @@ header {
   color: #444;
   margin-top: 0.2rem;
   margin-bottom: 0.8rem;
+}
+
+.header-summary {
+  margin: 2.44rem 0;
+  font-size: 1.2rem;
 }
 
 .container {
@@ -46,11 +52,11 @@ h6 {
   margin: 0;
   font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
 }
 
@@ -82,3 +88,50 @@ h6 {
 p {
   margin: 0.3rem 0;
 }
+
+body {
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+#mySidenav a {
+  transition: 0.1s;
+  position: fixed;
+  right: -132px;
+  width: 140px;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 16px;
+  color: white;
+  border-radius: 5px 0 0 5px; /* top-left, top-right bottom-right, bottom-left */
+  --link-color: white;
+  --link-color-hover: white;
+}
+
+#mySidenav a:hover {
+  right: 0;
+}
+
+#home {
+  top: 10px;
+  background-color: #7da651;
+}
+
+#blog {
+  top: 70px;
+  background-color: #e9a94a;
+}
+
+#resume {
+  top: 130px;
+  background-color: #6391f3;
+}
+
+#contact {
+  top: 190px;
+  background-color: #a276f3;
+}
+
