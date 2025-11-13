@@ -9,6 +9,7 @@ dependencies = [
     "markdown>=3.9",
     "markupsafe>=3.0.3",
     "pypandoc>=1.16",
+    "python-frontmatter>=1.1.0",
     "python-slugify>=8.0.4",
     "pyyaml>=6.0.3",
 ]
