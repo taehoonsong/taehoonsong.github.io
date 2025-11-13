@@ -1,6 +1,7 @@
 ---
 title: Test blog
-date: November 9, 2025
+date: 2025-11-09
+summary: We're testing out some math rendering here!
 ---
 
 # This is a blog post
