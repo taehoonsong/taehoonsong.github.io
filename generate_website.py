@@ -14,6 +14,8 @@ SRC_PATH = Path("content")
 OUTPUT_PATH = Path("pages")
 TEMPLATE_PATH = Path("templates")
 STATIC_DIR = Path("static")
+PET_DIR = STATIC_DIR / "img" / "pets"
+PET_DIR.mkdir(exist_ok=True, parents=True)
 
 
 class SocialMediaLink(TypedDict):
@@ -32,6 +34,14 @@ class BlogPost(TypedDict):
 
 class BlogPostIndex(TypedDict):
     posts: list[BlogPost]
+
+
+class PetImage(TypedDict):
+    img_path: str
+
+
+class PetGallery(TypedDict):
+    pet_images: list[PetImage]
 
 
 def clean_output_path() -> None:
@@ -60,6 +70,12 @@ def get_blog_post_data() -> BlogPostIndex:
     post_list.sort(key=lambda x: x.get("date"), reverse=True)
 
     return {"posts": post_list}
+
+
+def get_pet_data() -> PetGallery:
+    return {
+        "pet_images": [{"img_path": str(path).replace("static", "")} for path in PET_DIR.iterdir()],
+    }
 
 
 def get_portfolio_data() -> dict:
@@ -100,26 +116,6 @@ def render_template(template_name: str, export_path: Path, env: Environment, dat
         f.write(content)
 
 
-def render_resume(loader: FileSystemLoader, data: dict) -> None:
-    env = Environment(
-        loader=loader,
-        block_start_string="<BLOCK>",
-        block_end_string="</BLOCK>",
-        variable_start_string="<VAR>",
-        variable_end_string="</VAR>",
-        trim_blocks=True,
-        autoescape=select_autoescape(),
-    )
-
-    file_name = "resume.tex"
-    jinja_temp = env.get_template(file_name)
-
-    export_path = OUTPUT_PATH / file_name
-    tex = jinja_temp.render(**data)
-    with export_path.open("w", encoding="utf-8") as f:
-        f.write(tex)
-
-
 def render_posts() -> None:
     t = TEMPLATE_PATH / "post.html"
     out_path = OUTPUT_PATH / "posts"
@@ -154,8 +150,9 @@ def main() -> None:
         "strftime": dt.datetime.strftime,
         "to_date": dt.datetime.fromisoformat,
     }
+    pet_data = get_pet_data()
 
-    data = portfolio_data | blog_data | time_data
+    data = portfolio_data | blog_data | time_data | pet_data
 
     # Render landing page
     index_env = Environment(loader=loader, autoescape=select_autoescape())
@@ -163,6 +160,9 @@ def main() -> None:
 
     # Render index of blog posts
     render_template("post_index.html", OUTPUT_PATH / "posts" / "index.html", index_env, data)
+
+    # Render pet gallery
+    render_template("pets.html", OUTPUT_PATH / "pets.html", index_env, data)
 
     # Render tex that will be converted to PDF later by pdflatex
     resume_env = Environment(
