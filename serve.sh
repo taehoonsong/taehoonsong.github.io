@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-uv run generate_website.py
+./build.sh all
 
 cd pages
 
