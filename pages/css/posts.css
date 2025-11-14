@@ -23,8 +23,8 @@ header {
 }
 
 .header-summary {
-  margin: 2.44rem 0;
-  font-size: 1.2rem;
+  margin: 2rem 0;
+  font-size: 1.1rem;
 }
 
 .container {
@@ -91,6 +91,7 @@ p {
 
 body {
   font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.2rem;
   font-weight: 400;
   display: grid;
   grid-template-rows: auto 1fr auto;

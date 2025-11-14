@@ -1,0 +1,447 @@
+<!doctype html>
+<html  dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Basics of Bayesian Inference</title>
+
+        <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css"
+    />
+    
+    <!-- Icons -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+    <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+    <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
+    ></script>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css"
+    />
+    <link rel="stylesheet" href="/css/posts.css" />
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script src="uikit.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+    <!-- <script src="scripts.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+    <meta name="generator" content="pandoc-uikit" />
+         <meta name="date" content="2021-06-20" />
+        <title>Basics of Bayesian Inference</title>
+    <style type="text/css">
+      code {
+        white-space: pre;
+      }
+    </style>
+         <style type="text/css">
+      html { -webkit-text-size-adjust: 100%; }
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          color: #aaaaaa;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+      code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+      code span.at { color: #7d9029; } /* Attribute */
+      code span.bn { color: #40a070; } /* BaseN */
+      code span.bu { color: #008000; } /* BuiltIn */
+      code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #4070a0; } /* Char */
+      code span.cn { color: #880000; } /* Constant */
+      code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+      code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+      code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+      code span.dt { color: #902000; } /* DataType */
+      code span.dv { color: #40a070; } /* DecVal */
+      code span.er { color: #ff0000; font-weight: bold; } /* Error */
+      code span.ex { } /* Extension */
+      code span.fl { color: #40a070; } /* Float */
+      code span.fu { color: #06287e; } /* Function */
+      code span.im { color: #008000; font-weight: bold; } /* Import */
+      code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+      code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+      code span.op { color: #666666; } /* Operator */
+      code span.ot { color: #007020; } /* Other */
+      code span.pp { color: #bc7a00; } /* Preprocessor */
+      code span.sc { color: #4070a0; } /* SpecialChar */
+      code span.ss { color: #bb6688; } /* SpecialString */
+      code span.st { color: #4070a0; } /* String */
+      code span.va { color: #19177c; } /* Variable */
+      code span.vs { color: #4070a0; } /* VerbatimString */
+      code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+       
+  </head>
+
+  <body>
+        <header class="page-header">
+      <div class="container">
+        <div class="header-top flex-responsive">
+          <h1 class="header-info">Basics of Bayesian Inference</h1>
+          <br />
+                    <h2 class="header-label">2021-06-20</h2>
+                     <p class="header-summary">Bayesian statistics is
+heavily used in decision theory and data science; however, many
+statistics programs at most universities do not require any Bayesian
+statistics courses to be taught throughout the entire program. I’m
+hoping this post will persuade you why it’s so useful in decision
+theory.</p>
+                  </div>
+      </div>
+    </header>
+    
+    <div
+      class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom"
+    >
+      <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-4">
+          <div
+            class="uk-overflow-container"
+            data-uk-sticky="{top:25,media: 768}"
+          >
+            <div class="uk-panel uk-panel-box menu-begin">
+               <ul>
+<li><a href="#defining-probability"
+id="toc-defining-probability">Defining probability</a></li>
+<li><a href="#bayes-theorem" id="toc-bayes-theorem">Bayes'
+Theorem</a></li>
+<li><a href="#power-of-bayesian-statistics"
+id="toc-power-of-bayesian-statistics">Power of Bayesian
+Statistics</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+</ul> 
+            </div>
+          </div>
+        </div>
+
+        <div class="uk-width-medium-3-4">
+           <h1 id="defining-probability">Defining probability</h1>
+<p>Bayesians and frequentists (traditional statisticians) have a
+fundamental difference in philosophy. They disagree on what the word
+"probability" means. In simple terms, frequentists define probability as
+the relative frequency (hence the name) of a desired event of a random
+process. Let's say we want to know the probability of a coin landing
+heads up from a coin flip. Assuming the coin is fair, we can expect to
+see heads roughly half the time if we keep flipping the same coin. In a
+strictly frequentist point of view, you would say that if you were to
+flip this coin an <em>infinite</em> number of times, the relative
+frequency of heads will approach one half; so, the
+<strong>probability</strong> of getting heads from a fair coin is <span
+class="math inline"><sup>1</sup>/<sub>2</sub></span>. Note that the
+probability is assigned to the long-term process, not the individual
+event. This distinction comes into play when we look at hypothesis
+testing and confidence intervals later. <br/> <br/> While this approach
+makes sense for actions or processes that are repeatable, like a coin
+flip or a dice roll, most events in the world are not repeatable. Yet,
+we would like to assign some level of likelihood - whether based on
+facts, expert knowledge, or gut feeling - that some event may happen.
+There is no way of assigning probability to these types of events using
+strictly frequentist statistics. This is where Bayesians come in.
+Bayesians claim that probability represents our <em>degree of
+belief</em> of some event happening. We actually do this in everyday
+language. If someone asks you, "what's the likelihood that you're going
+to exercise tomorrow?" You can give an educated guess (or your degree of
+belief) on the likelihood, even if you've never been asked this question
+before. <br/> <br/> This subjectivity in defining probability is why
+most frequentists are uncomfortable with Bayesian statistics. Well, I
+would argue that frequentist statistics also has subjectivity. It's just
+pushed to a different part of the decision making process. Anyone who
+has taken introductory statistics courses would have heard of the
+<em>p</em>-value. In frequentist statistics, the <em>p</em>-value
+doesn't represent the probability that your hypothesis is true. It
+represents the probability of selecting a sample that is as extreme or
+more extreme than the one you selected. Let's say your hypothesis is
+that the average weight of everyone in your postal code is 150 pounds.
+If you sample 100 people and the average weight of those 100 people came
+out to 180 pounds, there are two possibilities: (1) your hypothesis is
+wrong and your sample reflects that fact or (2) your hypothesis is
+correct but your sample is not representative or just happened to have
+selected heavier individuals by random chance! You would never know what
+the truth is without actually weighing everyone in your postal code. So,
+in practice, statisticians use 0.05 as a cutoff for whether there is
+"statistically significant" evidence. There's nothing special about
+0.05, of course. You could use 0.01, 0.6, 0.0003, or whatever suits your
+fancy. This is where the subjectivity in frequentist statistics lies. In
+contrast, Bayesian statistics would be able to tell you the probability
+of your hypothesis being true. Both frequentist statistics and Bayesian
+statistics have some level of subjectivity and that's ok. <br/>
+<br/></p>
+<h1 id="bayes-theorem">Bayes' Theorem</h1>
+<p>Bayesian statistics is baed on (surprise, surprise) Bayes' theorem,
+named after Reverend Thomas Bayes. Bayes' theorem gives the probability
+of an event given some other prior knowledge. Let's say <span
+class="math inline"><em>A</em></span> represents the event that you
+rolled a 6 from a fair, six-sided die in a single try and <span
+class="math inline"><em>B</em></span> represents the event that the sum
+of two dice rolls is at least 10. Let's try to find the probability for
+each event. It's obvious that <span
+class="math inline"><em>P</em>(<em>A</em>) = <sup>1</sup>/<sub>6</sub></span>
+given the facts. What about <span
+class="math inline"><em>P</em>(<em>B</em>)</span>? You can have the
+first die roll a 4 and the second die roll a 6, or vice versa. You can
+also have both roll 5s. Similarly, you can have (5,6), (6,5), or (6,6),
+which all sum to at least 10. There are a total of 36 different ways to
+roll two dice (6 for each die). Therefore, <span
+class="math inline"><em>P</em>(<em>B</em>) = <sup>6</sup>/<sub>36</sub> = <sup>1</sup>/<sub>6</sub></span>.
+All possible combinations that meet both criteria are: (4,6), (6,4),
+(5,5), (5,6), (6,5), (6,6) <br/> <br/> Now, what if the first die turns
+out to be a 6 (event <span class="math inline"><em>A</em></span>) and
+you want to know the probability of the two rolls summing to at least 10
+(event <span class="math inline"><em>B</em></span>)? You already rolled
+a 6, so you have to roll at least a 4 for the second die. The
+probability of rolling a 4, a 5, or a 6 is <span
+class="math inline"><sup>3</sup>/<sub>6</sub> = <sup>1</sup>/<sub>2</sub></span>.
+This is the conditional probability of event <span
+class="math inline"><em>B</em></span> given event <span
+class="math inline"><em>A</em></span>. Using Bayes' Theorem:</p>
+<p><span class="math display">$$P(B|A) = \frac{P(A|B) \cdot P(B)}{P(A)}
+= \frac{\frac{3}{6}\cdot\frac{1}{6}}{\frac{1}{6}} =
+\frac{1}{2}$$</span></p>
+<p>I obtained <span
+class="math inline"><em>P</em>(<em>A</em>|<em>B</em>)</span> (read
+probability of A given B) by counting the number of events in which the
+first die is 6 in the list above. While this trivial example doesn't
+seem like it's <em>that</em> useful, it serves as the foundation to the
+entire field of Bayesian statistics beacuse it allows statisticians to
+calculate probabilities that are extremely difficult to measure in some
+cases. For instance, imagine you have a medical test that is 95%
+accurate and 90% specific. This means that if you are actually sick, the
+test can correctly identify that with 95% probability and if you are
+healthy, it can correctly identify that you are not sick with 90%
+probability. However, when doctors look at the exam result, they can
+only see that the test came back positive or negative. Now, given that
+the test came back positive, what's the probability that you are sick?
+If we assume that the probability of being sick is 1% based on your age,
+sex, etc.,</p>
+<p><span class="math display">$$\begin{aligned}
+P(Sick | Positive) &amp;= \frac{P(Positive | Sick) \cdot
+P(Sick)}{P(Positive)}\\
+&amp;=\frac{P(Positive | Sick) \cdot P(Sick)}{P(Positive | Sick) \cdot
+P(Sick) + P(Positive | Healthy) \cdot P(Healthy)}\\
+&amp;=\frac{0.95\times0.01}{0.95\times0.01 + (1-0.1)\times(1-0.01)}\\
+&amp;\approx 0.088
+\end{aligned}$$</span></p>
+<p>Even with a 95% accurate test, we see that the probability of
+actually being sick is just shy of 9% when we see a positive test
+result. If the probability of being sick is 0.1% in your age group, then
+the probability that you are sick is less than 1% even if you get a
+positive test result. This should make intuitive sense. If you’re young
+and healthy, it’s probably more likely that the test returned a false
+positive. <br/> <br/></p>
+<h1 id="power-of-bayesian-statistics">Power of Bayesian Statistics</h1>
+<p>The above example is cool and all, but we still assumed that we knew
+the probability of being sick in your cohort, which is backed by data
+(or relative frequency of patients in your cohort). This may not seem
+too different from frequentist statistics. Well, it gets interesting
+when you don’t have any data yet or have very little data. <br/> <br/>
+Let’s say you developed a new survey and believe it will have a higher
+response rate than the existing survey. A frequentist approach is to
+send out the new survey to a sample of people and compare it to
+historical response rates of the existing survey, or conduct A/B testing
+by using the existing survey to some people and the new survey to others
+and compare response rates. Either way, frequentists will conduct a
+hypothesis test to see if the response rate of the new survey is
+statistically significantly different from the existing survey. They can
+also create a confidence interval for the response rate, which
+represents the probability of selecting a sample that captures the true
+response rate. Remember that the confidence interval doesn’t tell you
+the probability of capturing the true parameter value (check out my <a
+href="./confidence-intervals.html">other post</a> if you’re shaky on
+confidence intervals). So, if the 95% confidence interval is <span
+class="math inline">(0.2, 0.4)</span>, it doesn’t mean that there is a
+95% chance that the true response rate is between 0.2 and 0.4. In
+frequentist statistics, the true response rate (or parameter) is a fixed
+value and not random, meaning you cannot assign probability to the
+parameter value. This comes from the fact that frequentists see
+probability as a relative frequency of an event of interest in a
+long-term random process. <br/> <br/> In Bayesian statistics, however,
+probability represents a degree of belief, so it’s not against the rules
+to assign probabilities to parameters. A 95% Bayesian confidence
+interval (more commonly known as “credible intervals”) of <span
+class="math inline">(0.2, 0.4)</span> would exactly mean what we
+intuitively think: the true response rate of the new survey is within
+the interval <span class="math inline">(0.2, 0.4)</span> with 95%
+probability. To expand on the survey example, let’s say you consult an
+expert (or make an educated guess) that the response rate follows a
+<span
+class="math inline"><em>B</em><em>e</em><em>t</em><em>a</em>(1, 3)</span>
+distribution, which looks like the following:</p>
+<p><img src="/img/bayesian-inference-prior.png"
+title="Prior distribution" alt="bayesian-inference-prior" /></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assumptions</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>alpha0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pi.vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">by=</span><span class="fl">0.01</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>prior <span class="ot">&lt;-</span> <span class="fu">dbeta</span>(pi.vals,alpha0,beta0)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution Plot</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pi.vals,prior,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">main=</span><span class="st">&quot;Distribution of p&quot;</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Probability (p)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Probability Density&quot;</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">7</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% Credible Interval</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">&quot;The 95% credible interval is: (&quot;</span>,<span class="fu">round</span>(<span class="fu">qbeta</span>(<span class="fl">0.025</span>,alpha0,beta0),<span class="dv">2</span>),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>       <span class="st">&quot;, &quot;</span>,<span class="fu">round</span>(<span class="fu">qbeta</span>(<span class="fl">0.975</span>,alpha0,beta0),<span class="dv">2</span>),<span class="st">&quot;)&quot;</span>)</span></code></pre></div>
+<p>Your 95% credible interval for the response rate is <span
+class="math inline">(0.01, 0.71)</span>, which means that the true
+response rate is within 0.01 and 0.71 with 95% probability. And we were
+able to calculate this even without even trying out the new survey! You
+may notice that the interval is very wide and pretty much useless at
+this point. So let’s gather some data to improve our estimate. You give
+out 50 surveys and 22 people respond (44% response rate). Let’s see what
+happened to our distribution and credible interval.</p>
+<p><img src="/img/bayesian-inference-post.png"
+title="Posterior distribution after one sample"
+alt="bayesian-inference-post" /></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>alpha1 <span class="ot">&lt;-</span> alpha0 <span class="sc">+</span> <span class="dv">22</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> <span class="dv">50</span> <span class="sc">-</span> <span class="dv">22</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">dbeta</span>(pi.vals,alpha1,beta1)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution Plot</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pi.vals,prior,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">main=</span><span class="st">&quot;Distribution of p&quot;</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Response RAte (p)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Probability Density&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">7</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(pi.vals,post,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fl">0.6</span>,<span class="dv">7</span>,<span class="fu">c</span>(<span class="st">&quot;Prior&quot;</span>,<span class="st">&quot;Posterior&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% Credible Interval</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">&quot;The 95% credible interval is: (&quot;</span>,<span class="fu">round</span>(<span class="fu">qbeta</span>(<span class="fl">0.025</span>,alpha1,beta1),<span class="dv">2</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>       <span class="st">&quot;, &quot;</span>,<span class="fu">round</span>(<span class="fu">qbeta</span>(<span class="fl">0.975</span>,alpha1,beta1),<span class="dv">2</span>),<span class="st">&quot;)&quot;</span>)</span></code></pre></div>
+<p>Don’t worry about exactly how the math works out right now. What’s
+important is that the distribution of the response rate is much narrower
+now. The 95% credible interval is <span
+class="math inline">(0.3, 0.56)</span>. Since our sample showed a 44%
+response rate, it makes sense that the credible interval focused around
+that value. <br/> <br/> You can go out and gather more data and improve
+your precision. If you surveyed an additional 50 people and this time
+only 13 people responded (26% response rate), the distribution will
+shift to reflect this fact. The green line below is centered around 0.3,
+because it’s considering the information from our prior belief and our
+two samples.</p>
+<p><img src="/img/bayesian-inference-post-2.png"
+title="Posterior distribution after two samples"
+alt="bayesian-inference-post-2" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect more data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>alpha2 <span class="ot">&lt;-</span> alpha1 <span class="sc">+</span> <span class="dv">15</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>beta2 <span class="ot">&lt;-</span> beta1 <span class="sc">+</span> <span class="dv">50</span> <span class="sc">-</span> <span class="dv">15</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>post2 <span class="ot">&lt;-</span> <span class="fu">dbeta</span>(pi.vals,alpha2,beta2)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution plot</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plotdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">pi=</span>pi.vals, <span class="at">prior=</span>prior, <span class="at">post1=</span>post, <span class="at">post2=</span>post2) <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(prior,post1,post2))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>plotdata, <span class="fu">aes</span>(<span class="at">x=</span>pi)) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>value,<span class="at">color=</span>name)) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Distribution of Response Rate&quot;</span>, <span class="at">x=</span><span class="st">&quot;Response Rate&quot;</span>, <span class="at">y=</span><span class="st">&quot;Probability Density&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>), <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name=</span><span class="st">&quot;&quot;</span>,<span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;After 1 sample&quot;</span>,<span class="st">&quot;After 2 samples&quot;</span>, <span class="st">&quot;Prior&quot;</span>))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% Credible Interval</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">&quot;The 95% credible interval is: (&quot;</span>,<span class="fu">round</span>(<span class="fu">qbeta</span>(<span class="fl">0.025</span>,alpha2,beta2),<span class="dv">2</span>),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>       <span class="st">&quot;, &quot;</span>,<span class="fu">round</span>(<span class="fu">qbeta</span>(<span class="fl">0.975</span>,alpha2,beta2),<span class="dv">2</span>),<span class="st">&quot;)&quot;</span>)</span></code></pre></div>
+<p>Not only did the distribution shift left to reflect the new data,
+which had a lower response rate than the first sample, but it also
+became narrower than the distribution from a single sample. Our 95%
+credible interval is now <span class="math inline">(0.28, 0.46)</span>.
+So, the width of our credible interval started at 0.7 when we only had
+an educated guess, narrowed to 0.26 with the first sample, and further
+narrowed to 0.18 with the second sample. You can keep gathering more
+data until you hit a desired level of precision. <br/> <br/></p>
+<h1 id="conclusion">Conclusion</h1>
+<p>I hope this post gives enough information to appreciate the power of
+Bayesian statistics and why it’s becoming more prevalent. Bayesian
+inference gives a more intuitive interpretation of results compared to
+frequentist methods, in my opinion. This is most obvious when looking at
+confidence intervals or hypothesis tests. Decision makers who are not
+well-versed in statistics will be confused by the implication of the
+level of confidence or the <em>p</em>-value. Bayesian inference gives a
+much more intuitive result that states the probability of something
+being true. Often times, this is the information that decision makers
+care about. <br/> <br/> Bayesian models are also more flexible when
+dealing with multiple layers of uncertainty. For example, imagine that
+the response rate from our example above is required for another model.
+Frequentist models will have to assume that the response rate is a fixed
+value, which can underestimate the uncertainty associated with the
+result. On the other hand, Bayesian models can be hierarchical and
+propagate the uncertainty of not knowing the true response rate through
+multiple layers and reflect that uncertainty in the outcome. <br/> <br/>
+I’m a little disappointed that most statistics programs rarely teach
+Bayesian statistics, as it is such a powerful tool. Both frequentist and
+Bayesian statistics have their place. Frequentist methods are much more
+straightforward to implement and can be powerful when the data comes
+from designed experiments where sources of uncertainty are
+well-controlled. Bayesian methods are capable of dealing with multiple
+sources of uncertainty and give intuitive interpretations of results for
+non-statisticians. I strongly encourage aspiring statisticians and data
+scientists to familiarize themselves with Bayesian statistics.</p>
+        </div>
+      </div>
+      <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+    </div>
+
+    <div id="mySidenav">
+      <a href="/index.html" id="home">Home</a>
+      <a href="/posts/index.html" id="blog">Blog</a>
+      <a href="/resume.pdf" id="resume">Resume</a>
+      <a href="/pets.html" id="pets">Pets</a>
+    </div>
+
+    <footer class="page-footer">
+      <div class="container">
+        This work is marked
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
+          >CC0 1.0 Universal</a
+        ><img
+          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        /><img
+          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        />
+    </footer>
+  </body>
+</html>
