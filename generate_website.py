@@ -118,15 +118,20 @@ def render_template(template_name: str, export_path: Path, env: Environment, dat
 
 def render_posts() -> None:
     t = TEMPLATE_PATH / "post.html"
+    lua_filters = [f"{TEMPLATE_PATH}/{lf.name}" for lf in TEMPLATE_PATH.glob("*.lua")]
     out_path = OUTPUT_PATH / "posts"
     out_path.mkdir(exist_ok=True)
+
+    # Copy figures needed for posts
+    shutil.copytree(SRC_PATH / "figures", out_path / "figures")
 
     [
         pypandoc.convert_file(
             source_file=file,
             to="html5",
             format="gfm",
-            extra_args=(f"--template={t!s}", "--toc"),
+            filters=lua_filters,
+            extra_args=(f"--template={t}", "--toc"),
             outputfile=out_path / f"{get_blog_metadata(file).get('file_path')}",
         )
         for file in SRC_PATH.iterdir()

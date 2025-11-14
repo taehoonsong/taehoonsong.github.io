@@ -41,12 +41,12 @@ Even with a 95% accurate test, we see that the probability of actually being sic
 The above example is cool and all, but we still assumed that we knew the probability of being sick in your cohort, which is backed by data (or relative frequency of patients in your cohort). This may not seem too different from frequentist statistics. Well, it gets interesting when you don’t have any data yet or have very little data.
 <br/>
 <br/>
-Let’s say you developed a new survey and believe it will have a higher response rate than the existing survey. A frequentist approach is to send out the new survey to a sample of people and compare it to historical response rates of the existing survey, or conduct A/B testing by using the existing survey to some people and the new survey to others and compare response rates. Either way, frequentists will conduct a hypothesis test to see if the response rate of the new survey is statistically significantly different from the existing survey. They can also create a confidence interval for the response rate, which represents the probability of selecting a sample that captures the true response rate. Remember that the confidence interval doesn’t tell you the probability of capturing the true parameter value (check out my [other post](./confidence-intervals.html) if you’re shaky on confidence intervals). So, if the 95% confidence interval is $(0.2, 0.4)$, it doesn’t mean that there is a 95% chance that the true response rate is between 0.2 and 0.4. In frequentist statistics, the true response rate (or parameter) is a fixed value and not random, meaning you cannot assign probability to the parameter value. This comes from the fact that frequentists see probability as a relative frequency of an event of interest in a long-term random process.
+Let’s say you developed a new survey and believe it will have a higher response rate than the existing survey. A frequentist approach is to send out the new survey to a sample of people and compare it to historical response rates of the existing survey, or conduct A/B testing by using the existing survey to some people and the new survey to others and compare response rates. Either way, frequentists will conduct a hypothesis test to see if the response rate of the new survey is statistically significantly different from the existing survey. They can also create a confidence interval for the response rate, which represents the probability of selecting a sample that captures the true response rate. Remember that the confidence interval doesn’t tell you the probability of capturing the true parameter value (check out my [other post](confidence-intervals.md) if you’re shaky on confidence intervals). So, if the 95% confidence interval is $(0.2, 0.4)$, it doesn’t mean that there is a 95% chance that the true response rate is between 0.2 and 0.4. In frequentist statistics, the true response rate (or parameter) is a fixed value and not random, meaning you cannot assign probability to the parameter value. This comes from the fact that frequentists see probability as a relative frequency of an event of interest in a long-term random process.
 <br/>
 <br/>
 In Bayesian statistics, however, probability represents a degree of belief, so it’s not against the rules to assign probabilities to parameters. A 95% Bayesian confidence interval (more commonly known as “credible intervals”) of $(0.2, 0.4)$ would exactly mean what we intuitively think: the true response rate of the new survey is within the interval $(0.2, 0.4)$ with 95% probability. To expand on the survey example, let’s say you consult an expert (or make an educated guess) that the response rate follows a $Beta(1,3)$ distribution, which looks like the following:
 
-![bayesian-inference-prior](/img/bayesian-inference-prior.png "Prior distribution")
+![bayesian-inference-prior](figures/bayesian-inference-prior.png "Prior distribution")
 
 ```r
 # Assumptions
@@ -67,7 +67,7 @@ paste0("The 95% credible interval is: (",round(qbeta(0.025,alpha0,beta0),2),
 
 Your 95% credible interval for the response rate is $(0.01, 0.71)$, which means that the true response rate is within 0.01 and 0.71 with 95% probability. And we were able to calculate this even without even trying out the new survey! You may notice that the interval is very wide and pretty much useless at this point. So let’s gather some data to improve our estimate. You give out 50 surveys and 22 people respond (44% response rate). Let’s see what happened to our distribution and credible interval.
 
-![bayesian-inference-post](/img/bayesian-inference-post.png "Posterior distribution after one sample")
+![bayesian-inference-post](figures/bayesian-inference-post.png "Posterior distribution after one sample")
 
 ```r
 # Collect data
@@ -92,7 +92,7 @@ Don’t worry about exactly how the math works out right now. What’s important
 <br/>
 You can go out and gather more data and improve your precision. If you surveyed an additional 50 people and this time only 13 people responded (26% response rate), the distribution will shift to reflect this fact. The green line below is centered around 0.3, because it’s considering the information from our prior belief and our two samples.
 
-![bayesian-inference-post-2](/img/bayesian-inference-post-2.png "Posterior distribution after two samples")
+![bayesian-inference-post-2](figures/bayesian-inference-post-2.png "Posterior distribution after two samples")
 
 ```r
 # Collect more data
