@@ -99,10 +99,13 @@
     <div class="container">
       <main>
         <section>
-          {% for post in posts %} {% set currentyear = strftime(post.date, "%Y")
-          %} {% if currentyear != prevyear %}
-          <h2 class="section-heading">{{ currentyear }}</h2>
-          {% set prevyear = currentyear %} {% endif %}
+          {% set ns = namespace(thisyear=now.year) %}
+          {% for post in posts %} 
+          {% set postyear = post.date.year %}
+          {% if ns.thisyear != postyear %}
+            <h2 class="section-heading">{{ postyear }}</h2>
+            {% set ns.thisyear = postyear %}
+          {% endif %}
           <ul>
             <li>
               <a href="{{ post.file_path }}"
@@ -136,7 +139,7 @@
           alt=""
           style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
         />
-        <!-- <p>© {{ current_year }} {{ name }}. All rights reserved.</p> -->
+        <!-- <p>© {{ now.year }} {{ name }}. All rights reserved.</p> -->
       </div>
     </footer>
   </body>
