@@ -99,9 +99,11 @@
             class="uk-overflow-container"
             data-uk-sticky="{top:25,media: 768}"
           >
+            $if(toc)$
             <div class="uk-panel uk-panel-box menu-begin">
-              $if(toc)$ $toc$ $endif$
+              $toc$
             </div>
+            $endif$
           </div>
         </div>
 
