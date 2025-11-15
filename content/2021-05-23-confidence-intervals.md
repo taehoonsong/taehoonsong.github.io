@@ -15,7 +15,7 @@ Similar to the Central Limit Theorem, there are common misconceptions on how to 
 > 
 > [Investopedia: Confidence Interval](https://www.investopedia.com/terms/c/confidenceinterval.asp) (Accessed on 2021-05-22)
 
-I just claimed this is false. What is the *correct* way to interpret a confidence interval then? I'm going to make use of the Central Limit Theorem, so if you're not familiar, check out my [previous post](./central-limit-theorem.md)
+I just claimed this is false. What is the *correct* way to interpret a confidence interval then? I'm going to make use of the Central Limit Theorem, so if you're not familiar, check out my [previous post](./2021-05-17-central-limit-theorem.md)
 
 # What is a confidence interval?
 There is a reason why this interval is called the confidence interval and not something else, like a probability interval. In essence, a confidence interval is meant to portray some level of uncertainty. We do this in every day life as well. When someone asks you, “what do you think is the average salary in your company?” You can make an educated guess but you’re not sure (unless you actually know everyone’s salary). So, you would probably say something like “I think it’s about x dollars, give or take a few thousand.” A confidence interval is a statistically rigorous way of saying “give or take”. 
