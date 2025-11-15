@@ -8,17 +8,17 @@ gen_html(){
 
 gen_pdf(){
 
-    if [ ! -f "./pages/resume.tex" ]; then 
+    if [ ! -f "./pages/resume.tex" ]; then
         echo resume.tex missing... try running 'build.sh html'
         exit 0
     fi
 
     # Convert resume.tex to pdf using pdflatex
-    pdflatex --output-directory=pages ./pages/resume.tex
+    pdflatex --output-directory=pages ./pages/resume.tex 1> /dev/null
 
     # clean up
     cd pages
-    latexmk -c
+    latexmk -c 1> /dev/null
 }
 
 main(){
