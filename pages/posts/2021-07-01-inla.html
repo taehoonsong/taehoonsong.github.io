@@ -1,0 +1,691 @@
+<!doctype html>
+<html  dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Faster Bayesian Inference with INLA</title>
+
+        <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css"
+    />
+    
+    <!-- Icons -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+    <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+    <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
+    ></script>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css"
+    />
+    <link rel="stylesheet" href="/css/posts.css" />
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script src="uikit.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+    <!-- <script src="scripts.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+    <meta name="generator" content="pandoc-uikit" />
+         <meta name="date" content="2021-07-01" />
+        <title>Faster Bayesian Inference with INLA</title>
+    <style type="text/css">
+      code {
+        white-space: pre;
+      }
+    </style>
+        
+  </head>
+
+  <body>
+        <header class="page-header">
+      <div class="container">
+        <div class="header-top flex-responsive">
+          <h1 class="header-info">Faster Bayesian Inference with
+INLA</h1>
+          <br />
+                    <h2 class="header-label">2021-07-01</h2>
+                     <p class="header-summary">Bayesian inference is
+powerful, but can be slow even with modern hardware. Integrated nested
+Laplace approximation (INLA) is a relatively new method that aims to
+solve this problem.</p>
+                  </div>
+      </div>
+    </header>
+    
+    <div
+      class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom"
+    >
+      <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-4">
+          <div
+            class="uk-overflow-container"
+            data-uk-sticky="{top:25,media: 768}"
+          >
+                        <div class="uk-panel uk-panel-box menu-begin">
+              <ul>
+              <li><a href="#introduction"
+              id="toc-introduction">Introduction</a></li>
+              <li><a href="#statistical-methods"
+              id="toc-statistical-methods">Statistical Methods</a>
+              <ul>
+              <li><a href="#markov-chain-monte-carlo-mcmc"
+              id="toc-markov-chain-monte-carlo-mcmc">Markov chain Monte
+              Carlo (MCMC)</a></li>
+              <li><a
+              href="#integrated-nested-laplace-approximation-inla"
+              id="toc-integrated-nested-laplace-approximation-inla">Integrated
+              nested Laplace approximation (INLA)</a></li>
+              </ul></li>
+              <li><a href="#results" id="toc-results">Results</a>
+              <ul>
+              <li><a href="#run-times-seconds"
+              id="toc-run-times-seconds">Run times (seconds)</a></li>
+              <li><a href="#mean-squared-error-mse"
+              id="toc-mean-squared-error-mse">Mean Squared Error
+              (MSE)</a></li>
+              <li><a href="#mean-squared-prediction-error-mspe"
+              id="toc-mean-squared-prediction-error-mspe">Mean Squared
+              Prediction Error (MSPE)</a></li>
+              </ul></li>
+              <li><a href="#conclusion"
+              id="toc-conclusion">Conclusion</a></li>
+              <li><a href="#additional-resources"
+              id="toc-additional-resources">Additional
+              Resources</a></li>
+              </ul>
+            </div>
+                      </div>
+        </div>
+
+        <div class="uk-width-medium-3-4">
+           <h1 id="introduction">Introduction</h1>
+<p>It is no secret that Bayesian statistics – Markov chain Monte Carlo
+(MCMC) methods in particular – has been gaining popularity in the past
+couple of decades. I remember making memes in undergrad about how
+<em>“Bayesian inference is so hot right now!”</em> Yes, I made
+statistics memes.</p>
+<p><img src="figures/bayesian-inla-hot-meme.png"
+title="Bayesian inference is so hot right now!"
+style="margin:auto; display: block;" alt="bayesian-inla-hot-meme" /></p>
+<p>MCMC samplers like NIMBLE, STAN, and JAGS make implementing MCMC
+easier and accessible. However, there is a reason why MCMC only became
+viable in the last couple of decades: computational cost. This issue
+persists even today when we have more compute power than ever before.
+The computation time required for MCMC to stabilize increases
+exponentially with sample size and the number of hyperparameters.</p>
+<p>Integrated nested Laplace approximation (INLA) proposed by Rue,
+Martino, and Chopin in 2009 is a modern tool for Bayesian inference that
+provides similar insights as MCMC but at a much lower computational
+burden. Check out this <a
+href="https://jrfaulkner.github.io/files/INLA_talk.pdf">presentation by
+John Paige</a> at the University of Washington in 2017. The last few
+slides compare the computation time between INLA and MCMC and the
+difference is staggering. INLA takes a few seconds whereas MCMC takes
+hours or even longer.</p>
+<p>I came across INLA during my last semester at George Mason
+University. While researching the topic for a class project, I noticed
+that many resources online compared INLA and MCMC for Gaussian
+responses. So, I ambitiously set out to compare the performances of the
+two approaches with respect to inference and prediction in non-Gaussian
+settings.</p>
+<h1 id="statistical-methods">Statistical Methods</h1>
+<h2 id="markov-chain-monte-carlo-mcmc">Markov chain Monte Carlo
+(MCMC)</h2>
+<p>MCMC is a family of sampling algorithms used to estimate the joint
+posterior distribution in Bayesian statistics. The two most popular
+algorithms are the Metropolis-Hastings algorithm and the Gibbs Sampling
+algorithm, a special case of the Metropolis-Hastings algorithm. There
+are other better resources online that explain the details of each
+algorithm much better than I can, so I’m going to simplify a bit
+here.</p>
+<p>Let <span
+class="math inline"><em>p</em>(<em>θ</em> ∣ <strong>y</strong>)</span>
+be the posterior distribution of interest, where <span
+class="math inline"><em>θ</em></span> is the hyperparameter and <span
+class="math inline"><strong>y</strong></span> represents the observed
+data. Then, from Bayes’ Rule, we know that <span
+class="math inline"><em>p</em>(<strong>y</strong> ∣ <em>θ</em>) ⋅ <em>p</em>(<em>θ</em>)</span>
+is proportional to the distribution of interest or the target
+distribution. The Metropolis-Hastings algorithm works in the following
+way:</p>
+<ol type="1">
+<li>Choose an arbitrary starting value <span
+class="math inline"><em>θ</em><sup>(0)</sup></span> and an arbitrary
+proposal density <span class="math inline"><em>q</em></span>.</li>
+<li>Draw a candidate value <span
+class="math inline"><em>θ</em><sup>*</sup></span> for the next iteration
+given the previous value <span
+class="math inline"><em>θ</em><sup>(<em>i</em> − 1)</sup></span> from
+the proposal density.</li>
+<li>Calculate the acceptance ratio <span
+class="math inline"><em>α</em></span> (see below).</li>
+<li>Generate a random number <span class="math inline"><em>u</em></span>
+from <span
+class="math inline"><em>U</em> ∼ <em>U</em><em>n</em><em>i</em><em>f</em>(0, 1)</span>
+and compare to <span class="math inline"><em>α</em></span>.</li>
+<li>Reject <span class="math inline"><em>θ</em><sup>*</sup></span> if
+<span class="math inline"><em>u</em> &gt; <em>α</em></span> and set
+<span
+class="math inline"><em>θ</em><sup>(<em>i</em>)</sup> = <em>θ</em><sup>(<em>i</em> − 1)</sup></span>;
+otherwise, <span
+class="math inline"><em>θ</em><sup>(<em>i</em>)</sup> = <em>θ</em><sup>*</sup></span>.</li>
+</ol>
+<p><span class="math display">$$\alpha =
+\frac{p\left(\mathbf{y}\mid\theta^*\right) \cdot
+p\left(\theta^*\right)\cdot
+q\left(\theta^{(i-1)}\mid\theta^*\right)}{p\left(\mathbf{y}\mid\theta^{(i-1)}\right)
+\cdot p\left(\theta^{(i-1)}\right) \cdot
+q\left(\theta^*\mid\theta^{(i-1)}\right)}$$</span></p>
+<p>A Gaussian distribution is commonly chosen as the proposal density,
+but there are other options as well.</p>
+<p>Gibbs Sampling works similarly but it always accepts the proposal
+<span class="math inline"><em>θ</em><sup>*</sup></span>. It makes use of
+the fact that it is easier to sample from a conditional distribution
+than to marginalize a joint distribution given a multivariate
+distribution. Let <span
+class="math inline"><strong>θ</strong> = (<em>θ</em><sub>1</sub>, …, <em>θ</em><sub><em>p</em></sub>)</span>
+be a multivariate parameter, where <span
+class="math inline"><em>p</em></span> is the number of parameters. The
+proposal density for <span
+class="math inline"><em>θ</em><sub><em>j</em></sub> ∈ {<em>θ</em><sub><em>k</em></sub>}<sub><em>k</em> = 1</sub><sup><em>p</em></sup></span>
+is the full conditional distribution <span
+class="math inline"><em>p</em>(<em>θ</em><sub><em>j</em></sub> ∣ <em>θ</em><sub>−<em>j</em></sub>, <strong>y</strong>)</span>
+and <span class="math inline"><em>θ</em><sub>−<em>j</em></sub></span>
+denotes the vector of <span class="math inline"><em>θ</em></span>’s not
+including <span
+class="math inline"><em>θ</em><sub><em>j</em></sub></span> from <span
+class="math inline"><strong>θ</strong></span>. This means that the
+acceptance ratio <span class="math inline"><em>α</em></span> for <span
+class="math inline"><em>θ</em><sub><em>j</em></sub></span> is:</p>
+<p><span class="math display">$$\begin{align*}
+\alpha &amp;=
+\frac{\left[p\left(\mathbf{y}\mid\theta_j^*,\theta_{-j}^{(i-1)}\right)
+\cdot p\left(\theta_j^*,\theta_{-j}^{(i-1)}\right)\right] \cdot
+p\left(\theta_j^{(i-1)}\mid\theta_{-j}^{(i-1)},\mathbf{y}\right)}{\left[p\left(\mathbf{y}\mid\theta_j^{(i-1)},\theta_{-j}^{(i-1)}\right)
+\cdot p\left(\theta_j^{(i-1)},\theta_{-j}^{(i-1)}\right)\right] \cdot
+p\left(\theta_j^* \mid \theta_{-j}^{(i-1)},\mathbf{y}\right)}\\
+\\
+&amp;= \frac{\left[p\left(\theta^*_j \mid
+\theta^{(i-1)}_{-j},\mathbf{y}\right) \cdot
+p\left(\theta^{(i-1)}_{-j},\mathbf{y}\right)\right] \cdot
+p\left(\theta^{(i-1)}_{j}\mid\theta^{(i-1)}_{-j},\mathbf{y}\right)}{\left[
+p\left(\theta^{(i-1)}_{j}\mid\theta^{(i-1)}_{-j},\mathbf{y}\right) \cdot
+p\left(\theta^{(i-1)}_{-j},\mathbf{y}\right) \right] \cdot
+p\left(\theta^*_j \mid \theta^{(i-1)}_{-j},\mathbf{y}\right)} \\
+\\
+&amp;= 1
+\end{align*}$$</span></p>
+<p>Gibbs Sampling is much more computationally efficient compared to the
+regular Metropolis-Hasting algorithm for this reason. So, when sampling
+from a multivariate parameter space is necessary, such as the Gaussian
+distribution, Gibbs Sampling is preferred.</p>
+<p>The core idea behind MCMC is that after a large number of iterations,
+the random nature of the algorithm will have found the region where the
+likelihood is maximized. The relative frequency of the accepted values
+can be plotted to give a rough idea of the posterior distribution. Since
+it is extremely unlikely that the algorithm started in the correct
+place, the convention is to set a “burn-in” period for the algorithm to
+stabilize. Additionally, because the new proposal value is inevitably
+correlated to its previous value, the practitioner can also specify
+“thinning” intervals so that only the <em>n</em>-th value is
+recorded.</p>
+<h2 id="integrated-nested-laplace-approximation-inla">Integrated nested
+Laplace approximation (INLA)</h2>
+<p>INLA speeds up the Bayesian inference process by employing the
+following three tactics:</p>
+<ol type="1">
+<li>Focus on models that can be expressed as latent Gaussian Markov
+random fields.</li>
+<li>Split up the joint posterior into a nested product of marginal
+posteriors.</li>
+<li>Approximate the marginal posteriors using Laplace
+approximation.</li>
+</ol>
+<p>Rue, Martino, and Chopin claims that inference on marginal posteriors
+is often sufficient and substantially decreases the computation time.
+The main benefit of using Laplace approximation is that it converts an
+integration problem into an optimization problem, a relatively simpler
+problem. Here’s the gist of how Laplace approximation works.</p>
+<p>Let <span class="math inline"><em>f</em>(<em>x</em>)</span> be a
+well-behaved unimodal function that is twice-differentiable and achieves
+its maximum at <span class="math inline"><em>x</em><sub>0</sub></span>.
+Let <span
+class="math inline"><em>g</em>(<em>x</em>) = ln (<em>f</em>(<em>x</em>))</span>.
+The goal is to compute</p>
+<p><span
+class="math display">∫<sub><em>a</em></sub><sup><em>b</em></sup><em>f</em>(<em>x</em>) <em>d</em><em>x</em> = ∫<sub><em>a</em></sub><sup><em>b</em></sup>exp (<em>g</em>(<em>x</em>)) <em>d</em><em>x</em></span></p>
+<p>where <span class="math inline"><em>a</em>, <em>b</em></span> are
+potentially infinite. Then, using a Taylor approximation,</p>
+<p><span class="math display">$$\int_a^b \exp(g(x))\ dx \approx
+\int_a^b\exp\left(g(x_0) +
+g'(x_0)(x-x_0)+\frac{1}{2}g''(x_0)(x-x_0)^2\right)\ dx$$</span></p>
+<p>Notice that <span
+class="math inline"><em>g</em><sup>′</sup>(<em>x</em><sub>0</sub>) = 0</span>
+because the logarithm function is one-to-one and <span
+class="math inline"><em>f</em>(<em>x</em>)</span> achieves its maximum
+at <span class="math inline"><em>x</em><sub>0</sub></span> by
+definition. So,</p>
+<p><span class="math display">$$\begin{align*}
+\int_{a}^{b} f(x)\ dx &amp;\approx \int_{a}^{b} \exp\left(g(x_0)+
+\frac{1}{2}g''(x_0)(x-x_0)^2\right)\ dx\\
+\\
+&amp;=\exp\left(g(x_0)\right)\cdot\int_{a}^{b}
+\exp\left(-\frac{1}{2}\frac{(x-x_0)^2}{-g''(x_0)^{-1}}\right)\ dx\\
+\\
+&amp;=\exp\left(g(x_0)\right) \cdot
+\sqrt{\frac{2\pi}{-g''(x_0)}}\cdot\left[\Phi\left(b \mid x_0,
+-g''(x_0)^{-1}\right)-\Phi\left(a \mid x_0, -g''(x_0)^{-1}\right)\right]
+\end{align*}$$</span></p>
+<p>where <span
+class="math inline"><em>Φ</em>(<em>z</em> ∣ <em>μ</em>, <em>σ</em><sup>2</sup>)</span>
+is the cumulative distribution function for a Normal distribution with
+mean <span class="math inline"><em>μ</em></span> and variance <span
+class="math inline"><em>σ</em><sup>2</sup></span>. Notice that the
+Normal distribution is centered at the mode <span
+class="math inline"><em>x</em><sub>0</sub></span>. The specifics of the
+INLA algorithm are well-explained <a
+href="https://becarioprecario.bitbucket.io/inla-gitbook/ch-INLA.html">here</a>.</p>
+<p>One major benefit of INLA is that it is fully implemented in R. The
+code is converted to C++ at runtime, but the <code>INLA</code> package
+allows users to write everything in R without learning a new syntax.
+While MCMC sampling libraries have a fairly simple syntax, it’s still
+something the practitioner has to learn. Moreover, because the INLA
+algorithm focuses on marginal distributions, parallelization is as easy
+as setting the desired number of processor cores. Check out <a
+href="https://www.r-inla.org/">r-inla</a> for further details on the R
+package.</p>
+<h1 id="results">Results</h1>
+<p>I won’t go into the details of the study design, but I first generate
+random data for a number of different scenarios that include Gaussian,
+Bernoulli, and Poisson responses Then, MCMC and INLA are fit and their
+respective run times in seconds, mean squared error (MSE) for model
+parameters, and mean squared prediction error (MSPE) are recorded. Lower
+is better for all statistics.</p>
+<h2 id="run-times-seconds">Run times (seconds)</h2>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>INLA</th>
+<th>MCMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>0.50</td>
+<td>12.97</td>
+</tr>
+<tr>
+<td>200</td>
+<td>0.52</td>
+<td>14.90</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0.67</td>
+<td>18.84</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>0.85</td>
+<td>23.24</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 1:</strong> Bernoulli response run times</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>INLA</th>
+<th>MCMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>0.59</td>
+<td>11.77</td>
+</tr>
+<tr>
+<td>200</td>
+<td>0.59</td>
+<td>13.06</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0.80</td>
+<td>15.45</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>1.11</td>
+<td>18.29</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 2:</strong> Gaussian response run times</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>INLA</th>
+<th>MCMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>0.59</td>
+<td>11.77</td>
+</tr>
+<tr>
+<td>100</td>
+<td>0.53</td>
+<td>12.27</td>
+</tr>
+<tr>
+<td>200</td>
+<td>0.52</td>
+<td>14.00</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0.66</td>
+<td>18.55</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>0.84</td>
+<td>23.96</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 3:</strong> Poisson response run times</p>
+<p>INLA is much faster than MCMC in all scenarios. However, faster
+computation alone is insufficient. Let's look at inference
+performances:</p>
+<h2 id="mean-squared-error-mse">Mean Squared Error (MSE)</h2>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>INLA</th>
+<th>MCMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>6.21</td>
+<td>1.66</td>
+</tr>
+<tr>
+<td>200</td>
+<td>2.38</td>
+<td>1.12</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0.41</td>
+<td>0.30</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>0.19</td>
+<td>0.15</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 4:</strong> Bernoulli response MSE</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>INLA</th>
+<th>MCMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>4.52</td>
+<td>2.54</td>
+</tr>
+<tr>
+<td>200</td>
+<td>2.15</td>
+<td>2.45</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0.42</td>
+<td>1.85</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>0.21</td>
+<td>1.32</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 5:</strong> Gaussian response MSE</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>INLA</th>
+<th>MCMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>0.93</td>
+<td>0.62</td>
+</tr>
+<tr>
+<td>200</td>
+<td>0.46</td>
+<td>0.34</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0.09</td>
+<td>0.07</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>0.04</td>
+<td>0.04</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 6:</strong> Poisson response MSE</p>
+<p>MCMC generally performs better than INLA for smaller datasets and the
+difference in performance decreases as sample size increases.
+Surprisingly, INLA performs better than MCMC in the Gaussian setting
+when the sample sie is greater than 200. Finally, let's examine the
+prediction performances:</p>
+<h2 id="mean-squared-prediction-error-mspe">Mean Squared Prediction
+Error (MSPE)</h2>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>INLA</th>
+<th>MCMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>0.43</td>
+<td>0.43</td>
+</tr>
+<tr>
+<td>200</td>
+<td>0.42</td>
+<td>0.41</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0.40</td>
+<td>0.40</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>0.40</td>
+<td>0.39</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 7:</strong> Bernoulli response MSPE</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>INLA</th>
+<th>MCMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>5.11</td>
+<td>6.71</td>
+</tr>
+<tr>
+<td>200</td>
+<td>4.95</td>
+<td>6.44</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>4.78</td>
+<td>6.13</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>4.78</td>
+<td>6.09</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 8:</strong> Gaussian response MSPE</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>INLA</th>
+<th>MCMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>1.28</td>
+<td>1.19</td>
+</tr>
+<tr>
+<td>200</td>
+<td>1.15</td>
+<td>1.14</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>1.10</td>
+<td>1.10</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>1.08</td>
+<td>1.08</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 9:</strong> Poisson response MSPE</p>
+<p>For the non-Gaussian responses, INLA and MCMC have almost identical
+MSPE regardless of sample size. What’s interesting is that INLA performs
+better than MCMC for the Gaussian response by a noticeable amount.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>MCMC seems to perform slightly better than INLA for non-Gaussian
+responses with respect to both inference and prediction. However, this
+comes at a much higher computational cost. In my testing, I purposefully
+built simple scenarios because I wanted to run the same scenario
+multiple times to get the performance metrics. Had I designed something
+more complicated where MCMC takes hours like the scenarios in <a
+href="https://jrfaulkner.github.io/files/INLA_talk.pdf">John Paige’s
+presentation</a>, I would not have been able to finish this project. As
+for Gaussian responses, it seems like INLA has better performance than
+MCMC except when sample size is a few hundred and the goal is inference
+rather than prediction. Personally, I would take the minor inference
+performance penalty of INLA over MCMC for the Gaussian response.</p>
+<p>There are some caveats to these results, however. Bayesian models
+shine when the underlying processes are complex. In cases like this
+simulation study where all covariates are independent from each other
+and lacks a hierarchical structure, there is little reason to consider a
+Bayesian framework. Frequentist methods such as generalized linear
+models (GLM) run much faster than INLA and they also provide almost
+identical performance to INLA in these simple cases. While MCMC performs
+slightly better in terms of MSE, that may be due to the MCMC algorithm
+being given the exact distribution of the model parameters. Another
+limitation to this study is the fixed number of covariates. Also, I only
+explored two types of non-Gaussian responses.</p>
+<p>These caveats are mainly due to limited time and computation power as
+this was a class project and I had to use my personal computer. With
+more time and computation power, it may be interesting to vary the
+number of covariates, implement correlation structures between
+covariates, consider hierarchical structures, or explore other
+non-Gaussian responses.</p>
+<h1 id="additional-resources">Additional Resources</h1>
+<ul>
+<li><a href="https://www.r-inla.org/">R-INLA Project</a></li>
+<li><a
+href="https://haakonbakkagit.github.io/organisedtopics.html">Haakon
+Bakka's Online Course Topics for Bayesian Modeling</a></li>
+<li><a
+href="https://becarioprecario.bitbucket.io/inla-gitbook/index.html">Bayesian
+inference with INLA</a></li>
+</ul>
+        </div>
+      </div>
+      <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+    </div>
+
+    <div id="mySidenav">
+      <a href="/index.html" id="home">Home</a>
+      <a href="/posts/index.html" id="blog">Blog</a>
+      <a href="/resume.pdf" id="resume">Resume</a>
+      <a href="/pets.html" id="pets">Pets</a>
+    </div>
+
+    <footer class="page-footer">
+      <div class="container">
+        This work is marked
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
+          >CC0 1.0 Universal</a
+        ><img
+          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        /><img
+          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        />
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,445 @@
+<!doctype html>
+<html  dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Why use stratification?</title>
+
+        <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css"
+    />
+    
+    <!-- Icons -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+    <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+    <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
+    ></script>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css"
+    />
+    <link rel="stylesheet" href="/css/posts.css" />
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script src="uikit.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+    <!-- <script src="scripts.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+    <meta name="generator" content="pandoc-uikit" />
+         <meta name="date" content="2021-06-27" />
+        <title>Why use stratification?</title>
+    <style type="text/css">
+      code {
+        white-space: pre;
+      }
+    </style>
+         <style type="text/css">
+      html { -webkit-text-size-adjust: 100%; }
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          color: #aaaaaa;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+      code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+      code span.at { color: #7d9029; } /* Attribute */
+      code span.bn { color: #40a070; } /* BaseN */
+      code span.bu { color: #008000; } /* BuiltIn */
+      code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #4070a0; } /* Char */
+      code span.cn { color: #880000; } /* Constant */
+      code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+      code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+      code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+      code span.dt { color: #902000; } /* DataType */
+      code span.dv { color: #40a070; } /* DecVal */
+      code span.er { color: #ff0000; font-weight: bold; } /* Error */
+      code span.ex { } /* Extension */
+      code span.fl { color: #40a070; } /* Float */
+      code span.fu { color: #06287e; } /* Function */
+      code span.im { color: #008000; font-weight: bold; } /* Import */
+      code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+      code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+      code span.op { color: #666666; } /* Operator */
+      code span.ot { color: #007020; } /* Other */
+      code span.pp { color: #bc7a00; } /* Preprocessor */
+      code span.sc { color: #4070a0; } /* SpecialChar */
+      code span.ss { color: #bb6688; } /* SpecialString */
+      code span.st { color: #4070a0; } /* String */
+      code span.va { color: #19177c; } /* Variable */
+      code span.vs { color: #4070a0; } /* VerbatimString */
+      code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+       
+  </head>
+
+  <body>
+        <header class="page-header">
+      <div class="container">
+        <div class="header-top flex-responsive">
+          <h1 class="header-info">Why use stratification?</h1>
+          <br />
+                    <h2 class="header-label">2021-06-27</h2>
+                     <p class="header-summary">Stratification is a
+statistical sample methodology that can improve the accuracy of your
+sample with a smaller sample size. Let's see how.</p>
+                  </div>
+      </div>
+    </header>
+    
+    <div
+      class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom"
+    >
+      <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-4">
+          <div
+            class="uk-overflow-container"
+            data-uk-sticky="{top:25,media: 768}"
+          >
+                        <div class="uk-panel uk-panel-box menu-begin">
+              <ul>
+              <li><a href="#regular-sampling"
+              id="toc-regular-sampling">"Regular" Sampling</a></li>
+              <li><a href="#common-terminology"
+              id="toc-common-terminology">Common Terminology</a></li>
+              <li><a href="#examples" id="toc-examples">Examples</a>
+              <ul>
+              <li><a href="#simple-random-sampling"
+              id="toc-simple-random-sampling">Simple Random
+              Sampling</a></li>
+              <li><a href="#stratified-sampling"
+              id="toc-stratified-sampling">Stratified Sampling</a></li>
+              </ul></li>
+              <li><a href="#conclusion"
+              id="toc-conclusion">Conclusion</a></li>
+              </ul>
+            </div>
+                      </div>
+        </div>
+
+        <div class="uk-width-medium-3-4">
+           <p>In statistical sampling, stratification is a strategy used
+to improve precision (lower standard error) of the estimate while
+maintaining a reasonable sample size. Before we can talk about
+stratification, we first have to cover what simple random sampling
+is.</p>
+<h1 id="regular-sampling">"Regular" Sampling</h1>
+<p>Simple random sampling is perhaps the most well-known sampling
+strategies to non-statisticians. Under simple random sampling, all units
+in a given population has a non-negative and equal chance of selection.
+For example, say that the population size is 1000 people and I want to
+use simple random sampling to select 30 people. Each person would have
+the same probability of being selected. While this strategy is
+relatively simple to implement, we can be slightly smarter in our
+sampling strategy to obtain the same results with a smaller sample or
+obtain better precision while maintaining the same number of samples:
+stratification.</p>
+<h1 id="common-terminology">Common Terminology</h1>
+<p>Before we can jump into how stratification works, we need to go over
+some common terminology:</p>
+<ul>
+<li><strong>Population</strong> (or <strong>Sampling Frame</strong>):
+The set of all records of interest from which we draw samples. It's also
+known as "the universe."</li>
+<li><strong>Sample</strong>: A subset of the population.</li>
+<li><strong>Sampling Unit</strong>: An indivisible object from which
+responses and measurements are taken. For example, if the population
+lists project costs, the sampling unit is a project. It's also known as
+the analysis unit.</li>
+<li><strong>Stratum</strong> (<strong>Strata</strong> for plural): A
+group (or groups) of sampling units in which the probability of
+selection is independent of sampling units in other strata.</li>
+</ul>
+<h1 id="examples">Examples</h1>
+<h2 id="simple-random-sampling">Simple Random Sampling</h2>
+<p>Stratification is commonly used in auditing. So, let’s say you’re
+tasked with auditing expense records for a local company. The company
+has an internal bookkeeping system, which contains 1000 records for the
+year. The company knows that not all expenses are entered correctly
+because people make mistakes and some people just use their corporate
+credit cards for personal uses. You’ve been tasked to estimate the total
+business expense incurred over the year. Because it’s infeasible to go
+through all 1000 records, if you select a sample of records, the
+accounting team will audit those selected records and tell you how much
+of that expense was business-related versus personal. For simplicity,
+let’s say that an expense record can be all personal (0% business), 50%
+business, 70% business, 90% business, or all business-related. We
+wouldn’t know how much a given expense record would be business-related
+until we select it for audit. How should we select the samples so that
+we can accurately and precisely estimate the total business expense?</p>
+<p>With simple random sampling, the only choice is to increase the
+sample size. As the sample size increases, the standard error of the
+estimate decreases. Let’s compare two simple random samples: one with
+sample size of 30 and another with sample size of 100.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20210627</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co"># Total number of expense records</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rexp</span>(N, <span class="fl">0.001</span>), <span class="dv">0</span>) <span class="co"># Expense records</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="dv">1</span>) <span class="co"># proportion of business-related expense per record</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Business expense amounts (randomly select from p and multiply expense amount)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">sapply</span>(X, <span class="cf">function</span>(x) p[<span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">6</span>)]<span class="sc">*</span>x)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># The true value we&#39;re trying to estimate</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>param <span class="ot">&lt;-</span> <span class="fu">sum</span>(Y)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">cbind</span>(X, Y)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">ID=</span><span class="fu">row_number</span>())</span></code></pre></div>
+<p>For sake of this example, let’s say that we know the true value of
+the total business expense. The true value is $616,954. Here, we’re
+going to multiply the sample mean and the population size to get an
+estimate of the total business expense amount. Since the sample mean is
+an unbiased estimator for the population mean, this estimator (called
+the Mean Per Unit or MPU estimator) is also unbiased.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample size of 30 using simple random sampling</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> N<span class="sc">*</span>(N<span class="sc">-</span>n)<span class="sc">/</span>n</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df=</span>n<span class="dv">-1</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">assign</span>(<span class="fu">paste0</span>(<span class="st">&quot;sample_&quot;</span>, n), pop <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span>n) <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">x=</span>X, <span class="at">y=</span>Y) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">SampleSize =</span> n, <span class="at">EstTotal =</span> <span class="fu">mean</span>(y)<span class="sc">*</span>N, <span class="at">SE=</span><span class="fu">sqrt</span>(g<span class="sc">*</span><span class="fu">var</span>(y)), <span class="at">ME=</span>SE<span class="sc">*</span>t, <span class="at">RP=</span>ME<span class="sc">/</span>EstTotal))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># sample size of 100 using simple random sampling</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> N<span class="sc">*</span>(N<span class="sc">-</span>n)<span class="sc">/</span>n</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df=</span>n<span class="dv">-1</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">assign</span>(<span class="fu">paste0</span>(<span class="st">&quot;sample_&quot;</span>, n), pop <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span>n) <span class="sc">%&gt;%</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">rename</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y) <span class="sc">%&gt;%</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarize</span>(<span class="at">SampleSize =</span> n, <span class="at">EstTotal =</span> <span class="fu">mean</span>(y)<span class="sc">*</span>N, <span class="at">SE=</span><span class="fu">sqrt</span>(g<span class="sc">*</span><span class="fu">var</span>(y)), <span class="at">ME=</span>SE<span class="sc">*</span>t, <span class="at">RP=</span>ME<span class="sc">/</span>EstTotal))</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Sample Size</strong></th>
+<th style="text-align: center;"><strong>Estimated Total Business
+Expense</strong></th>
+<th style="text-align: center;"><strong>t critical value</strong></th>
+<th style="text-align: center;"><strong>Standard Error</strong></th>
+<th style="text-align: center;"><strong>Margin of Error</strong></th>
+<th style="text-align: center;"><strong>Relative Precision</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">855,810</td>
+<td style="text-align: center;">2.045</td>
+<td style="text-align: center;">185,317</td>
+<td style="text-align: center;">379,015</td>
+<td style="text-align: center;">44.3%</td>
+</tr>
+<tr>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">713,650</td>
+<td style="text-align: center;">1.984</td>
+<td style="text-align: center;">84,555</td>
+<td style="text-align: center;">167,775</td>
+<td style="text-align: center;">23.5%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 1:</strong> Simple random sample results</p>
+<p>As expected, the larger sample has a much lower standard error and a
+better estimate. Relative precision is simply the margin of error
+divided by the estimate. We can see that more than tripling our sample
+size only yielded in halving the standard error. The plot below shows
+the sampling distribution of the estimate over 10,000 samples for both
+sample sizes.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution of estimates</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>numSim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nr=</span>numSim, <span class="at">nc=</span><span class="dv">2</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(results) <span class="ot">&lt;-</span> <span class="fu">c</span>(n1, n2)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numSim){</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  results[i,] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(<span class="fu">sample</span>(pop<span class="sc">$</span>Y, n1)<span class="sc">*</span>N), <span class="fu">mean</span>(<span class="fu">sample</span>(pop<span class="sc">$</span>Y, n2)<span class="sc">*</span>N))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>results2 <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(results) <span class="sc">%&gt;%</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(<span class="st">&quot;30&quot;</span>, <span class="st">&quot;100&quot;</span>), <span class="at">names_to=</span><span class="st">&quot;sample.size&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;estimate&quot;</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create comparison of sampling distribution of estimates</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results2, <span class="fu">aes</span>(<span class="at">x=</span>estimate, <span class="at">fill=</span>sample.size)) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">position=</span><span class="st">&quot;identity&quot;</span>, <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">binwidth=</span><span class="fl">5e4</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept=</span>param)) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill=</span><span class="st">&quot;Sample Size&quot;</span>, <span class="at">x=</span><span class="st">&quot;Estimate&quot;</span>, <span class="at">y=</span><span class="st">&quot;Frequency&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">comma_format</span>()) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">comma_format</span>())</span></code></pre></div>
+<p><img src="figures/stratification-30-vs-100.png"
+title="Increasing the sample size makes the sampling distribution tighter"
+style="margin:auto; display: block;"
+alt="stratification-30-vs-100" /></p>
+<p>The black vertical line represents the true value. Both sampling
+distributions are centered around the true value, as expected given the
+unbiasedness of the estimator. We can also see that the sampling
+distribution for the estimator from the smaller sample is wider (higher
+variance). At this point, we might be content in randomly selecting 100
+records for the accounting department to audit and estimate the total
+business expense based on that sample result. However, consider the fact
+that this takes time away from their regular duties. Maybe, the
+accounting department is small, consisting of one or two people. Is
+there a way to alleviate their work by selecting a <em>smarter</em>
+sample?</p>
+<h2 id="stratified-sampling">Stratified Sampling</h2>
+<p>You notice that expense records range from a few dollars up to a few
+thousand dollars. Then, maybe we should always select the records with
+the largest amounts for audit since how much of those large expenses are
+business-related will greatly affect our estimate. Let’s say we want to
+select expenses greater than $5,000 with certainty. This cutoff is
+purely arbitrary.</p>
+<p>After setting the certainty cases aside, we can also increase the
+chances of the higher records of being selected. After all, the total
+expense amount (the known value of 984,485 from
+<code>sum(pop$X)</code>)) suggests that records with only a few dollars
+won’t affect our estimate too much. One of the simplest ways to divide
+up our records is to have each stratum contain roughly the same amount
+in expenses. Let’s say we want four strata with equal amounts in each
+stratum. We will randomly select four records from each of these four
+non-certainty strata. This brings our total sample size to 20 (4 from
+each of the 4 non-certainty strata and another 4 from the certainty
+stratum).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cutoff for certainty stratum. This is arbitrary.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Divide population into strata with equal amounts in each stratum</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>numstrata <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>EqAmount <span class="ot">&lt;-</span> <span class="fu">sum</span>(pop<span class="sc">$</span>X)<span class="sc">/</span>numstrata</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># number of samples for each stratum</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>nh <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>strat <span class="ot">&lt;-</span> pop <span class="sc">%&gt;%</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(X) <span class="sc">%&gt;%</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cert =</span> <span class="fu">ifelse</span>(X <span class="sc">&gt;=</span> cutoff, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="at">cumsum=</span><span class="fu">cumsum</span>(X))</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># non-certainty</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>noncert <span class="ot">&lt;-</span> strat <span class="sc">%&gt;%</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cert<span class="sc">==</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">strata =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">floor</span>(cumsum<span class="sc">/</span>EqAmount)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(strata) <span class="sc">%&gt;%</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Nh=</span><span class="fu">n</span>(), <span class="at">gh =</span> Nh<span class="sc">*</span>(Nh<span class="sc">-</span>nh)<span class="sc">/</span>nh)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># certainty (sample all)</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>cert <span class="ot">&lt;-</span> strat <span class="sc">%&gt;%</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cert<span class="sc">==</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">strata =</span> numstrata <span class="sc">+</span> <span class="dv">1</span>, <span class="at">Nh=</span><span class="fu">n</span>(), <span class="at">gh =</span> <span class="dv">0</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>results_strat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nr=</span>numSim, <span class="at">nc=</span><span class="dv">1</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numSim){</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  output <span class="ot">&lt;-</span> noncert <span class="sc">%&gt;%</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(strata) <span class="sc">%&gt;%</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample_n</span>(<span class="at">size=</span><span class="fu">min</span>(<span class="fu">n</span>(), nh)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">nh =</span> <span class="fu">n</span>(), <span class="at">EstTotal =</span> <span class="fu">mean</span>(Y) <span class="sc">*</span> Nh, <span class="at">.groups=</span><span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>()</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  results_strat[i,] <span class="ot">&lt;-</span> <span class="fu">sum</span>(output<span class="sc">$</span>EstTotal) <span class="sc">+</span> <span class="fu">sum</span>(cert<span class="sc">$</span>Y)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>results3 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(results, results_strat)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(results3) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;30&quot;</span>, <span class="st">&quot;100&quot;</span>, <span class="st">&quot;stratified&quot;</span>)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>results3 <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(results3) <span class="sc">%&gt;%</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(<span class="st">&quot;30&quot;</span>, <span class="st">&quot;100&quot;</span>, <span class="st">&quot;stratified&quot;</span>), <span class="at">names_to=</span><span class="st">&quot;sample.size&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;estimate&quot;</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Create comparison of sampling distribution of estimates</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results3, <span class="fu">aes</span>(<span class="at">x=</span>estimate)) <span class="sc">+</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">position=</span><span class="st">&quot;identity&quot;</span>, <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">binwidth=</span><span class="fl">5e4</span>, <span class="fu">aes</span>(<span class="at">fill=</span>sample.size), <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept=</span>param)) <span class="sc">+</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill=</span><span class="st">&quot;Sample Size&quot;</span>, <span class="at">color=</span><span class="st">&quot;Sample Size&quot;</span>, <span class="at">x=</span><span class="st">&quot;Estimate&quot;</span>, <span class="at">y=</span><span class="st">&quot;Frequency&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">comma_format</span>()) <span class="sc">+</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">comma_format</span>()) <span class="sc">+</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_discrete</span>(<span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Simple, n=100&quot;</span>, <span class="st">&quot;Simple, n=30&quot;</span>, <span class="st">&quot;Stratified, n=20&quot;</span>))</span></code></pre></div>
+<p><img src="figures/stratification-strat-30-100.png"
+title="Stratified sample of 20 is better than simple random sample of 30"
+style="margin:auto; display: block;"
+alt="stratification-strat-30-100" /></p>
+<p>With only 20 records, the sampling distribution of the estimator from
+the stratified sample is narrower than the simple random sample with
+size 30. Sure, it’s not as narrow as the one with 100 samples, but we
+can easily make it better by increasing the number of samples from each
+stratum a little bit.</p>
+<p>We don’t even have to sample the same number of records from each
+stratum and there is a way to divide the population that minimizes the
+variance for a given number of strata. We also could have estimated how
+much wouldn’t qualify as business-related instead since at least 50% of
+the amount is business-related for most records.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Even in this small example, you can see that stratification makes our
+sample significantly more efficient. In one of my work projects, I was
+able to cut thousands of review-hours for an audit because I used some
+clever stratification tricks to produce an efficient sample. The client
+was pleased because the audit was shorter and smoother than expected.
+Our auditors were pleased because they had fewer items to review.</p>
+<p>Statistical sampling can be taught across a couple of semesters in
+some graduate programs, so I wasn’t going to try to cover everything in
+this post. My hope is that this nudges some to consider stratification
+for their next project or decide to take a sampling course.</p>
+        </div>
+      </div>
+      <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+    </div>
+
+    <div id="mySidenav">
+      <a href="/index.html" id="home">Home</a>
+      <a href="/posts/index.html" id="blog">Blog</a>
+      <a href="/resume.pdf" id="resume">Resume</a>
+      <a href="/pets.html" id="pets">Pets</a>
+    </div>
+
+    <footer class="page-footer">
+      <div class="container">
+        This work is marked
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
+          >CC0 1.0 Universal</a
+        ><img
+          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        /><img
+          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        />
+    </footer>
+  </body>
+</html>
