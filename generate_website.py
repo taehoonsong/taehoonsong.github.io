@@ -62,7 +62,7 @@ def copy_static_to_output() -> None:
 
 def get_blog_metadata(file: Path) -> BlogPost:
     meta: BlogPost = frontmatter.load(file).metadata
-    meta["file_path"] = f"{slugify(meta.get('title'))}.html"
+    meta["file_path"] = f"{slugify(file.stem)}.html"
     return meta
 
 
