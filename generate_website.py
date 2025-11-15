@@ -84,9 +84,6 @@ def get_portfolio_data() -> dict:
     with path.open(encoding="utf-8", errors="ignore") as f:
         data = json.load(f)
 
-    # For copyright notice in footer
-    data["current_year"] = dt.datetime.now(tz=dt.UTC).year
-
     # Make fullname
     data["name"] = f"{data['first_name']} {data['last_name']}"
 
