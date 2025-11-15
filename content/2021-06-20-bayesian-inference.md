@@ -24,8 +24,11 @@ I obtained $P(A|B)$ (read probability of A given B) by counting the number of ev
 ```math
 \begin{aligned}
 P(Sick | Positive) &= \frac{P(Positive | Sick) \cdot P(Sick)}{P(Positive)}\\
+\\
 &=\frac{P(Positive | Sick) \cdot P(Sick)}{P(Positive | Sick) \cdot P(Sick) + P(Positive | Healthy) \cdot P(Healthy)}\\
+\\
 &=\frac{0.95\times0.01}{0.95\times0.01 + (1-0.1)\times(1-0.01)}\\
+\\
 &\approx 0.088
 \end{aligned}
 ```
@@ -115,3 +118,4 @@ I hope this post gives enough information to appreciate the power of Bayesian st
 Bayesian models are also more flexible when dealing with multiple layers of uncertainty. For example, imagine that the response rate from our example above is required for another model. Frequentist models will have to assume that the response rate is a fixed value, which can underestimate the uncertainty associated with the result. On the other hand, Bayesian models can be hierarchical and propagate the uncertainty of not knowing the true response rate through multiple layers and reflect that uncertainty in the outcome.
 
 I’m a little disappointed that most statistics programs rarely teach Bayesian statistics, as it is such a powerful tool. Both frequentist and Bayesian statistics have their place. Frequentist methods are much more straightforward to implement and can be powerful when the data comes from designed experiments where sources of uncertainty are well-controlled. Bayesian methods are capable of dealing with multiple sources of uncertainty and give intuitive interpretations of results for non-statisticians. I strongly encourage aspiring statisticians and data scientists to familiarize themselves with Bayesian statistics.
+
