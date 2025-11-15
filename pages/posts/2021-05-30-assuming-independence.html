@@ -1,0 +1,337 @@
+<!doctype html>
+<html  dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Did you assume independence?</title>
+
+        <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css"
+    />
+    
+    <!-- Icons -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+    <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+    <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
+    ></script>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css"
+    />
+    <link rel="stylesheet" href="/css/posts.css" />
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script src="uikit.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+    <!-- <script src="scripts.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+    <meta name="generator" content="pandoc-uikit" />
+         <meta name="date" content="2021-05-30" />
+        <title>Did you assume independence?</title>
+    <style type="text/css">
+      code {
+        white-space: pre;
+      }
+    </style>
+        
+  </head>
+
+  <body>
+        <header class="page-header">
+      <div class="container">
+        <div class="header-top flex-responsive">
+          <h1 class="header-info">Did you assume independence?</h1>
+          <br />
+                    <h2 class="header-label">2021-05-30</h2>
+                     <p class="header-summary">Many statistical formulas
+and theorems assumes or requires statistical independence. But what if
+you can't assume independence?</p>
+                  </div>
+      </div>
+    </header>
+    
+    <div
+      class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom"
+    >
+      <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-4">
+          <div
+            class="uk-overflow-container"
+            data-uk-sticky="{top:25,media: 768}"
+          >
+                        <div class="uk-panel uk-panel-box menu-begin">
+              <ul>
+              <li><a href="#introduction"
+              id="toc-introduction">Introduction</a></li>
+              <li><a href="#runs-test" id="toc-runs-test">Runs Test</a>
+              <ul>
+              <li><a href="#binary-random-variable"
+              id="toc-binary-random-variable">Binary random
+              variable</a></li>
+              <li><a href="#non-binary-random-variable"
+              id="toc-non-binary-random-variable">Non-binary random
+              variable</a></li>
+              </ul></li>
+              <li><a href="#rank-von-neumann-test"
+              id="toc-rank-von-neumann-test">Rank von Neumann
+              Test</a></li>
+              <li><a href="#conclusion"
+              id="toc-conclusion">Conclusion</a></li>
+              </ul>
+            </div>
+                      </div>
+        </div>
+
+        <div class="uk-width-medium-3-4">
+           <h1 id="introduction">Introduction</h1>
+<p>Many popular statistical procedures, such as hypothesis testing and
+linear regression, include the assumption of independence. Assuming
+independence makes the math much simpler and can be a reasonable
+assumption depending on how the data was collected. Even though I lumped
+them together, hypothesis tests and regression have different
+assumptions of independence. For example, a t-test will assume that
+observations are randomly selected from a t-distribution, specifically a
+simple random sample. On the other hand, regression generally assumes
+that the residuals are independent from each other, meaning after
+accounting for the effects of all predictor variables.</p>
+<p>You might be familiar with looking at diagnostic plots such as Q-Q
+plots and residual plots after a regression model is fit to check the
+validity of these assumptions. Well, have you considered how to check
+your independence assumption for hypothesis testing? Did you just
+<em>assume</em> independence? In this post, I’ll go over some simple
+nonparametric methods to test for independence in hypothesis testing.
+Nonparametric tests are useful when you don’t want to have any
+assumptions about the distribution of your observations or when you
+simply don’t know.</p>
+<h1 id="runs-test">Runs Test</h1>
+<p>The runs test is a nonparametric statistical test that checks if a
+sequence of observations are independent. The idea behind it is quite
+simple: you can calculate the expected number of runs (consecutive
+observations with the same outcome) and see how likely or unlikely that
+outcome is if the observations are truly random and independent. If the
+number of runs is too low, the observations might be positively
+correlated; if the number of runs is too high, then the observations may
+be negatively correlated.</p>
+<h2 id="binary-random-variable">Binary random variable</h2>
+<p>Let’s start with a binary (or Bernoulli) random variable. Consider
+the following sequence of 20 outcomes:</p>
+<p><span class="math display">$$\begin{gathered}
+1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1
+\end{gathered}$$</span></p>
+<p>In the above sequence, there are 5 runs, 3 of which are 1’s and the
+others are 0’s. Now, what’s the expected number of runs for a
+20-element-long sequence of binary outcomes? Let <span
+class="math inline"><em>I</em><sub><em>k</em></sub></span> be an
+indicator variable that is equal to 1 if a new run starts in position
+<span class="math inline"><em>k</em></span> and 0 otherwise. This
+suggests that <span
+class="math inline"><em>I</em><sub><em>k</em></sub> = 1</span> when the
+element in the <span class="math inline">(<em>k</em> − 1)</span>-th
+position is different from the <span
+class="math inline"><em>k</em></span>-th element. If the <span
+class="math inline">(<em>k</em> − 1)</span>-th element and the <span
+class="math inline"><em>k</em></span>-th are the same, then a run would
+not start at position <span class="math inline"><em>k</em></span> by
+definition. This means that the number of runs, <span
+class="math inline"><em>R</em></span>, can be written as</p>
+<p><span class="math display">$$\begin{gathered}
+R=1+I_2+I_3+\cdots+I_n
+\end{gathered}$$</span></p>
+<p>where <span
+class="math inline"><em>n</em> = <em>n</em><sub>1</sub> + <em>n</em><sub>2</sub></span>
+and <span class="math inline"><em>n</em><sub>1</sub></span> and <span
+class="math inline"><em>n</em><sub>2</sub></span> represent the number
+of 1’s and 0’s, respectively. There is a 1 because there is always at
+least 1 run even if all the element are the same and there are no new
+runs in the sequence. Then the probability that <span
+class="math inline"><em>I</em><sub><em>k</em></sub> = 1</span> is:</p>
+<p><span class="math display">$$\begin{aligned}
+P(I_k=1)&amp;=\frac{\binom{2}{1}\binom{n-2}{n_1-1}}{\binom{n}{n_1}}\\
+\\
+&amp;=\frac{\frac{2(n-2)!}{(n_1-1)![n-2-(n_1-1)]!}}{\frac{n!}{n_1!(n-n_2)!}}\\
+\\
+&amp;=\frac{\frac{2(n-2)!}{(n_1-1)!(n_2-1)!}}{\frac{n!}{n_1!n_2!}}\\
+\\
+&amp;=\frac{2n_1n_2}{n(n-1)}
+\end{aligned}$$</span></p>
+<p>Notice that this is also the expected value of <span
+class="math inline"><em>I</em><sub><em>k</em></sub></span> because it is
+a binary variable. Let’s dissect the first fraction to understand why
+this is the correct probability. In the denominator, <span
+class="math display">$$\binom{n}{n_1}$$</span> represents the number of
+ways you can arrange 1’s from the total number of elements. Since the
+location of 0’s depend on where the 1’s are, we cover all possible
+arrangements of all elements. In the numerator, <span
+class="math display">$$\binom{2}{1}$$</span> represents the number of
+ways you can arrange the 0 and 1 in the <span
+class="math inline"><em>k</em></span>-th position to start a new run so
+that <span
+class="math inline"><em>I</em><sub><em>k</em></sub> = 1</span>. Either
+you have a 1 in the <span class="math inline">(<em>k</em> − 1)</span>-th
+position and a 0 in the <span class="math inline"><em>k</em></span>-th
+position, or you have a 0 in the <span
+class="math inline">(<em>k</em> − 1)</span>-th position and a 1 in the
+<span class="math inline"><em>k</em></span>-th position. You have to
+choose one element out of two possibilities (0 or 1). Then, <span
+class="math display">$$\binom{n-2}{n_1-1}$$</span> is the number of ways
+to arrange the others. You’ve already used up two elements from the
+total (hence <span class="math inline"><em>n</em> − 2</span>) because
+you know there’s a new run in position <span
+class="math inline"><em>k</em></span> and you used up a single 1 from
+the total number of 1’s (hence <span
+class="math inline"><em>n</em><sub>1</sub> − 1</span>). Now we can
+calculate the expected number of runs:</p>
+<p><span class="math display">$$\begin{aligned}
+E[R] &amp;= E[1+I_2+\cdots+I_n]\\
+\\
+&amp;= 1 + (n-1)E[I_k]\\
+\\
+&amp;= 1 + (n-1)\frac{2n_1n_2}{n(n-1)}\\
+\\
+&amp;=1+\frac{2n_1n_2}{n}
+\end{aligned}$$</span></p>
+<p>The variance of <span class="math inline"><em>R</em></span> is a bit
+more involved, but it comes out to:</p>
+<p><span class="math display">$$\begin{aligned}
+Var[R] &amp;= Var[1+I_2+I_3+\cdots+I_n]\\
+\\
+&amp;= Var[I_2+I_3+\cdots+I_n]\\
+\\
+&amp;= \sum_{k=2}^n Var[I_k] + \sum_{k=2}^n \sum_{j\neq k}
+Cov[I_j,I_k]\\
+\\
+&amp;=(n-1)p-(n-1)^2p^2+\sum_{k=2}^n \sum_{j\neq k}E[I_jI_k]\\
+\\
+&amp;=(n-1)p-(n-1)^2p^2+(n-2)p+2(n_1-1)(n_2-1)p\\
+\\
+&amp;=\frac{2n_1n_2(2n_1n_2-n)}{n^2(n-1)}\\
+\\
+&amp;=\frac{(E[R]-1)(E[R]-2)}{n-1}
+\end{aligned}$$</span></p>
+<p>where <span class="math inline">2 ≤ <em>j</em> ≤ <em>n</em></span>.
+Try deriving this result for yourself. You should breakout <span
+class="math inline"><em>E</em>[<em>I</em><sub><em>j</em></sub><em>I</em><sub><em>k</em></sub>]</span>
+into two scenarios: (1) <span
+class="math inline"><em>j</em> = <em>k</em> ± 1</span> and (2) <span
+class="math inline"><em>j</em> ≠ ±1</span>. Now that you have the
+expected number of runs, you can compare it to the observed number of
+runs to see how likely the observed number of runs is. You can calculate
+the exact p-value:</p>
+<p><span class="math display">$$\begin{aligned}
+P(|R-E[R]| \geq r) &amp;= P(R-E[R] \geq r) \cup P(R-E[R] \leq -r)\\
+\\
+&amp;=P(R \geq r + E[R]) \cup P(R \leq E[R] -r)
+\end{aligned}$$</span></p>
+<p>or use the following Normal approximation:</p>
+<p><span class="math display">$$\text{two-sided p-value} =
+\begin{cases}
+2\Phi\left(\frac{r + 0.5 - E[R]}{\sqrt{Var[R]}}\right), &amp;r &gt;
+E[R]\\
+\\
+2\Phi\left(\frac{E[R]+ 0.5 -r}{\sqrt{Var[R]}}\right), &amp;r \leq E[R]
+\end{cases}$$</span></p>
+<p>where <span class="math inline"><em>r</em></span> is the observed
+number of runs and <span class="math inline"><em>Φ</em></span> is the
+cumulative distribution function of a standard Normal distribution.</p>
+<h2 id="non-binary-random-variable">Non-binary random variable</h2>
+<p>What if your random variable is a numerical? Well, you can
+dichotomize your numerical observations by checking if they are above or
+below the median. Observations equal to the median are omitted in this
+case.</p>
+<h1 id="rank-von-neumann-test">Rank von Neumann Test</h1>
+<p>Yet another test of randomness is called the rank von Neumann test.
+As you can tell from the name, this test uses ranks. Suppose that <span
+class="math inline"><em>X</em><sub><em>i</em></sub></span> where <span
+class="math inline"><em>i</em> ∈ {1, 2, …, <em>n</em>}</span> are
+independent and identically distributed (i.i.d.) continuous random
+variables with mean <span class="math inline"><em>μ</em></span> and
+variance <span class="math inline"><em>σ</em><sup>2</sup></span>. If
+<span class="math inline"><em>X</em><sub><em>i</em></sub></span>’s are
+truly i.i.d.,</p>
+<p><span class="math display">$$E\left[\sum_{i=1}^{n-1}[rank(X_i) -
+rank(X_{i+1})]^2 \right] = \frac{(n-1)(n^2+n)}{6}$$</span></p>
+<p>If there are no ties in the data (guaranteed if the random variables
+are continuous),</p>
+<p><span class="math display">$$\begin{aligned}
+\sum_{i=1}^n\left[ rank(X_i) - \overline{rank(X)}\right]^2 &amp;=
+\sum_{i=1}^n\left[rank(X_i) - \frac{n+1}{2}\right]\\
+\\
+&amp;= \sum_{i=1}^n \left[i - \frac{n+1}{2} \right]^2 \\
+\\
+&amp;=\frac{(n-1)(n^2+n)}{12}
+\end{aligned}$$</span></p>
+<p>Therefore, the test statistic <span
+class="math inline"><em>V</em></span>:</p>
+<p><span class="math display">$$V = \frac{\sum_{i=1}^{n-1}[rank(X_i) -
+rank(X_{i+1})]^2}{\sum_{i=1}^n\left[ rank(X_i) -
+\overline{rank(X)}\right]^2}$$</span></p>
+<p>has an expectation of 2 if <span
+class="math inline"><em>X</em><sub><em>i</em></sub></span>’s are
+i.i.d.</p>
+<p><span class="math display">$$E[V] =
+E\left[\frac{\sum_{i=1}^{n-1}[rank(X_i) -
+rank(X_{i+1})]^2}{\sum_{i=1}^n\left[ rank(X_i) -
+\overline{rank(X)}\right]^2} \right]=
+\frac{\frac{(n-1)(n^2+n)}{6}}{\frac{(n-1)(n^2+n)}{12}} = 2$$</span></p>
+<p>Under the null hypothesis that the <span
+class="math inline"><em>X</em><sub><em>i</em></sub></span>’s are i.i.d.,
+the distribution of <span class="math inline">$B=\frac{V}{4}$</span> can
+be approximated by a Beta distribution where both shape parameters
+are</p>
+<p><span class="math display">$$\alpha =
+\frac{1}{2}\left[\frac{5n(n+1)(n-1)^2}{(n-2)(5n^2-2n-9)}-1\right]$$</span></p>
+<p>If you’d rather stick to <span class="math inline"><em>V</em></span>,
+the distribution of <span class="math inline"><em>V</em></span> can be
+approximated by a Normal distribution with mean 2 (remember that <span
+class="math inline"><em>E</em>[<em>V</em>] = 2</span>), and variance</p>
+<p><span
+class="math display">$$\frac{4(n-2)(5n^2-2n-9)}{5n(n+1)(n-1)^2}$$</span></p>
+<h1 id="conclusion">Conclusion</h1>
+<p>There are other tests of randomness but these are the popular
+nonparametric tests. These may look intimidating at first, but the
+underlying principles are fairly simple. Additionally, the R package
+<code>randtests</code> have many nonparametric tests, including the ones
+introduced in this post (note that the rank von Neumann test is listed
+as the Bartels rank test in the <code>randtests</code> package). I hope
+you stop just assuming independence, as violation of this assumption can
+seriously affect the validity of your conclusions.</p>
+        </div>
+      </div>
+      <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+    </div>
+
+    <div id="mySidenav">
+      <a href="/index.html" id="home">Home</a>
+      <a href="/posts/index.html" id="blog">Blog</a>
+      <a href="/resume.pdf" id="resume">Resume</a>
+      <a href="/pets.html" id="pets">Pets</a>
+    </div>
+
+    <footer class="page-footer">
+      <div class="container">
+        This work is marked
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
+          >CC0 1.0 Universal</a
+        ><img
+          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        /><img
+          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        />
+    </footer>
+  </body>
+</html>

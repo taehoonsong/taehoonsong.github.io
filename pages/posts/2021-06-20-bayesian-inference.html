@@ -139,19 +139,21 @@ theory.</p>
             class="uk-overflow-container"
             data-uk-sticky="{top:25,media: 768}"
           >
-            <div class="uk-panel uk-panel-box menu-begin">
-               <ul>
-<li><a href="#defining-probability"
-id="toc-defining-probability">Defining probability</a></li>
-<li><a href="#bayes-theorem" id="toc-bayes-theorem">Bayes'
-Theorem</a></li>
-<li><a href="#power-of-bayesian-statistics"
-id="toc-power-of-bayesian-statistics">Power of Bayesian
-Statistics</a></li>
-<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
-</ul> 
+                        <div class="uk-panel uk-panel-box menu-begin">
+              <ul>
+              <li><a href="#defining-probability"
+              id="toc-defining-probability">Defining
+              probability</a></li>
+              <li><a href="#bayes-theorem" id="toc-bayes-theorem">Bayes'
+              Theorem</a></li>
+              <li><a href="#power-of-bayesian-statistics"
+              id="toc-power-of-bayesian-statistics">Power of Bayesian
+              Statistics</a></li>
+              <li><a href="#conclusion"
+              id="toc-conclusion">Conclusion</a></li>
+              </ul>
             </div>
-          </div>
+                      </div>
         </div>
 
         <div class="uk-width-medium-3-4">
@@ -170,23 +172,24 @@ frequency of heads will approach one half; so, the
 class="math inline"><sup>1</sup>/<sub>2</sub></span>. Note that the
 probability is assigned to the long-term process, not the individual
 event. This distinction comes into play when we look at hypothesis
-testing and confidence intervals later. <br/> <br/> While this approach
-makes sense for actions or processes that are repeatable, like a coin
-flip or a dice roll, most events in the world are not repeatable. Yet,
-we would like to assign some level of likelihood - whether based on
-facts, expert knowledge, or gut feeling - that some event may happen.
-There is no way of assigning probability to these types of events using
-strictly frequentist statistics. This is where Bayesians come in.
-Bayesians claim that probability represents our <em>degree of
-belief</em> of some event happening. We actually do this in everyday
-language. If someone asks you, "what's the likelihood that you're going
-to exercise tomorrow?" You can give an educated guess (or your degree of
-belief) on the likelihood, even if you've never been asked this question
-before. <br/> <br/> This subjectivity in defining probability is why
-most frequentists are uncomfortable with Bayesian statistics. Well, I
-would argue that frequentist statistics also has subjectivity. It's just
-pushed to a different part of the decision making process. Anyone who
-has taken introductory statistics courses would have heard of the
+testing and confidence intervals later.</p>
+<p>While this approach makes sense for actions or processes that are
+repeatable, like a coin flip or a dice roll, most events in the world
+are not repeatable. Yet, we would like to assign some level of
+likelihood - whether based on facts, expert knowledge, or gut feeling -
+that some event may happen. There is no way of assigning probability to
+these types of events using strictly frequentist statistics. This is
+where Bayesians come in. Bayesians claim that probability represents our
+<em>degree of belief</em> of some event happening. We actually do this
+in everyday language. If someone asks you, "what's the likelihood that
+you're going to exercise tomorrow?" You can give an educated guess (or
+your degree of belief) on the likelihood, even if you've never been
+asked this question before.</p>
+<p>This subjectivity in defining probability is why most frequentists
+are uncomfortable with Bayesian statistics. Well, I would argue that
+frequentist statistics also has subjectivity. It's just pushed to a
+different part of the decision making process. Anyone who has taken
+introductory statistics courses would have heard of the
 <em>p</em>-value. In frequentist statistics, the <em>p</em>-value
 doesn't represent the probability that your hypothesis is true. It
 represents the probability of selecting a sample that is as extreme or
@@ -204,8 +207,7 @@ in practice, statisticians use 0.05 as a cutoff for whether there is
 fancy. This is where the subjectivity in frequentist statistics lies. In
 contrast, Bayesian statistics would be able to tell you the probability
 of your hypothesis being true. Both frequentist statistics and Bayesian
-statistics have some level of subjectivity and that's ok. <br/>
-<br/></p>
+statistics have some level of subjectivity and that's ok.</p>
 <h1 id="bayes-theorem">Bayes' Theorem</h1>
 <p>Bayesian statistics is baed on (surprise, surprise) Bayes' theorem,
 named after Reverend Thomas Bayes. Bayes' theorem gives the probability
@@ -224,12 +226,13 @@ which all sum to at least 10. There are a total of 36 different ways to
 roll two dice (6 for each die). Therefore, <span
 class="math inline"><em>P</em>(<em>B</em>) = <sup>6</sup>/<sub>36</sub> = <sup>1</sup>/<sub>6</sub></span>.
 All possible combinations that meet both criteria are: (4,6), (6,4),
-(5,5), (5,6), (6,5), (6,6) <br/> <br/> Now, what if the first die turns
-out to be a 6 (event <span class="math inline"><em>A</em></span>) and
-you want to know the probability of the two rolls summing to at least 10
-(event <span class="math inline"><em>B</em></span>)? You already rolled
-a 6, so you have to roll at least a 4 for the second die. The
-probability of rolling a 4, a 5, or a 6 is <span
+(5,5), (5,6), (6,5), (6,6)</p>
+<p>Now, what if the first die turns out to be a 6 (event <span
+class="math inline"><em>A</em></span>) and you want to know the
+probability of the two rolls summing to at least 10 (event <span
+class="math inline"><em>B</em></span>)? You already rolled a 6, so you
+have to roll at least a 4 for the second die. The probability of rolling
+a 4, a 5, or a 6 is <span
 class="math inline"><sup>3</sup>/<sub>6</sub> = <sup>1</sup>/<sub>2</sub></span>.
 This is the conditional probability of event <span
 class="math inline"><em>B</em></span> given event <span
@@ -256,9 +259,12 @@ sex, etc.,</p>
 <p><span class="math display">$$\begin{aligned}
 P(Sick | Positive) &amp;= \frac{P(Positive | Sick) \cdot
 P(Sick)}{P(Positive)}\\
+\\
 &amp;=\frac{P(Positive | Sick) \cdot P(Sick)}{P(Positive | Sick) \cdot
 P(Sick) + P(Positive | Healthy) \cdot P(Healthy)}\\
+\\
 &amp;=\frac{0.95\times0.01}{0.95\times0.01 + (1-0.1)\times(1-0.01)}\\
+\\
 &amp;\approx 0.088
 \end{aligned}$$</span></p>
 <p>Even with a 95% accurate test, we see that the probability of
@@ -267,16 +273,16 @@ result. If the probability of being sick is 0.1% in your age group, then
 the probability that you are sick is less than 1% even if you get a
 positive test result. This should make intuitive sense. If you’re young
 and healthy, it’s probably more likely that the test returned a false
-positive. <br/> <br/></p>
+positive.</p>
 <h1 id="power-of-bayesian-statistics">Power of Bayesian Statistics</h1>
 <p>The above example is cool and all, but we still assumed that we knew
 the probability of being sick in your cohort, which is backed by data
 (or relative frequency of patients in your cohort). This may not seem
 too different from frequentist statistics. Well, it gets interesting
-when you don’t have any data yet or have very little data. <br/> <br/>
-Let’s say you developed a new survey and believe it will have a higher
-response rate than the existing survey. A frequentist approach is to
-send out the new survey to a sample of people and compare it to
+when you don’t have any data yet or have very little data.</p>
+<p>Let’s say you developed a new survey and believe it will have a
+higher response rate than the existing survey. A frequentist approach is
+to send out the new survey to a sample of people and compare it to
 historical response rates of the existing survey, or conduct A/B testing
 by using the existing survey to some people and the new survey to others
 and compare response rates. Either way, frequentists will conduct a
@@ -286,28 +292,29 @@ also create a confidence interval for the response rate, which
 represents the probability of selecting a sample that captures the true
 response rate. Remember that the confidence interval doesn’t tell you
 the probability of capturing the true parameter value (check out my <a
-href="./confidence-intervals.html">other post</a> if you’re shaky on
-confidence intervals). So, if the 95% confidence interval is <span
-class="math inline">(0.2, 0.4)</span>, it doesn’t mean that there is a
-95% chance that the true response rate is between 0.2 and 0.4. In
+href="2021-05-23-confidence-intervals.html">other post</a> if you’re
+shaky on confidence intervals). So, if the 95% confidence interval is
+<span class="math inline">(0.2, 0.4)</span>, it doesn’t mean that there
+is a 95% chance that the true response rate is between 0.2 and 0.4. In
 frequentist statistics, the true response rate (or parameter) is a fixed
 value and not random, meaning you cannot assign probability to the
 parameter value. This comes from the fact that frequentists see
 probability as a relative frequency of an event of interest in a
-long-term random process. <br/> <br/> In Bayesian statistics, however,
-probability represents a degree of belief, so it’s not against the rules
-to assign probabilities to parameters. A 95% Bayesian confidence
-interval (more commonly known as “credible intervals”) of <span
-class="math inline">(0.2, 0.4)</span> would exactly mean what we
-intuitively think: the true response rate of the new survey is within
-the interval <span class="math inline">(0.2, 0.4)</span> with 95%
-probability. To expand on the survey example, let’s say you consult an
-expert (or make an educated guess) that the response rate follows a
-<span
+long-term random process.</p>
+<p>In Bayesian statistics, however, probability represents a degree of
+belief, so it’s not against the rules to assign probabilities to
+parameters. A 95% Bayesian confidence interval (more commonly known as
+“credible intervals”) of <span class="math inline">(0.2, 0.4)</span>
+would exactly mean what we intuitively think: the true response rate of
+the new survey is within the interval <span
+class="math inline">(0.2, 0.4)</span> with 95% probability. To expand on
+the survey example, let’s say you consult an expert (or make an educated
+guess) that the response rate follows a <span
 class="math inline"><em>B</em><em>e</em><em>t</em><em>a</em>(1, 3)</span>
 distribution, which looks like the following:</p>
-<p><img src="/img/bayesian-inference-prior.png"
-title="Prior distribution" alt="bayesian-inference-prior" /></p>
+<p><img src="figures/bayesian-inference-prior.png"
+title="Prior distribution" style="margin:auto; display: block;"
+alt="bayesian-inference-prior" /></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assumptions</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>alpha0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="dv">3</span></span>
@@ -330,8 +337,9 @@ may notice that the interval is very wide and pretty much useless at
 this point. So let’s gather some data to improve our estimate. You give
 out 50 surveys and 22 people respond (44% response rate). Let’s see what
 happened to our distribution and credible interval.</p>
-<p><img src="/img/bayesian-inference-post.png"
+<p><img src="figures/bayesian-inference-post.png"
 title="Posterior distribution after one sample"
+style="margin:auto; display: block;"
 alt="bayesian-inference-post" /></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>alpha1 <span class="ot">&lt;-</span> alpha0 <span class="sc">+</span> <span class="dv">22</span></span>
@@ -353,14 +361,16 @@ important is that the distribution of the response rate is much narrower
 now. The 95% credible interval is <span
 class="math inline">(0.3, 0.56)</span>. Since our sample showed a 44%
 response rate, it makes sense that the credible interval focused around
-that value. <br/> <br/> You can go out and gather more data and improve
-your precision. If you surveyed an additional 50 people and this time
-only 13 people responded (26% response rate), the distribution will
-shift to reflect this fact. The green line below is centered around 0.3,
-because it’s considering the information from our prior belief and our
-two samples.</p>
-<p><img src="/img/bayesian-inference-post-2.png"
+that value.</p>
+<p>You can go out and gather more data and improve your precision. If
+you surveyed an additional 50 people and this time only 13 people
+responded (26% response rate), the distribution will shift to reflect
+this fact. The green line below is centered around 0.3, because it’s
+considering the information from our prior belief and our two
+samples.</p>
+<p><img src="figures/bayesian-inference-post-2.png"
 title="Posterior distribution after two samples"
+style="margin:auto; display: block;"
 alt="bayesian-inference-post-2" /></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect more data</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>alpha2 <span class="ot">&lt;-</span> alpha1 <span class="sc">+</span> <span class="dv">15</span></span>
@@ -388,7 +398,7 @@ credible interval is now <span class="math inline">(0.28, 0.46)</span>.
 So, the width of our credible interval started at 0.7 when we only had
 an educated guess, narrowed to 0.26 with the first sample, and further
 narrowed to 0.18 with the second sample. You can keep gathering more
-data until you hit a desired level of precision. <br/> <br/></p>
+data until you hit a desired level of precision.</p>
 <h1 id="conclusion">Conclusion</h1>
 <p>I hope this post gives enough information to appreciate the power of
 Bayesian statistics and why it’s becoming more prevalent. Bayesian
@@ -399,15 +409,16 @@ well-versed in statistics will be confused by the implication of the
 level of confidence or the <em>p</em>-value. Bayesian inference gives a
 much more intuitive result that states the probability of something
 being true. Often times, this is the information that decision makers
-care about. <br/> <br/> Bayesian models are also more flexible when
-dealing with multiple layers of uncertainty. For example, imagine that
-the response rate from our example above is required for another model.
-Frequentist models will have to assume that the response rate is a fixed
-value, which can underestimate the uncertainty associated with the
-result. On the other hand, Bayesian models can be hierarchical and
-propagate the uncertainty of not knowing the true response rate through
-multiple layers and reflect that uncertainty in the outcome. <br/> <br/>
-I’m a little disappointed that most statistics programs rarely teach
+care about.</p>
+<p>Bayesian models are also more flexible when dealing with multiple
+layers of uncertainty. For example, imagine that the response rate from
+our example above is required for another model. Frequentist models will
+have to assume that the response rate is a fixed value, which can
+underestimate the uncertainty associated with the result. On the other
+hand, Bayesian models can be hierarchical and propagate the uncertainty
+of not knowing the true response rate through multiple layers and
+reflect that uncertainty in the outcome.</p>
+<p>I’m a little disappointed that most statistics programs rarely teach
 Bayesian statistics, as it is such a powerful tool. Both frequentist and
 Bayesian statistics have their place. Frequentist methods are much more
 straightforward to implement and can be powerful when the data comes

@@ -1,0 +1,417 @@
+<!doctype html>
+<html  dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Confidence Intervals</title>
+
+        <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css"
+    />
+    
+    <!-- Icons -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+    <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+    <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
+    ></script>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css"
+    />
+    <link rel="stylesheet" href="/css/posts.css" />
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script src="uikit.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+    <!-- <script src="scripts.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+    <meta name="generator" content="pandoc-uikit" />
+         <meta name="date" content="2021-05-23" />
+        <title>Confidence Intervals</title>
+    <style type="text/css">
+      code {
+        white-space: pre;
+      }
+    </style>
+         <style type="text/css">
+      html { -webkit-text-size-adjust: 100%; }
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          color: #aaaaaa;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+      code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+      code span.at { color: #7d9029; } /* Attribute */
+      code span.bn { color: #40a070; } /* BaseN */
+      code span.bu { color: #008000; } /* BuiltIn */
+      code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #4070a0; } /* Char */
+      code span.cn { color: #880000; } /* Constant */
+      code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+      code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+      code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+      code span.dt { color: #902000; } /* DataType */
+      code span.dv { color: #40a070; } /* DecVal */
+      code span.er { color: #ff0000; font-weight: bold; } /* Error */
+      code span.ex { } /* Extension */
+      code span.fl { color: #40a070; } /* Float */
+      code span.fu { color: #06287e; } /* Function */
+      code span.im { color: #008000; font-weight: bold; } /* Import */
+      code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+      code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+      code span.op { color: #666666; } /* Operator */
+      code span.ot { color: #007020; } /* Other */
+      code span.pp { color: #bc7a00; } /* Preprocessor */
+      code span.sc { color: #4070a0; } /* SpecialChar */
+      code span.ss { color: #bb6688; } /* SpecialString */
+      code span.st { color: #4070a0; } /* String */
+      code span.va { color: #19177c; } /* Variable */
+      code span.vs { color: #4070a0; } /* VerbatimString */
+      code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+       
+  </head>
+
+  <body>
+        <header class="page-header">
+      <div class="container">
+        <div class="header-top flex-responsive">
+          <h1 class="header-info">Confidence Intervals</h1>
+          <br />
+                    <h2 class="header-label">2021-05-23</h2>
+                     <p class="header-summary">Confidence intervals are
+more complicated than you think.</p>
+                  </div>
+      </div>
+    </header>
+    
+    <div
+      class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom"
+    >
+      <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-4">
+          <div
+            class="uk-overflow-container"
+            data-uk-sticky="{top:25,media: 768}"
+          >
+                        <div class="uk-panel uk-panel-box menu-begin">
+              <ul>
+              <li><a href="#introduction"
+              id="toc-introduction">Introduction</a></li>
+              <li><a href="#misunderstanding"
+              id="toc-misunderstanding">Misunderstanding</a></li>
+              <li><a href="#what-is-a-confidence-interval"
+              id="toc-what-is-a-confidence-interval">What is a
+              confidence interval?</a></li>
+              <li><a href="#conclusion"
+              id="toc-conclusion">Conclusion</a></li>
+              </ul>
+            </div>
+                      </div>
+        </div>
+
+        <div class="uk-width-medium-3-4">
+           <h1 id="introduction">Introduction</h1>
+<p>Before we jump into what confidence intervals are, it’s important to
+go over some basic terminology. In the field of statistics, a
+<strong>population</strong> is the entire set of things, people, or
+events that are of interest. For example, if you wanted to know the
+average height of students in your school, the population is all
+students in your school. If you wanted to know the average height of all
+high school students in the U.S., then all high school students in the
+U.S. is your population. A <strong>parameter</strong> is something you
+can calculate from the population. In my previous example, the average
+height is the parameter.</p>
+<p>The problem is that it is usually extremely difficult, impractical,
+or both to gather data on the population. So, statisticians almost
+always deal with a <strong>sample</strong>, which is a subset of the
+population of interest. Then, a <strong>statistic</strong> is something
+you can calculate from the sample. To continue with the previous
+example, if you’re interested in the average height of students in your
+school, you can select 50 students from your school and measure their
+heights. Those 50 students are your sample and the average height of
+those 50 students is a statistic. If you selected your sample
+appropriately (random, independent, and representative of your
+population), you can make inference on the population and parameter even
+though you only have data on 50 students.</p>
+<h1 id="misunderstanding">Misunderstanding</h1>
+<p>Similar to the Central Limit Theorem, there are common misconceptions
+on how to interpret the confidence interval. <strong>A confidence
+interval does NOT give you the probability of a parameter falling inside
+the interval.</strong> I'm going to pick on <em>Investopedia</em>
+because it's one of the first websites that come up when you search for
+confidence interval. This is one of the key takeaways:</p>
+<blockquote>
+<p>A confidence interval is the probability that a parameter will fall
+between a pair of values.</p>
+<p><a
+href="https://www.investopedia.com/terms/c/confidenceinterval.asp">Investopedia:
+Confidence Interval</a> (Accessed on 2021-05-22)</p>
+</blockquote>
+<p>I just claimed this is false. What is the <em>correct</em> way to
+interpret a confidence interval then? I'm going to make use of the
+Central Limit Theorem, so if you're not familiar, check out my <a
+href="./2021-05-17-central-limit-theorem.html">previous post</a></p>
+<h1 id="what-is-a-confidence-interval">What is a confidence
+interval?</h1>
+<p>There is a reason why this interval is called the confidence interval
+and not something else, like a probability interval. In essence, a
+confidence interval is meant to portray some level of uncertainty. We do
+this in every day life as well. When someone asks you, “what do you
+think is the average salary in your company?” You can make an educated
+guess but you’re not sure (unless you actually know everyone’s salary).
+So, you would probably say something like “I think it’s about x dollars,
+give or take a few thousand.” A confidence interval is a statistically
+rigorous way of saying “give or take”.</p>
+<p>The problem is that a <strong>parameter</strong> is considered to be
+an <em>unknown but fixed</em> value. Bayesian statistics is a little
+different, but I won’t go into that here. In the above example where
+someone asks for the average salary at your company, there is an unknown
+(to you) but fixed (not random) value that is the true average salary at
+your company. If you knew everyone’s salary, you can easily calculate
+the average and it wouldn’t change for a given date and time. This is
+why a 95% or 99% confidence interval doesn’t represent the probability
+that the parameter falls within that interval. The parameter is a fixed
+value; there is nothing random about it.</p>
+<p>What is interesting to notice is that the <strong>sample</strong> you
+select from the population is random. If you randomly select 50 people
+from your company multiple times, you’re probably not going to get the
+same 50 people every time. This means that the average you calculate
+from your sample is going to depend on who was selected when you decided
+to take the sample. The distribution of this sample average is the
+<strong>sampling distribution</strong> of the sample mean and according
+to the Central Limit Theorem, this distribution approximates a Normal
+distribution if certain conditions are met.</p>
+<p>Let’s say that a company has 10,000 employees whose salaries range
+from $40,000 to $500,000. You’re interested in the average salary at
+this company so you randomly select 50 employees and ask for their
+salary (assume that people are not hesitant to share this
+information).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20210523</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate random salaries from Uniform distribution and round to $000&#39;s</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This is the population</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="at">n=</span><span class="dv">10000</span>, <span class="at">min=</span><span class="dv">40000</span>, <span class="at">max=</span><span class="dv">500000</span>), <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>param <span class="ot">&lt;-</span> <span class="fu">mean</span>(pop) <span class="co"># this is the parameter: population average salary</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly sample 50 employees and calculate average</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>samp1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(pop, <span class="at">size=</span><span class="dv">50</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(samp1)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly select 50 employees again</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>samp2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(pop, <span class="at">size=</span><span class="dv">50</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(samp2)</span></code></pre></div>
+<p>When you run the R code above, you’ll notice that the two sample
+averages are pretty close to the population average but the two samples
+have different means. This is due to the random nature of selecting the
+sample. Additionally, due to time and cost, you usually only have a
+single sample from the population. This means that when you construct a
+confidence interval from the sample you obtained, the population
+parameter can either fall inside the interval or outside the interval.
+<strong>Notice that you would have no way of knowing whether the sample
+you collected generated a confidence interval that captured the
+parameter!</strong></p>
+<p>The confidence level (95%, 99%, etc) indicates that if you were to
+draw samples many, many times from the same population and checked how
+many of them contained the population parameter, you will see that about
+95% (or whatever your desired confidence level is) of the generated
+intervals will have contained the population parameter. Still confused?
+The R code below is going to draw a sample of 50 people from the same
+population, construct a confidence interval, and see if the population
+parameter falls inside the interval. We’ll do this 10,000 times.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate sampling multiple times from the population</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>numSim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>contain <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># counter</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain critical value from t-distribution with n-1 degrees of freedom</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>crit <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p=</span><span class="fl">0.995</span>, <span class="at">df=</span>n<span class="dv">-1</span>) <span class="co"># for 99% confidence interval</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># initialize result matrix</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nr=</span>numSim, <span class="at">nc=</span><span class="dv">4</span>) </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sample.mean&quot;</span>, <span class="st">&quot;ci.lower&quot;</span>, <span class="st">&quot;ci.upper&quot;</span>, <span class="st">&quot;capture&quot;</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>results[,<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>numSim){</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(pop, <span class="at">size=</span>n)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  samp_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  samp_se <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp) <span class="sc">/</span> <span class="fu">sqrt</span>(n) <span class="co"># standard error</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># construct confidence interval</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  me <span class="ot">&lt;-</span> samp_se <span class="sc">*</span> crit <span class="co"># margin of error</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  ci_lower <span class="ot">&lt;-</span> samp_mean <span class="sc">-</span> me <span class="co"># lower bound</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  ci_upper <span class="ot">&lt;-</span> samp_mean <span class="sc">+</span> me <span class="co"># upper bound</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># keep results for visualization</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  results[i,<span class="dv">1</span>] <span class="ot">&lt;-</span> samp_mean</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  results[i,<span class="dv">2</span>] <span class="ot">&lt;-</span> ci_lower</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  results[i,<span class="dv">3</span>] <span class="ot">&lt;-</span> ci_upper</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># count up if the interval contains the population parameter</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (ci_lower <span class="sc">&lt;=</span> param <span class="sc">&amp;&amp;</span> param <span class="sc">&lt;=</span> ci_upper){</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    results[i,<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    contain <span class="ot">&lt;-</span> contain <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Print proportion of intervals containing the parameter</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(contain <span class="sc">/</span> numSim)</span></code></pre></div>
+<p>You will see that the proportion of intervals containing the
+population parameter is around 0.99. This is what we expect since we
+wanted a 99% confidence interval. As you increase the number of
+simulations (try setting numSim to 100,000), the proportion will tend
+toward 0.99.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(results) <span class="co">#convert matrix to tibble for visualization</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram of sample means</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results, <span class="fu">aes</span>(<span class="at">x=</span>sample.mean))<span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color=</span><span class="st">&quot;darkgray&quot;</span>, <span class="at">fill=</span><span class="st">&quot;steelblue&quot;</span>, <span class="at">binwidth=</span><span class="dv">10000</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span>param, <span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">&quot;Distribution of&quot;</span>, numSim, <span class="st">&quot;Sample Means&quot;</span>), <span class="at">x=</span><span class="st">&quot;Sample Mean&quot;</span>, <span class="at">y=</span><span class="st">&quot;Frequency&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>))</span></code></pre></div>
+<p><img src="figures/ci-distribution.png"
+title="Distribution of 10,000 sample means"
+style="margin:auto; display: block;" alt="ci-distribution" /></p>
+<p>In the above plot, you’ll notice that the sampling distribution is
+close to a Normal distribution, as expected per the Central Limit
+Theorem. The red vertical line represents the population parameter
+value. If you were to pick a random value from the sampling distribution
+and construct a confidence interval around it, many of them would
+capture the red line. However, if you happened to choose extreme values
+at the tails of the distribution, intervals generated from those extreme
+values may not be long enough to capture the red line. This means that
+if you want to make sure that your interval captures the parameter, you
+can widen the interval (increase the confidence level). Another way is
+to increase the sample size. Here, we took a sample of 50 people, but it
+you took a sample of 100 people, your estimates would be more accurate.
+In terms of the sampling distribution, this means that the distribution
+will become narrower.</p>
+<p>I hope this makes you realize that the randomness comes from the
+sample. So, the “confidence” in confidence interval refers to our
+confidence in the process of generating the interval. Therefore, the
+correct way to interpret a confidence interval is: “<strong>We are x%
+confident that the interval from a to b will capture the population
+parameter.</strong>” Why? Because the interval we generated from our
+sample is one of many possibilities and we a certain proportion (our
+confidence level) of those possibilities will have generated confidence
+intervals that capture the population parameter. Take a look at this
+plot that shows a few sample means, their respective confidence
+intervals, and whether the interval captures the parameter value.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample 5 CIs that captured the parameter and 5 that did not capture the parameter</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>success <span class="ot">&lt;-</span> results <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(capture<span class="sc">==</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">5</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>failure <span class="ot">&lt;-</span> results <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(capture<span class="sc">==</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">5</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>stacked <span class="ot">&lt;-</span> <span class="fu">rbind</span>(success, failure) <span class="sc">%&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(sample.mean) <span class="sc">%&gt;%</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="fu">row_number</span>(),<span class="at">capture=</span><span class="fu">as_factor</span>(capture))</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot them</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stacked,<span class="fu">aes</span>(<span class="at">y=</span>index)) <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">150000</span>,<span class="dv">400000</span>)) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>sample.mean, <span class="at">color=</span>capture)) <span class="sc">+</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span>param) <span class="sc">+</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span>ci.lower, <span class="at">xend=</span>ci.upper, <span class="at">yend=</span>index, <span class="at">color=</span>capture), <span class="at">linetype=</span><span class="st">&quot;longdash&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>param, <span class="at">y=</span><span class="fl">1.5</span>, <span class="at">label=</span><span class="st">&quot;← Parameter Value&quot;</span>), <span class="at">nudge_x=</span><span class="dv">30000</span>) <span class="sc">+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name=</span><span class="st">&quot;Capture?&quot;</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;False&quot;</span>,<span class="st">&quot;True&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Sample Mean&quot;</span>)</span></code></pre></div>
+<p><img src="figures/ci-capture.png"
+title="Distribution of 10,000 sample means"
+style="margin:auto; display: block;" alt="ci-capture" /></p>
+<p>It is very important to remember that we don’t assign any level of
+confidence or probability to the parameter. <strong>The parameter is not
+random; the samples and their corresponding means/intervals
+are!</strong></p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Honestly, the correct way to interpret a confidence interval is not
+intuitive. We’re used to assigning probabilities to indicate our degree
+of belief about some unknown thing. In fact, this is exactly how
+Bayesian statistics view probabilities. I will cover Bayesian statistics
+in a future post.</p>
+<p>I hope this clears up any misconceptions about the confidence
+interval and gives you a better understanding of why we must interpret
+confidence intervals in a specific manner.</p>
+        </div>
+      </div>
+      <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+    </div>
+
+    <div id="mySidenav">
+      <a href="/index.html" id="home">Home</a>
+      <a href="/posts/index.html" id="blog">Blog</a>
+      <a href="/resume.pdf" id="resume">Resume</a>
+      <a href="/pets.html" id="pets">Pets</a>
+    </div>
+
+    <footer class="page-footer">
+      <div class="container">
+        This work is marked
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
+          >CC0 1.0 Universal</a
+        ><img
+          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        /><img
+          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        />
+    </footer>
+  </body>
+</html>
