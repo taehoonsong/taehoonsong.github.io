@@ -14,4 +14,4 @@ trap 'kill "$http_server_pid"; exit' SIGINT
 
 # Watch for file changes
 cd -
-watchman-make -p "content/*" "static/**/*" "templates/*" "generate_website.py" -r "./build.sh all"
+watchman-make -p "content/*" "static/**/*" "templates/*" "filters/*" "generate_website.py" -r "./build.sh all"

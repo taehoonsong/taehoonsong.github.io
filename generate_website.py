@@ -13,6 +13,7 @@ from slugify import slugify
 SRC_PATH = Path("content")
 OUTPUT_PATH = Path("pages")
 TEMPLATE_PATH = Path("templates")
+FILTER_PATH = Path("filters")
 STATIC_DIR = Path("static")
 PET_DIR = STATIC_DIR / "img" / "pets"
 PET_DIR.mkdir(exist_ok=True, parents=True)
@@ -118,7 +119,7 @@ def render_template(template_name: str, export_path: Path, env: Environment, dat
 
 def render_posts() -> None:
     t = TEMPLATE_PATH / "post.html"
-    lua_filters = [f"{TEMPLATE_PATH}/{lf.name}" for lf in TEMPLATE_PATH.glob("*.lua")]
+    lua_filters = [f"{FILTER_PATH}/{lf.name}" for lf in FILTER_PATH.iterdir()]
     out_path = OUTPUT_PATH / "posts"
     out_path.mkdir(exist_ok=True)
 
