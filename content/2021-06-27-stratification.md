@@ -58,11 +58,13 @@ assign(paste0("sample_", n), pop %>% slice_sample(n=n) %>%
    summarize(SampleSize = n, EstTotal = mean(y)*N, SE=sqrt(g*var(y)), ME=SE*t, RP=ME/EstTotal))
 ```
 
+
 | **Sample Size** | **Estimated Total Business Expense** | **t critical value** | **Standard Error** | **Margin of Error** | **Relative Precision** |
 | :-:             | :-:                                  | :-:                  | :-:                | :-:                 | :-:                    |
 | 30              | 855,810                              | 2.045                | 185,317            | 379,015             | 44.3%                  |
 | 100             | 713,650                              | 1.984                | 84,555             | 167,775             | 23.5%                  |
 
+**Table 1:** Simple random sample results
 
 As expected, the larger sample has a much lower standard error and a better estimate. Relative precision is simply the margin of error divided by the estimate. We can see that more than tripling our sample size only yielded in halving the standard error. The plot below shows the sampling distribution of the estimate over 10,000 samples for both sample sizes.
 
