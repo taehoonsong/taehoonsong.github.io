@@ -6,7 +6,7 @@ if FORMAT:match("html") then
 		end
 		
 		-- Replace local markdown links to html.
-		local new_str = elem.target:gsub("(%.?%/?.*)(.md)", "%1.html")
+		local new_str = elem.target:gsub("(%.?%/?.*)(%.md)", "%1.html")
 		elem.target = new_str
 		return elem
 	end
