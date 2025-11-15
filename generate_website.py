@@ -66,8 +66,12 @@ def get_blog_metadata(file: Path) -> BlogPost:
     return meta
 
 
+def _valid_blog_post(path: Path) -> bool:
+    return all((path.is_file(), path.suffix.lower() == ".md", "draft" not in path.stem.lower()))
+
+
 def get_blog_post_data() -> BlogPostIndex:
-    post_list = [get_blog_metadata(post) for post in SRC_PATH.iterdir() if post.suffix.lower() == ".md"]
+    post_list = [get_blog_metadata(post) for post in SRC_PATH.iterdir() if _valid_blog_post(post)]
     post_list.sort(key=lambda x: x.get("date"), reverse=True)
 
     return {"posts": post_list}
@@ -133,7 +137,7 @@ def render_posts() -> None:
             outputfile=out_path / f"{get_blog_metadata(file).get('file_path')}",
         )
         for file in SRC_PATH.iterdir()
-        if file.suffix.lower() == ".md"
+        if _valid_blog_post(file)
     ]
 
 
