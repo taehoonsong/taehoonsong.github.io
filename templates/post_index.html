@@ -99,13 +99,10 @@
     <div class="container">
       <main>
         <section>
-          {% set ns = namespace(thisyear=now.year) %}
-          {% for post in posts %} 
-          {% set postyear = post.date.year %}
-          {% if ns.thisyear != postyear %}
-            <h2 class="section-heading">{{ postyear }}</h2>
-            {% set ns.thisyear = postyear %}
-          {% endif %}
+          {% set ns = namespace() %} {% for post in posts %} {% set postyear =
+          post.date.year %} {% if ns.thisyear != postyear %}
+          <h2 class="section-heading">{{ postyear }}</h2>
+          {% set ns.thisyear = postyear %} {% endif %}
           <ul>
             <li>
               <a href="{{ post.file_path }}"
