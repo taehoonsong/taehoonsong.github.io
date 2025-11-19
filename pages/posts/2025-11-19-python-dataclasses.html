@@ -1,0 +1,397 @@
+<!doctype html>
+<html  dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reduce boilerplate code with Python dataclasses</title>
+
+        <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css"
+    />
+    
+    <!-- Icons -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+    <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+    <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
+    ></script>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css"
+    />
+    <link rel="stylesheet" href="/css/posts.css" />
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script src="uikit.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+    <!-- <script src="scripts.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+    <meta name="generator" content="pandoc-uikit" />
+         <meta name="date" content="2025-11-19" />
+        <title>Reduce boilerplate code with Python dataclasses</title>
+    <style type="text/css">
+      code {
+        white-space: pre;
+      }
+    </style>
+         <style type="text/css">
+      html { -webkit-text-size-adjust: 100%; }
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          color: #aaaaaa;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+      code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+      code span.at { color: #7d9029; } /* Attribute */
+      code span.bn { color: #40a070; } /* BaseN */
+      code span.bu { color: #008000; } /* BuiltIn */
+      code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #4070a0; } /* Char */
+      code span.cn { color: #880000; } /* Constant */
+      code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+      code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+      code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+      code span.dt { color: #902000; } /* DataType */
+      code span.dv { color: #40a070; } /* DecVal */
+      code span.er { color: #ff0000; font-weight: bold; } /* Error */
+      code span.ex { } /* Extension */
+      code span.fl { color: #40a070; } /* Float */
+      code span.fu { color: #06287e; } /* Function */
+      code span.im { color: #008000; font-weight: bold; } /* Import */
+      code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+      code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+      code span.op { color: #666666; } /* Operator */
+      code span.ot { color: #007020; } /* Other */
+      code span.pp { color: #bc7a00; } /* Preprocessor */
+      code span.sc { color: #4070a0; } /* SpecialChar */
+      code span.ss { color: #bb6688; } /* SpecialString */
+      code span.st { color: #4070a0; } /* String */
+      code span.va { color: #19177c; } /* Variable */
+      code span.vs { color: #4070a0; } /* VerbatimString */
+      code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+       
+  </head>
+
+  <body>
+        <header class="page-header">
+      <div class="container">
+        <div class="header-top flex-responsive">
+          <h1 class="header-info">Reduce boilerplate code with Python
+dataclasses</h1>
+          <br />
+                    <h2 class="header-label">2025-11-19</h2>
+                     <p class="header-summary">Setting up a class just
+to store some data can be annoying because of all the boilerplate code
+required. Let's look at some solutions to make your life a little
+easier.</p>
+                  </div>
+      </div>
+    </header>
+    
+    <div
+      class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom"
+    >
+      <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-4">
+          <div
+            class="uk-overflow-container"
+            data-uk-sticky="{top:25,media: 768}"
+          >
+                        <div class="uk-panel uk-panel-box menu-begin">
+              <ul>
+              <li><a href="#motivation"
+              id="toc-motivation">Motivation</a></li>
+              <li><a href="#dataclasses"
+              id="toc-dataclasses">Dataclasses</a></li>
+              <li><a href="#alternatives"
+              id="toc-alternatives">Alternatives</a>
+              <ul>
+              <li><a href="#built-in-alternatives"
+              id="toc-built-in-alternatives">Built-in
+              alternatives</a></li>
+              <li><a href="#pydantic"
+              id="toc-pydantic">Pydantic</a></li>
+              </ul></li>
+              <li><a href="#conclusion"
+              id="toc-conclusion">Conclusion</a></li>
+              </ul>
+            </div>
+                      </div>
+        </div>
+
+        <div class="uk-width-medium-3-4">
+           <h1 id="motivation">Motivation</h1>
+<p>You made a simple program that uses a rectangle. You could specify
+the length and width for each function that is going to use the
+rectangle. But, you're a smart programmer. You're going to wrap them in
+a dictionary or a class so you can easily move the entire rectangle data
+in one argument. Let's say you would prefer a class because maybe
+there's a couple of helpful utility functions to include with the data.
+In regular Python, it may look something like this:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Rectangle:</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, length: <span class="bu">float</span>, width: <span class="bu">float</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.length <span class="op">=</span> length</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.width <span class="op">=</span> width</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">@property</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> area(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.length <span class="op">*</span> <span class="va">self</span>.width</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">@property</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> perimeter(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> (<span class="va">self</span>.length <span class="op">+</span> <span class="va">self</span>.width)</span></code></pre></div>
+<p>Simple enough. But later, you realize that the <code>print</code>
+method only shows the memory address of the object, which isn't helpful
+at all. So you implement a <code>__repr__</code> method to your class.
+You also need to compare two rectangles, so you implement the
+<code>__eq__</code> method as well.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> __future__ <span class="im">import</span> annotations</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Rectangle:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__eq__</span>(<span class="va">self</span>, other: <span class="st">&quot;Rectangle&quot;</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.length <span class="op">==</span> other.length <span class="op">&amp;</span> <span class="va">self</span>.width <span class="op">==</span> other.width</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f&quot;Rectangle(length=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>length<span class="sc">}</span><span class="ss">, width=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>width<span class="sc">}</span><span class="ss">)&quot;</span></span></code></pre></div>
+<p>Wait, you also need to check if length and width are non-zero
+positive numbers. Let's add a check in the init stage. The final class
+looks like:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> __future__ <span class="im">import</span> annotations</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Rectangle:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, length: <span class="bu">float</span>, width: <span class="bu">float</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> length <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;Length must be positive.&quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> width <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;Width must be positive.&quot;</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.length <span class="op">=</span> length</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.width <span class="op">=</span> width</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">@property</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> area(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.length <span class="op">*</span> <span class="va">self</span>.width</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">@property</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> perimeter(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> (<span class="va">self</span>.length <span class="op">+</span> <span class="va">self</span>.width)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__eq__</span>(<span class="va">self</span>, other: <span class="st">&quot;Rectangle&quot;</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.length <span class="op">==</span> other.length <span class="op">&amp;</span> <span class="va">self</span>.width <span class="op">==</span> other.width</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f&quot;Rectangle(length=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>length<span class="sc">}</span><span class="ss">, width=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>width<span class="sc">}</span><span class="ss">)&quot;</span></span></code></pre></div>
+<p>If your entire project has this one class, this doesn't seem so bad.
+However, it's likely that you're going have more classes. If not now,
+then probably later. What about a Circle class or a Cube class? Will you
+have to write all this boilerplate every time you make a new object for
+your program? If you read the title of the blog, you know the answer is:
+<strong>No</strong>.</p>
+<h1 id="dataclasses">Dataclasses</h1>
+<p>Python dataclasses offer a easy to use decorator that can handle most
+of your dataclass needs. For example, the Rectangle class from above can
+be written as:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Rectangle:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  length: <span class="bu">float</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  width: <span class="bu">float</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> __post_init__(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> length <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;Length must be positive.&quot;</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> width <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;Wdith must be positive.&quot;</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">@property</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> area(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.length <span class="op">*</span> <span class="va">self</span>.width</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">@property</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> perimeter(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> (<span class="va">self</span>.length <span class="op">+</span> <span class="va">self</span>.width)</span></code></pre></div>
+<p>You can see that we no longer need to have the <code>__init__</code>,
+<code>__eq__</code>, and <code>__repr__</code> methods, leaving only the
+class specific details for you to implement. The decorator also took
+care of <code>__hash__</code>, which we forgot to implement in the
+original Rectangle class. These methods are required for certain
+features to work, but can be tedious to implement if all you want is a
+simple class to hold some data. The <code>dataclasses</code> module
+exists to solve this exact issue. I hope it's not difficult to see why
+dataclasses can be so helpful in your projects.</p>
+<h1 id="alternatives">Alternatives</h1>
+<h2 id="built-in-alternatives">Built-in alternatives</h2>
+<p>What if you don't need properties? Well, then I would highly suggest
+<code>NamedTuple</code> or <code>TypedDict</code>, depending on your use
+case. Let's convert the Rectangle class into each of these.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> NamedTuple, TypedDict</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> T_Rectangle(NamedTuple):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  length: <span class="bu">float</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  width: <span class="bu">float</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> T_Rectangle(<span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> T_Rectangle(length<span class="op">=</span><span class="dv">2</span>, width<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> D_Rectangle(TypedDict):</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  length: <span class="bu">float</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  width: <span class="bu">float</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> D_Rectangle(length<span class="op">=</span><span class="dv">3</span>, width<span class="op">=</span><span class="dv">6</span>) <span class="co"># must use keyword arguments</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(b)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> { <span class="st">&#39;length&#39;</span>: <span class="dv">3</span>, <span class="st">&#39;width&#39;</span>: <span class="dv">6</span> }</span></code></pre></div>
+<p>You can immediately notice that <code>TypedDict</code> is very
+different just by looking at the <code>print</code> statement. That's
+because, under the hood, it's just a regular Python dictionary. On the
+other hand, <code>NamedTuple</code> looks pretty similar to our
+Rectangle class and for simple objects <code>NamedTuple</code> might be
+better than a dataclass. You can even add the <code>area</code> and
+<code>perimeter</code> methods to the <code>NamedTuple</code> object.
+However, there are caveats.</p>
+<ol type="1">
+<li>Because <code>NamedTuple</code> is a <code>tuple</code> in disguise,
+you cannot modify values after initialization. Depending on what you
+want to do, this may be good or bad. To freeze the values for a
+dataclass object, you can use <code>@dataclass(frozen=True)</code>.</li>
+<li>It's not "pythonic" to add methods to a <code>NamedTuple</code>
+class, even though Python lets you. If you really need the extra
+performance of a <code>NamedTuple</code> over a dataclass, maybe Python
+isn't the correct language for your project.</li>
+</ol>
+<h2 id="pydantic">Pydantic</h2>
+<p>One of the most popular alternatives to dataclasses is the <a
+href="https://github.com/pydantic/pydantic">pydantic package</a>. It
+provides much more granular control over the class, such as continuous
+validation of data. A regular Python dataclass can validate data at the
+initialization stage, but Pydantic allows you to validate data as the
+attribute is updated. So, this package is the go-to solution when
+building/dealing with APIs. Pydantic's capabilities are too much to
+cover in this blog post, but I highly recommend readers to check if out
+if you need strict control over every piece of data in your project.
+Here's what the Rectangle class would look like using pydantic:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> ConfigDict, PositiveFloat</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic.dataclasses <span class="im">import</span> dataclass</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span>(config<span class="op">=</span>ConfigDict(validate_assignment<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Rectangle:</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    length: PositiveFloat</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    width: PositiveFloat</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> area(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.length <span class="op">*</span> <span class="va">self</span>.width</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> perimeter(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> (<span class="va">self</span>.length <span class="op">+</span> <span class="va">self</span>.width)</span></code></pre></div>
+<p>The <code>validate_assignment=True</code> tells pydantic to
+revalidate the data when a new value is assigned. This ensures that both
+<code>length</code> and <code>width</code> are positive. You can
+implement this without pydantic, using getters and setters. However,
+this allows you to focus on the implementation details over data
+validation. However, because we're dealing with Python, you can override
+anything you want. For example, we can bypass Pydantic's validator by
+using <code>__setattr__</code>:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> Rectangle(length<span class="op">=</span><span class="dv">5</span>, width<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">object</span>.<span class="fu">__setattr__</span>(r, <span class="st">&quot;length&quot;</span>, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Rectangle(length<span class="op">=-</span><span class="dv">1</span>, width<span class="op">=</span><span class="fl">10.0</span>)</span></code></pre></div>
+<p>But, if you're doing this, I hope you know what you're doing because
+you're going against the intended design of the class.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Python being Python, there are many ways to solve one problem. In
+order to reduce boilerplate code for data-centric objects, start with
+the built-in <code>dataclasses</code> module and see if it meets all of
+your needs. You could look into <code>NamedTuple</code> or
+<code>TypedDict</code>, if you think a regular dataclass is unnecessary.
+However, if you find yourself trying to implement more checks into your
+dataclass, maybe it's time to use <code>pydantic</code> and let it
+handle all the boilerplate code for you. It might be more upfront work,
+but it can save you tons of time by removing unnecessary debugging and
+testing down the road.</p>
+        </div>
+      </div>
+      <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+    </div>
+
+    <div id="mySidenav">
+      <a href="/index.html" id="home">Home</a>
+      <a href="/posts/index.html" id="blog">Blog</a>
+      <a href="/resume.pdf" id="resume">Resume</a>
+      <a href="/pets.html" id="pets">Pets</a>
+    </div>
+
+    <footer class="page-footer">
+      <div class="container">
+        This work is marked
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
+          >CC0 1.0 Universal</a
+        ><img
+          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        /><img
+          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
+          alt=""
+          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
+        />
+    </footer>
+  </body>
+</html>
