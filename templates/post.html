@@ -1,142 +1,117 @@
 <!doctype html>
 <html $if(lang)$ lang="$lang$" $endif$ dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>$if(title)$$title$$endif$</title>
 
-    $if(template_css)$
-    <link rel="stylesheet" href="$template_css$" />
-    $else$
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css"
-    />
-    $endif$
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>$if(title)$$title$$endif$</title>
 
-    <!-- Icons -->
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
-    <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
-    <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+  $if(template_css)$
+  <link rel="stylesheet" href="$template_css$" />
+  $else$
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css" />
+  $endif$
 
-    <script
-      id="MathJax-script"
-      async
-      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
-    ></script>
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css"
-    />
-    <link rel="stylesheet" href="/css/posts.css" />
-    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-    <!-- <script src="uikit.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
-    <!-- <script src="scripts.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
-    <!-- <script src="jquery.sticky-kit.js "></script> -->
-    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+  <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+  <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
 
-    <meta name="generator" content="pandoc-uikit" />
-    $for(author-meta)$
-    <meta name="author" content="$author-meta$" />
-    $endfor$ $if(date-meta)$
-    <meta name="date" content="$date-meta$" />
-    $endif$
-    <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
-    <style type="text/css">
-      code {
-        white-space: pre;
-      }
-    </style>
-    $if(quotes)$
-    <style type="text/css">
-      q {
-        quotes: "“" "”" "‘" "’";
-      }
-    </style>
-    $endif$ $if(highlighting-css)$
-    <style type="text/css">
-      $highlighting-css$
-    </style>
-    $endif$ $for(css)$
-    <link
-      rel="stylesheet"
-      href="$css$"
-      $if(html5)$$else$type="text/css"
-      $endif$
-    />
-    $endfor$ $if(math)$ $math$ $endif$ $for(header-includes)$ $header-includes$
-    $endfor$
-  </head>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css" />
+  <link rel="stylesheet" href="/css/posts.css" />
+  <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <!-- <script src="uikit.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+  <!-- <script src="scripts.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+  <!-- <script src="jquery.sticky-kit.js "></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
 
-  <body>
-    $if(title)$
-    <header class="page-header">
-      <div class="container">
-        <div class="header-top flex-responsive">
-          <h1 class="header-info">$title$</h1>
-          <br />
-          $if(date)$
-          <h2 class="header-label">$date$</h2>
-          $endif$ $if(summary)$
-          <p class="header-summary">$summary$</p>
+  <meta name="generator" content="pandoc-uikit" />
+  $for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+  $endfor$ $if(date-meta)$
+  <meta name="date" content="$date-meta$" />
+  $endif$
+  <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
+  <style type="text/css">
+    code {
+      white-space: pre;
+    }
+  </style>
+  $if(quotes)$
+  <style type="text/css">
+    q {
+      quotes: "“" "”" "‘" "’";
+    }
+  </style>
+  $endif$ $if(highlighting-css)$
+  <style type="text/css">
+    $highlighting-css$
+  </style>
+  $endif$ $for(css)$
+  <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$ />
+  $endfor$ $if(math)$ $math$ $endif$ $for(header-includes)$ $header-includes$
+  $endfor$
+</head>
+
+<body>
+  $if(title)$
+  <header class="page-header">
+    <div class="container">
+      <div class="header-top flex-responsive">
+        <h1 class="header-info">$title$</h1>
+        <br />
+        $if(date)$
+        <h2 class="header-label">$date$</h2>
+        $endif$ $if(summary)$
+        <p class="header-summary">$summary$</p>
+        $endif$
+      </div>
+    </div>
+  </header>
+  $endif$
+
+  <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="uk-grid" data-uk-grid-margin>
+      <div class="uk-width-medium-1-4">
+        <div class="uk-overflow-container" data-uk-sticky="{top:25,media: 768}">
+          $if(toc)$
+          <div class="uk-panel uk-panel-box menu-begin">
+            $toc$
+          </div>
           $endif$
         </div>
       </div>
-    </header>
-    $endif$
 
-    <div
-      class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom"
-    >
-      <div class="uk-grid" data-uk-grid-margin>
-        <div class="uk-width-medium-1-4">
-          <div
-            class="uk-overflow-container"
-            data-uk-sticky="{top:25,media: 768}"
-          >
-            $if(toc)$
-            <div class="uk-panel uk-panel-box menu-begin">
-              $toc$
-            </div>
-            $endif$
-          </div>
-        </div>
-
-        <div class="uk-width-medium-3-4">
-          $if(abstract)$
-          <h1>$abstract-title$</h1>
-          $abstract$ $endif$ $body$
-        </div>
+      <div class="uk-width-medium-3-4">
+        $if(abstract)$
+        <h1>$abstract-title$</h1>
+        $abstract$ $endif$ $body$
       </div>
-      <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
     </div>
+    <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+  </div>
 
-    <div id="mySidenav">
-      <a href="/index.html" id="home">Home</a>
-      <a href="/posts/index.html" id="blog">Blog</a>
-      <a href="/resume.pdf" id="resume">Resume</a>
-      <a href="/pets.html" id="pets">Pets</a>
-    </div>
+  <div id="mySidenav">
+    <a href="/index.html" id="home">Home</a>
+    <a href="/posts/index.html" id="blog">Blog</a>
+    <a href="/resume.pdf" id="resume">Resume</a>
+    <a href="/pets.html" id="pets">Pets</a>
+  </div>
 
-    <footer class="page-footer">
-      <div class="container">
-        This work is marked
-        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
-          >CC0 1.0 Universal</a
-        ><img
-          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
-          alt=""
-          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
-        /><img
-          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
-          alt=""
-          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
-        />
-    </footer>
-  </body>
+  <footer class="page-footer">
+    <div class="container">
+      This work is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img
+        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+        src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"></div>
+  </footer>
+</body>
+
 </html>

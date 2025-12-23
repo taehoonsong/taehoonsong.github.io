@@ -1,143 +1,122 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Website description -->
-    <title>{{ website_title }} - Posts</title>
-    <meta name="description" content="{{ name }} - {{ summary }}" />
-    <meta name="author" content="{{ name }}" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="{{ name }}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ base_url }}/index.html" />
-    <meta property="og:image" content="{{ base_url }}/{{ image_path }}" />
-    <meta property="og:image:alt" content="{{ name }} Profile Image" />
+  <!-- Website description -->
+  <title>{{ website_title }} - Posts</title>
+  <meta name="description" content="{{ name }} - {{ summary }}" />
+  <meta name="author" content="{{ name }}" />
 
-    <!-- Icons -->
-    <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
-    <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
-    <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="{{ name }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ base_url }}/index.html" />
+  <meta property="og:image" content="{{ base_url }}/{{ image_path }}" />
+  <meta property="og:image:alt" content="{{ name }} Profile Image" />
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="/css/modern_normalize.css" />
-    <link rel="stylesheet" href="/css/html5bp.css" />
-    <link rel="stylesheet" href="/css/main.css" />
-    <link rel="stylesheet" href="/css/sidenav.css" />
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+  <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+  <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-    <!-- Theme -->
-    <meta name="theme-color" content="#fafafa" />
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/modern_normalize.css" />
+  <link rel="stylesheet" href="/css/html5bp.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/sidenav.css" />
 
-    <!-- Content Security Policy: Update if adding external sources (e.g., Google Fonts, Bootstrap CDN, analytics, etc). -->
-    <!-- style-src, script-src, img-src: separate sources with spaces -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content=" default-src 'self'; "
-    />
-  </head>
+  <!-- Theme -->
+  <meta name="theme-color" content="#fafafa" />
 
-  <body>
-    <header class="page-header">
-      <div class="container">
-        <div class="header-top flex-responsive">
-          {% if image_path %}
-          <img
-            class="header-image"
-            width="256"
-            height="256"
-            src="/{{ image_path }}"
-            alt="{{ name }} Profile Image"
-          />
-          {% endif %}
-          <div class="header-info">
-            <h1>
-              {{ first_name }} {% if nickname %} ({{ nickname }}) {% endif %} {{
-              last_name }}
-            </h1>
-            {% if label %}
-            <h2 class="header-label">{{ label }}</h2>
-            {% endif %} {% if contact.email or contact.phone or contact.location
-            %}
-            <address>
-              <ul class="inline-list flex-responsive">
-                {% if contact.email %}
-                <li>
-                  <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
-                </li>
-                {% endif %} {% if contact.location %}
-                <li>{{ contact.location }}</li>
-                {% endif %}
-              </ul>
-            </address>
-            {% endif %} {% if social_media_links %}
+  <!-- Content Security Policy: Update if adding external sources (e.g., Google Fonts, Bootstrap CDN, analytics, etc). -->
+  <!-- style-src, script-src, img-src: separate sources with spaces -->
+  <meta http-equiv="Content-Security-Policy" content=" default-src 'self'; " />
+</head>
+
+<body>
+  <header class="page-header">
+    <div class="container">
+      <div class="header-top flex-responsive">
+        {% if image_path %}
+        <img class="header-image" width="256" height="256" src="/{{ image_path }}" alt="{{ name }} Profile Image" />
+        {% endif %}
+        <div class="header-info">
+          <h1>
+            {{ first_name }} {% if nickname %} ({{ nickname }}) {% endif %} {{
+            last_name }}
+          </h1>
+          {% if label %}
+          <h2 class="header-label">{{ label }}</h2>
+          {% endif %} {% if contact.email or contact.phone or contact.location
+          %}
+          <address>
             <ul class="inline-list flex-responsive">
-              {% for link in social_media_links %}
+              {% if contact.email %}
               <li>
-                <a
-                  href="{{ link.url }}"
-                  rel="noopener noreferrer"
-                  aria-label="{{ link.label }}"
-                  class="link-with-icon"
-                >
-                  {% if link.svg_data %}{{ link.svg_data | safe }}{% endif %} {{
-                  link.label }}
-                </a>
+                <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
               </li>
-              {% endfor %}
+              {% endif %} {% if contact.location %}
+              <li>{{ contact.location }}</li>
+              {% endif %}
             </ul>
-            {% endif %} {% if summary %}
-            <p class="header-summary">{{ summary }}</p>
-            {% endif %}
-          </div>
+          </address>
+          {% endif %} {% if social_media_links %}
+          <ul class="inline-list flex-responsive">
+            {% for link in social_media_links %}
+            <li>
+              <a href="{{ link.url }}" rel="noopener noreferrer" aria-label="{{ link.label }}" class="link-with-icon">
+                {% if link.svg_data %}{{ link.svg_data | safe }}{% endif %} {{
+                link.label }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %} {% if summary %}
+          <p class="header-summary">{{ summary }}</p>
+          {% endif %}
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
+  <div class="container">
+    <main>
+      <section>
+        {% set ns = namespace() %} {% for post in posts %} {% set postyear =
+        post.date.year %} {% if ns.thisyear != postyear %}
+        <h2 class="section-heading">{{ postyear }}</h2>
+        {% set ns.thisyear = postyear %} {% endif %}
+        <ul>
+          <li>
+            <a href="{{ post.file_path }}">{{ strftime(post.date, "%B %-d") }} - {{ post.title }}</a>
+          </li>
+        </ul>
+        {% endfor %}
+      </section>
+    </main>
+  </div>
+
+  <div id="mySidenav" class="sidenav">
+    <a href="/index.html" id="home">Home</a>
+    <a href="/posts/index.html" id="blog">Blog</a>
+    <a href="/resume.pdf" id="resume">Resume</a>
+    <a href="/pets.html" id="pets">Pets</a>
+  </div>
+
+  <footer class="page-footer">
     <div class="container">
-      <main>
-        <section>
-          {% set ns = namespace() %} {% for post in posts %} {% set postyear =
-          post.date.year %} {% if ns.thisyear != postyear %}
-          <h2 class="section-heading">{{ postyear }}</h2>
-          {% set ns.thisyear = postyear %} {% endif %}
-          <ul>
-            <li>
-              <a href="{{ post.file_path }}"
-                >{{ strftime(post.date, "%B %-d") }} - {{ post.title }}</a
-              >
-            </li>
-          </ul>
-          {% endfor %}
-        </section>
-      </main>
+      This work is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img
+        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+        src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;">
+      <!-- <p>© {{ now.year }} {{ name }}. All rights reserved.</p> -->
     </div>
+  </footer>
+</body>
 
-    <div id="mySidenav" class="sidenav">
-      <a href="/index.html" id="home">Home</a>
-      <a href="/posts/index.html" id="blog">Blog</a>
-      <a href="/resume.pdf" id="resume">Resume</a>
-      <a href="/pets.html" id="pets">Pets</a>
-    </div>
-
-    <footer class="page-footer">
-      <div class="container">
-        This work is marked
-        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
-          >CC0 1.0 Universal</a
-        ><img
-          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
-          alt=""
-          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
-        /><img
-          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
-          alt=""
-          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
-        />
-        <!-- <p>© {{ now.year }} {{ name }}. All rights reserved.</p> -->
-      </div>
-    </footer>
-  </body>
 </html>
