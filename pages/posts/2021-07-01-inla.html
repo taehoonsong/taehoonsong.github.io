@@ -1,115 +1,98 @@
 <!doctype html>
 <html  dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faster Bayesian Inference with INLA</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css" />
+  
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+  <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+  <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css" />
+  <link rel="stylesheet" href="/css/posts.css" />
+  <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <!-- <script src="uikit.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+  <!-- <script src="scripts.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+  <!-- <script src="jquery.sticky-kit.js "></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+  <meta name="generator" content="pandoc-uikit" />
+     <meta name="date" content="2021-07-01" />
     <title>Faster Bayesian Inference with INLA</title>
+  <style type="text/css">
+    code {
+      white-space: pre;
+    }
+  </style>
+      
+</head>
 
-        <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css"
-    />
-    
-    <!-- Icons -->
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
-    <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
-    <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
-
-    <script
-      id="MathJax-script"
-      async
-      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
-    ></script>
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css"
-    />
-    <link rel="stylesheet" href="/css/posts.css" />
-    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-    <!-- <script src="uikit.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
-    <!-- <script src="scripts.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
-    <!-- <script src="jquery.sticky-kit.js "></script> -->
-    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
-
-    <meta name="generator" content="pandoc-uikit" />
-         <meta name="date" content="2021-07-01" />
-        <title>Faster Bayesian Inference with INLA</title>
-    <style type="text/css">
-      code {
-        white-space: pre;
-      }
-    </style>
-        
-  </head>
-
-  <body>
-        <header class="page-header">
-      <div class="container">
-        <div class="header-top flex-responsive">
-          <h1 class="header-info">Faster Bayesian Inference with
-INLA</h1>
-          <br />
-                    <h2 class="header-label">2021-07-01</h2>
-                     <p class="header-summary">Bayesian inference is
+<body>
+    <header class="page-header">
+    <div class="container">
+      <div class="header-top flex-responsive">
+        <h1 class="header-info">Faster Bayesian Inference with INLA</h1>
+        <br />
+                <h2 class="header-label">2021-07-01</h2>
+                 <p class="header-summary">Bayesian inference is
 powerful, but can be slow even with modern hardware. Integrated nested
 Laplace approximation (INLA) is a relatively new method that aims to
 solve this problem.</p>
+              </div>
+    </div>
+  </header>
+  
+  <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="uk-grid" data-uk-grid-margin>
+      <div class="uk-width-medium-1-4">
+        <div class="uk-overflow-container" data-uk-sticky="{top:25,media: 768}">
+                    <div class="uk-panel uk-panel-box menu-begin">
+            <ul>
+            <li><a href="#introduction"
+            id="toc-introduction">Introduction</a></li>
+            <li><a href="#statistical-methods"
+            id="toc-statistical-methods">Statistical Methods</a>
+            <ul>
+            <li><a href="#markov-chain-monte-carlo-mcmc"
+            id="toc-markov-chain-monte-carlo-mcmc">Markov chain Monte
+            Carlo (MCMC)</a></li>
+            <li><a href="#integrated-nested-laplace-approximation-inla"
+            id="toc-integrated-nested-laplace-approximation-inla">Integrated
+            nested Laplace approximation (INLA)</a></li>
+            </ul></li>
+            <li><a href="#results" id="toc-results">Results</a>
+            <ul>
+            <li><a href="#run-times-seconds"
+            id="toc-run-times-seconds">Run times (seconds)</a></li>
+            <li><a href="#mean-squared-error-mse"
+            id="toc-mean-squared-error-mse">Mean Squared Error
+            (MSE)</a></li>
+            <li><a href="#mean-squared-prediction-error-mspe"
+            id="toc-mean-squared-prediction-error-mspe">Mean Squared
+            Prediction Error (MSPE)</a></li>
+            </ul></li>
+            <li><a href="#conclusion"
+            id="toc-conclusion">Conclusion</a></li>
+            <li><a href="#additional-resources"
+            id="toc-additional-resources">Additional Resources</a></li>
+            </ul>
+          </div>
                   </div>
       </div>
-    </header>
-    
-    <div
-      class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom"
-    >
-      <div class="uk-grid" data-uk-grid-margin>
-        <div class="uk-width-medium-1-4">
-          <div
-            class="uk-overflow-container"
-            data-uk-sticky="{top:25,media: 768}"
-          >
-                        <div class="uk-panel uk-panel-box menu-begin">
-              <ul>
-              <li><a href="#introduction"
-              id="toc-introduction">Introduction</a></li>
-              <li><a href="#statistical-methods"
-              id="toc-statistical-methods">Statistical Methods</a>
-              <ul>
-              <li><a href="#markov-chain-monte-carlo-mcmc"
-              id="toc-markov-chain-monte-carlo-mcmc">Markov chain Monte
-              Carlo (MCMC)</a></li>
-              <li><a
-              href="#integrated-nested-laplace-approximation-inla"
-              id="toc-integrated-nested-laplace-approximation-inla">Integrated
-              nested Laplace approximation (INLA)</a></li>
-              </ul></li>
-              <li><a href="#results" id="toc-results">Results</a>
-              <ul>
-              <li><a href="#run-times-seconds"
-              id="toc-run-times-seconds">Run times (seconds)</a></li>
-              <li><a href="#mean-squared-error-mse"
-              id="toc-mean-squared-error-mse">Mean Squared Error
-              (MSE)</a></li>
-              <li><a href="#mean-squared-prediction-error-mspe"
-              id="toc-mean-squared-prediction-error-mspe">Mean Squared
-              Prediction Error (MSPE)</a></li>
-              </ul></li>
-              <li><a href="#conclusion"
-              id="toc-conclusion">Conclusion</a></li>
-              <li><a href="#additional-resources"
-              id="toc-additional-resources">Additional
-              Resources</a></li>
-              </ul>
-            </div>
-                      </div>
-        </div>
 
-        <div class="uk-width-medium-3-4">
-           <h1 id="introduction">Introduction</h1>
+      <div class="uk-width-medium-3-4">
+         <h1 id="introduction">Introduction</h1>
 <p>It is no secret that Bayesian statistics – Markov chain Monte Carlo
 (MCMC) methods in particular – has been gaining popularity in the past
 couple of decades. I remember making memes in undergrad about how
@@ -660,32 +643,26 @@ Bakka's Online Course Topics for Bayesian Modeling</a></li>
 href="https://becarioprecario.bitbucket.io/inla-gitbook/index.html">Bayesian
 inference with INLA</a></li>
 </ul>
-        </div>
       </div>
-      <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
     </div>
+    <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+  </div>
 
-    <div id="mySidenav">
-      <a href="/index.html" id="home">Home</a>
-      <a href="/posts/index.html" id="blog">Blog</a>
-      <a href="/resume.pdf" id="resume">Resume</a>
-      <a href="/pets.html" id="pets">Pets</a>
-    </div>
+  <div id="mySidenav">
+    <a href="/index.html" id="home">Home</a>
+    <a href="/posts/index.html" id="blog">Blog</a>
+    <a href="/resume.pdf" id="resume">Resume</a>
+    <a href="/pets.html" id="pets">Pets</a>
+  </div>
 
-    <footer class="page-footer">
-      <div class="container">
-        This work is marked
-        <a href="https://creativecommons.org/publicdomain/zero/1.0/"
-          >CC0 1.0 Universal</a
-        ><img
-          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
-          alt=""
-          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
-        /><img
-          src="https://mirrors.creativecommons.org/presskit/icons/zero.svg"
-          alt=""
-          style="max-width: 1em; max-height: 1em; margin-left: 0.2em"
-        />
-    </footer>
-  </body>
+  <footer class="page-footer">
+    <div class="container">
+      This work is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img
+        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+        src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"></div>
+  </footer>
+</body>
+
 </html>
