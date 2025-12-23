@@ -6,7 +6,9 @@ Use jinja templates to generate a personal website. Inspired by [portfolio_gener
 
 ## Prerequisites
 1. [uv](https://github.com/astral-sh/uv) is available and the repo has been initialized by `uv sync`.
-1. [pandoc](https://pandoc.org), [pywatchman](https://github.com/facebook/watchman)
+2. [pandoc](https://pandoc.org)
+3. [pywatchman](https://github.com/facebook/watchman)
+4. pdflatex, latexmk (usually bundled with TeX distributions)
 
 ## Usage
 Run [`serve.sh`](./serve.sh)
