@@ -10,7 +10,7 @@ http_server_pid=$!
 # Trap sigint and kill all background processes
 trap 'kill "$http_server_pid"; exit' SIGINT
 
-# xdg-open "http://localhost:8000"
+xdg-open "http://localhost:8000"
 
 # Watch for file changes
 cd -
