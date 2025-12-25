@@ -1,0 +1,194 @@
+<!doctype html>
+<html  dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Build your own API client using requests and httpx</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css" />
+  
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+  <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+  <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css" />
+  <link rel="stylesheet" href="/css/posts.css" />
+  <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <!-- <script src="uikit.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+  <!-- <script src="scripts.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+  <!-- <script src="jquery.sticky-kit.js "></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+  <meta name="generator" content="pandoc-uikit" />
+     <meta name="date" content="2025-12-24" />
+    <title>Build your own API client using requests and httpx</title>
+  <style type="text/css">
+    code {
+      white-space: pre;
+    }
+  </style>
+      
+</head>
+
+<body>
+    <header class="page-header">
+    <div class="container">
+      <div class="header-top flex-responsive">
+        <h1 class="header-info">Build your own API client using requests
+and httpx</h1>
+        <br />
+                <h2 class="header-label">2025-12-24</h2>
+                 <p class="header-summary">The <code>requests</code>
+module is popular for interacting with APIs on Python. You can easily
+check how web APIs work and build a prototype in minutes. However, it's
+not the most efficient use of time since the sc<Find>ript is I/O-bound.
+Try using <code>httpx</code> instead!</p>
+              </div>
+    </div>
+  </header>
+  
+  <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="uk-grid" data-uk-grid-margin>
+      <div class="uk-width-medium-1-4">
+        <div class="uk-overflow-container" data-uk-sticky="{top:25,media: 768}">
+                    <div class="uk-panel uk-panel-box menu-begin">
+            <ul>
+            <li><a href="#data-source" id="toc-data-source">Data
+            source</a></li>
+            <li><a href="#sample-code" id="toc-sample-code">Sample
+            code</a></li>
+            <li><a href="#synchronous-api-client"
+            id="toc-synchronous-api-client">Synchronous API
+            client</a></li>
+            <li><a href="#whats-wrong-with-synchronous-code"
+            id="toc-whats-wrong-with-synchronous-code">What's wrong with
+            synchronous code?</a></li>
+            <li><a href="#asynchronous-api-client"
+            id="toc-asynchronous-api-client">Asynchronous API
+            client</a></li>
+            <li><a href="#what-should-i-use"
+            id="toc-what-should-i-use">What should I use?</a></li>
+            </ul>
+          </div>
+                  </div>
+      </div>
+
+      <div class="uk-width-medium-3-4">
+         <h1 id="data-source">Data source</h1>
+<p>For this article, I'll be using the <a
+href="https://fred.stlouisfed.org/docs/api/fred/">Federval Reserve Bank
+at St. Louis (FRED) API Version 1</a>. To follow along, please create an
+account and generate an API key. Familiarize yourself with the <a
+href="https://fred.stlouisfed.org/docs/api/terms_of_use.html">FRED API
+Terms of Use</a>.</p>
+<h1 id="sample-code">Sample code</h1>
+<p>I uploaded some example API client code to my <a
+href="https://github.com/taehoonsong/blog-examples/tree/requests-vs-httpx">GitHub
+repo</a> for this blog post. Clone the repo with the following
+command:</p>
+<pre><code>git clone -b requests-vs-httpx https://github.com/taehoonsong/blog-examples.git ./requests-vs-httpx</code></pre>
+<p>and initialize project with (assuming you have <a
+href="https://github.com/astral-sh/uv">uv</a> installed)</p>
+<pre><code>cd requests-vs-httpx &amp;&amp; uv sync</code></pre>
+<p>if you're just using <code>pip</code></p>
+<pre><code>cd requests-vs-httpx &amp;&amp; pip install -r requirements.txt</code></pre>
+<p>The main branch doesn't have anything, so make sure to include
+<code>-b requests-vs-httpx</code> to specify the branch. Once cloned,
+add a <code>.env</code> file inside the <code>requests-vs-httpx</code>
+folder with the your FRED API key. The <code>.env</code> file should
+look like this:</p>
+<pre><code>FRED_API=&lt;YOUR API KEY HERE&gt;</code></pre>
+<h1 id="synchronous-api-client">Synchronous API client</h1>
+<p>You're assigned to write a Python script that retrieves some economic
+data. For sake of this example, let's say the data provider limits the
+API by only allowing one month of data per request. Many real-world APIs
+have some sort of rate limit, so I put this artificial limit instead.
+Based on a quick Google search, you find out that the
+<code>requests</code> module is the go-to tool for handling web requests
+on Python. You find a helpful repo with an <a
+href="https://github.com/taehoonsong/blog-examples/blob/requests-vs-httpx/src/01-requests.py">example
+synchronous API client</a>. Let's test this out.</p>
+<pre><code>&gt;&gt;&gt; uv run 01-requests.py
+&gt;&gt;&gt; `requests` took: 2.8 seconds to download data from 2025-01-01 to 2025-12-31.</code></pre>
+<p>This result will vary depending on the state of the API and your
+internet connection, but this doesn't seem too bad at all. Only 2.8
+seconds to download 12 months of data. You can simply build your example
+based on this script and be done with the project. However, you know you
+can make the script more efficient if you use asynchronous (async)
+code.</p>
+<h1 id="whats-wrong-with-synchronous-code">What's wrong with synchronous
+code?</h1>
+<p>There's nothing inherently wrong with synchronous code. Depending on
+the task, you may want the code to be strictly synchronous. In many
+cases, however, your computer ends up wasting a lot of time waiting for
+something to happen. This mainly occurs when operations are I/O-bound.
+Web requests are a perfect example of this. In the synchrounous example
+above, each request took about 230ms on average, which may be plenty
+fast depending on your goals. However, after the first API request, each
+subsequent request doesn't go out until the previous request gets a
+response. This means if there's an issue in one of the requests, all
+subsequent requests will be waiting.</p>
+<h1 id="asynchronous-api-client">Asynchronous API client</h1>
+<p>The better way to do this would be to submit all requests at once and
+wait for the responses as they come in. This is what async code allows
+us to do. Here's an <a
+href="https://github.com/taehoonsong/blog-examples/blob/requests-vs-httpx/src/02-httpx.py">example
+async API client</a>. The trade-off is that you have to use
+<code>asyncio</code> to invoke async code and there are specific rules
+about what you can and cannot use. For example, you cannot simply pass a
+list or range to an asynchronous for loop because Python cannot
+guarantee the order of operations. So, I have to generate the list of
+parameters first and pass that to the client. But, the benefit is
+clear:</p>
+<pre><code>&gt;&gt;&gt; uv run 02-httpx.py
+&gt;&gt;&gt; `httpx` took: 0.5 seconds to download data from 2025-01-01 to 2025-12-31.</code></pre>
+<p>That's nearly an six-fold reduction in time. The difference will be
+more apparent when you're dealing with even more requests.</p>
+<h1 id="what-should-i-use">What should I use?</h1>
+<p>This depends on the scope of your project. If you're making a few web
+requests and slightly longer run times are acceptable, using synchronous
+code makes sense. It's also much easier to follow the code. I will note
+that <code>httpx</code> also supports synchronous clients, so there's no
+need to use <code>requests</code>. When you look at the <a
+href="https://github.com/taehoonsong/blog-examples/blob/requests-vs-httpx/src/01-requests.py">synchronous
+client example</a>, you'll notice that I'm using f-strings to pass in
+the API parameters, whereas in the <a
+href="https://github.com/taehoonsong/blog-examples/blob/requests-vs-httpx/src/02-httpx.py">async
+client example</a>, I'm passing a dictionary to the client. This is only
+one of the niceties that <code>httpx</code> has over
+<code>requests</code>.</p>
+<p>Now, if you're making hundreds of web requests, each millisecond
+starts to matter. If you haven't tried out writing asynchronous code, I
+highly encourage you to try. Even though it's a bit more work to set up
+the client, the time savings may be worth it.</p>
+      </div>
+    </div>
+    <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+  </div>
+
+  <div id="mySidenav">
+    <a href="/index.html" id="home">Home</a>
+    <a href="/posts/index.html" id="blog">Blog</a>
+    <a href="/resume.pdf" id="resume">Resume</a>
+    <a href="/pets.html" id="pets">Pets</a>
+  </div>
+
+  <footer class="page-footer">
+    <div class="container">
+      This work is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img
+        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+        src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"></div>
+  </footer>
+</body>
+
+</html>
