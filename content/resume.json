@@ -32,15 +32,24 @@
   "current_work": [
     {
       "company": "Cohen Milstein Sellers & Toll, PLLC",
-      "position": "Data Engineer",
+      "positions": [
+        {
+          "title": "Senior Data Engineer",
+          "start_date": "Jan 2026",
+          "end_date": "Present"
+        },
+        {
+          "title": "Data Engineer",
+          "start_date": "Sep 2022",
+          "end_date": "Dec 2025"
+        }
+      ],
       "location": "Washington, DC",
       "url": "https://www.cohenmilstein.com",
-      "start_date": "Sep 2022",
-      "end_date": "Present",
       "highlights": [
-        "Lead the design, implementation, maintenance, and optimization of data pipelines, databases, and application infrastructures.",
-        "Develop Python apps that automate existing processes, create data solutions for ligitation support, or assist in case development.",
-        "Modernize legacy Python, SQL, and VBA code to be more secure and performant; migrate all authentication systems to use SSO.",
+        "Design, implement, maintain, and optimize data pipelines, databases, and application infrastructures.",
+        "Develop Python apps that automate existing processes, create data solutions for ligitation support, or assist in case development for the Securities Pratice Group.",
+        "Rewrite and refactor legacy Python, SQL, and VBA code to keep up with modern security and coding standards; migrate all authentication systems to use SSO.",
         "Evaluate AI solutions for the Firm with respect to data privacy, security, and impact as a member of the Firm's AI Committee."
       ]
     }
@@ -48,11 +57,20 @@
   "relevant_work": [
     {
       "company": "Grant Thornton LLP",
-      "position": "Statistician",
+      "positions": [
+        {
+          "title": "Manager - Statistician",
+          "start_date": "Aug 2022",
+          "end_date": "Aug 2022"
+        },
+        {
+          "title": "Senior Associate - Statistician",
+          "start_date": "May 2021",
+          "end_date": "July 2022"
+        }
+      ],
       "location": "Washington, DC",
       "url": "https://www.grantthornton.com",
-      "start_date": "May 2021",
-      "end_date": "Aug 2022",
       "highlights": [
         "Designed efficient statistical samples for federal and state taxes, audits, and other program analytic purposes, saving hundreds to thousands of staff hours per engagement.",
         "Helped win over $8 million in government contract awards in 2022 by authoring technical sections related to statistical sampling and data analytics in RFPs.",
@@ -61,11 +79,15 @@
     },
     {
       "company": "Cohen Milstein Sellers & Toll, PLLC",
-      "position": "Data Analyst",
+      "positions": [
+        {
+          "title": "Data Analyst",
+          "start_date": "Jun 2016",
+          "end_date": "May 2019"
+        }
+      ],
       "location": "Washington, DC",
       "url": "https://www.cohenmilstein.com",
-      "start_date": "Jun 2016",
-      "end_date": "May 2019",
       "highlights": [
         "Researched securities frauds and market manipulation involving various financial instruments; frequently worked with Antitrust or ERISA practice group attorneys to assist with financial data analysis.",
         "Analyzed trading data sets, recognized trends and patterns, validated data integrity; audited and monitored investment data for institutional investors to calculate potential damages relating to securities class actions.",
@@ -74,11 +96,15 @@
     },
     {
       "company": "RiskEcon Lab, New York University Courant Institute",
-      "position": "Research Intern",
+      "positions": [
+        {
+          "title": "Research Intern",
+          "start_date": "Oct 2015",
+          "end_date": "May 2016"
+        }
+      ],
       "location": "New York, NY",
       "url": "https://wp.nyu.edu/riskeconlab",
-      "start_date": "Oct 2015",
-      "end_date": "May 2016",
       "highlights": [
         "Aggregated and analyzed biodiversity data from proprietary and federal databases; reviewed literature on biodiversity data collection methods.",
         "Analyzed quantitative data from the railroad transportation industry to implement a financial model that considers potential economic and environmental losses due to derailments.",
