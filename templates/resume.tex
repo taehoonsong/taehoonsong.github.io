@@ -3,6 +3,7 @@
 \definecolor{darkgray}{HTML}{333333}
 \definecolor{lightgray}{HTML}{999999}
 \usepackage{geometry}
+\usepackage{enumitem}
 \setlength\parindent{0pt}
 \usepackage{hyperref}
 \usepackage{bold-extra}
@@ -52,13 +53,17 @@
 
 \begin{small}
   <BLOCK>for job in current_work</BLOCK>
-  \textbf{<VAR>job.company|replace("&","\\&")|safe</VAR>} \hfill
-  \textcolor{gray}{<VAR>job.location</VAR>}\\
-  \textit{<VAR>job.position</VAR>} \hfill
-  \textcolor{gray}{<VAR>job.start_date</VAR> -- <VAR>job.end_date</VAR>}\\
-  \vspace{-1mm}
+  \textbf{<VAR>job.company|replace("&","\\&")|safe</VAR>} \hfill \textcolor{gray}{<VAR>job.location</VAR>}
+  <BLOCK>for position in job.positions</BLOCK>
+  \textit{<VAR>position.title|replace("-","--")</VAR>} \hfill <BLOCK>if position.start_date != position.end_date</BLOCK>
+  \textcolor{gray}{<VAR>position.start_date</VAR> -- <VAR>position.end_date</VAR>}
+  <BLOCK>else</BLOCK>
+  \textcolor{gray}{<VAR>position.start_date</VAR>}
+  <BLOCK>endif</BLOCK>
+  <BLOCK>endfor</BLOCK>
+  \vspace{-2mm}
 
-  \begin{itemize}
+  \begin{itemize}[leftmargin=0.5cm]
       \setlength\itemsep{-1mm}
       <BLOCK>for highlight in job.highlights</BLOCK>
     \item <VAR>highlight|replace("$","\\$")|replace("&","\\&")|safe</VAR>
@@ -82,13 +87,17 @@
 
 \begin{small}
   <BLOCK>for job in relevant_work</BLOCK>
-  \textbf{<VAR>job.company|replace("&","\\&")|safe</VAR>} \hfill
-  \textcolor{gray}{<VAR>job.location</VAR>}\\
-  \textit{<VAR>job.position</VAR>} \hfill
-  \textcolor{gray}{<VAR>job.start_date</VAR> -- <VAR>job.end_date</VAR>}\\
+  \textbf{<VAR>job.company|replace("&","\\&")|safe</VAR>} \hfill \textcolor{gray}{<VAR>job.location</VAR>}
+  <BLOCK>for position in job.positions</BLOCK>
+  \textit{<VAR>position.title|replace("-","--")</VAR>} \hfill <BLOCK>if position.start_date != position.end_date</BLOCK>
+  \textcolor{gray}{<VAR>position.start_date</VAR> -- <VAR>position.end_date</VAR>}
+  <BLOCK>else</BLOCK>
+  \textcolor{gray}{<VAR>position.start_date</VAR>}
+  <BLOCK>endif</BLOCK>
+  <BLOCK>endfor</BLOCK>
   \vspace{-2mm}
 
-  \begin{itemize}
+  \begin{itemize}[leftmargin=0.5cm]
       \setlength\itemsep{-1mm}
       <BLOCK>for highlight in job.highlights</BLOCK>
     \item <VAR>highlight|replace("$","\\$")|replace("&","\\&")|safe</VAR>
