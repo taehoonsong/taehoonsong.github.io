@@ -47,9 +47,9 @@
       "location": "Washington, DC",
       "url": "https://www.cohenmilstein.com",
       "highlights": [
-        "Design, implement, maintain, and optimize data pipelines, databases, and application infrastructures.",
-        "Develop Python apps that automate existing processes, create data solutions for ligitation support, or assist in case development for the Securities Pratice Group.",
-        "Rewrite and refactor legacy Python, SQL, and VBA code to keep up with modern security and coding standards; migrate all authentication systems to use SSO.",
+        "Develop Python solutions that help find new case opportunities, streamline ETL processes, or provide user interfaces for various scripts; create and maintain data solutions for ligitation support.",
+        "Refactor or replace legacy Python, SQL, and VBA code to keep up with modern security and coding standards; migrate all authentication systems to use SSO.",
+        "Design, implement, maintain, and optimize data pipelines, databases, and cloud infrastructures.",
         "Evaluate AI solutions for the Firm with respect to data privacy, security, and impact as a member of the Firm's AI Committee."
       ]
     }
@@ -164,6 +164,11 @@
     {
       "name": "R",
       "proficiency": 55,
+      "proficiency_label": "Intermediate"
+    },
+    {
+      "name": "Nix",
+      "proficiency": 50,
       "proficiency_label": "Intermediate"
     },
     {
