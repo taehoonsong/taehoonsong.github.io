@@ -47,7 +47,7 @@
       "location": "Washington, DC",
       "url": "https://www.cohenmilstein.com",
       "highlights": [
-        "Develop Python solutions that help find new case opportunities, streamline ETL processes, or provide user interfaces for various scripts; create and maintain data solutions for ligitation support.",
+        "Develop Python solutions that help find new case opportunities, streamline ETL processes, or provide user interfaces for various scripts; create and maintain data solutions for litigation support.",
         "Refactor or replace legacy Python, SQL, and VBA code to keep up with modern security and coding standards; migrate all authentication systems to use SSO.",
         "Design, implement, maintain, and optimize data pipelines, databases, and cloud infrastructures.",
         "Evaluate AI solutions for the Firm with respect to data privacy, security, and impact as a member of the Firm's AI Committee."
@@ -197,12 +197,16 @@
       "name": "Keyboards",
       "images": [
         {
-          "img_path": "img/wooting.png",
+          "img_path": "img/wooting-80he.png",
           "caption": "Wooting 80HE"
         },
         {
-          "img_path": "img/moonlander.png",
-          "caption": "ZSA Moonlander"
+          "img_path": "img/wooting-60he-v2.png",
+          "caption": "Wooting 60HE v2"
+        },
+        {
+          "img_path": "img/moonlander-mk1.png",
+          "caption": "ZSA Moonlander Mark I"
         }
       ]
     },
