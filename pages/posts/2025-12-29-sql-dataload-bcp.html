@@ -1,0 +1,193 @@
+<!doctype html>
+<html  dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Load data faster into SQL with bcp</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css" />
+  
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+  <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+  <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css" />
+  <link rel="stylesheet" href="/css/posts.css" />
+  <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <!-- <script src="uikit.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+  <!-- <script src="scripts.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+  <!-- <script src="jquery.sticky-kit.js "></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+  <meta name="generator" content="pandoc-uikit" />
+     <meta name="date" content="2025-12-29" />
+    <title>Load data faster into SQL with bcp</title>
+  <style type="text/css">
+    code {
+      white-space: pre;
+    }
+  </style>
+      
+</head>
+
+<body>
+    <header class="page-header">
+    <div class="container">
+      <div class="header-top flex-responsive">
+        <h1 class="header-info">Load data faster into SQL with bcp</h1>
+        <br />
+                <h2 class="header-label">2025-12-29</h2>
+                 <p class="header-summary">There are many tools that
+load data into SQL, but bcp can probably load it faster.</p>
+              </div>
+    </div>
+  </header>
+  
+  <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="uk-grid" data-uk-grid-margin>
+      <div class="uk-width-medium-1-4">
+        <div class="uk-overflow-container" data-uk-sticky="{top:25,media: 768}">
+                    <div class="uk-panel uk-panel-box menu-begin">
+            <ul>
+            <li><a href="#what-even-is-bcp"
+            id="toc-what-even-is-bcp">What even is bcp?</a></li>
+            <li><a href="#installation-process"
+            id="toc-installation-process">Installation process</a>
+            <ul>
+            <li><a href="#windows" id="toc-windows">Windows</a></li>
+            <li><a href="#linux-and-macos"
+            id="toc-linux-and-macos">Linux and MacOS</a></li>
+            </ul></li>
+            <li><a href="#advantages-of-using-bcp"
+            id="toc-advantages-of-using-bcp">Advantages of using
+            bcp</a></li>
+            <li><a href="#disadvantages-of-using-bcp"
+            id="toc-disadvantages-of-using-bcp">Disadvantages of using
+            bcp</a>
+            <ul>
+            <li><a href="#inflexible"
+            id="toc-inflexible">Inflexible</a></li>
+            <li><a href="#authentication"
+            id="toc-authentication">Authentication</a></li>
+            <li><a href="#extra-dependency"
+            id="toc-extra-dependency">Extra dependency</a></li>
+            </ul></li>
+            <li><a href="#should-you-use-bcp"
+            id="toc-should-you-use-bcp">Should you use bcp?</a></li>
+            </ul>
+          </div>
+                  </div>
+      </div>
+
+      <div class="uk-width-medium-3-4">
+         <h1 id="what-even-is-bcp">What even is bcp?</h1>
+<p><a
+href="https://learn.microsoft.com/en-us/sql/tools/bcp-utility?view=sql-server-ver17&amp;tabs=windows">bcp</a>
+is a tool from Microsoft that specializes in bulk copy (hence the name)
+into a SQL database. It is only available as a command-line (CLI) tool,
+which might be a downside for some. In my experience, CLI tools are the
+most reliable tools. bcp is also available on Linux and MacOS, which
+makes sense given Azure's existence. I will note that the Linux/MacOS
+version has one feature that I will talk about later that makes it
+better than the Windows version.</p>
+<h1 id="installation-process">Installation process</h1>
+<h2 id="windows">Windows</h2>
+<p>You have to install the Microsoft Command Line Utilities for SQL
+Server, which is separate from the ODBC Driver. My only gripe is that I
+wish bcp was available via <code>winget</code>. The ODBC Driver is, so I
+don't see why this tool isn't included (The
+<code>Microsoft.Sqlcmd</code> package on <code>winget</code> does not
+include bcp, unfortunately). Linux and MacOS can also use their
+respective package managers to install bcp.</p>
+<h2 id="linux-and-macos">Linux and MacOS</h2>
+<p>There's a <a
+href="https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup-tools?view=sql-server-ver17&amp;tabs=redhat-install%2Codbc-ubuntu-1804">separate
+guide for installing bcp</a> for these operating systems.</p>
+<h1 id="advantages-of-using-bcp">Advantages of using bcp</h1>
+<p>Short answer: speed. When using an ORM tool like <a
+href="https://www.sqlalchemy.org/">SQLAlchemy</a>, I was able to load a
+dataset with ~1 million rows and 80 fields (about 1 GiB) in about 30
+minutes into a table without any indices. I have a 1Gbps upload link, so
+it's not a network issue. I tried using <a
+href="https://docs.sqlalchemy.org/en/21/core/connections.html#engine-insertmanyvalues"><code>use_insertmanyvalues</code></a>,
+but it still took about 20 minutes. I could reduce the time to about ~10
+minutes by loading into a temp table, but that increases complexity and
+isn't always viable depending on the size of the data.</p>
+<p>Using bcp, however, this load took about 2 minutes. No messing around
+with options, just default settings. There is a catch as always. bcp
+will not load a file if the file and target table have the exact same
+schema. This means that the order of the columns matter, and if your
+table as an identity column that is automatically generated, the file
+should have an identity column too. For example, let's say the target
+table has an integer identity column that is auto-incremented. In order
+for bcp to load the file, I'll add a column of zeros to the file with
+the same column name. While this is a little annoying, it might be worth
+the hassle if you have large datasets that take forever to load
+otherwise.</p>
+<h1 id="disadvantages-of-using-bcp">Disadvantages of using bcp</h1>
+<h2 id="inflexible">Inflexible</h2>
+<p>Like I mentioned above, bcp will not work if the columns match
+exactly. So, when you want to load a sparse dataset where many columns
+are empty or nulls, it might be burdensome to generate those columns
+just so you can use bcp. In this case, it may be easier to use an ORM
+like SQLAlchemy to specify exactly which columns you intend to load.</p>
+<h2 id="authentication">Authentication</h2>
+<p>This is why I still use SQLAlchemy even though I prefer the speed of
+bcp. At the time of writing, bcp on Windows <strong>does not</strong>
+support token-based authentication. This is non-negotiable for me. I
+would much rather wait a bit longer for my data to load than to pass my
+username and password into a CLI tool. In fact, we disable SQL logins
+for security and only rely on Microsoft Entra Authentication. In the
+documentation, bcp technically support Entra authentication with the
+<code>-G</code> flag. However, it does not work reliably in my work
+environment with MFA enabled. I wish bcp on Windows supported token
+based authentication, because it's much easier to implement on apps. The
+Linux/MacOS version of bcp supports tokens, so I know it's possible.</p>
+<h2 id="extra-dependency">Extra dependency</h2>
+<p>This might not be a huge problem, but it is annoying nonetheless. I
+used to rely on bcp for work when my work used to have SQL logins. I
+wrote a wrapper for it in Python to invoke it with the correct
+arguments. It worked well, but having an extra dependency that could not
+be easily installed through a script (at least on Windows) was a bummer
+for onboarding new users. Then once we moved to Entra only, I replaced
+bcp with a custom loader using SQLAlchemy.</p>
+<h1 id="should-you-use-bcp">Should you use bcp?</h1>
+<p>As always, it depends. If you're using SQL logins, then why not give
+it a try? It's much faster than any ORM I've used. You might need to
+process your data file to match the target table, but the trade-off is
+ungodly speed. It's basically only limited by your network speed to the
+server. On the other hand, if you find out that Entra authentication
+doesn't work (like my situation), then you might be doomed, unless you
+can have a Linux or MacOS machine to load data. I wish I could have a
+Linux machine for work, but alas, we can't have everything.</p>
+      </div>
+    </div>
+    <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+  </div>
+
+  <div id="mySidenav">
+    <a href="/index.html" id="home">Home</a>
+    <a href="/posts/index.html" id="blog">Blog</a>
+    <a href="/resume.pdf" id="resume">Resume</a>
+    <a href="/pets.html" id="pets">Pets</a>
+  </div>
+
+  <footer class="page-footer">
+    <div class="container">
+      This work is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img
+        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+        src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"></div>
+  </footer>
+</body>
+
+</html>
