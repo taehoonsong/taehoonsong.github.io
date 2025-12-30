@@ -102,8 +102,7 @@ def get_portfolio_data() -> dict:
         if svg_path is None:
             continue
 
-        with Path(STATIC_DIR, svg_path).open(encoding="utf-8", errors="ignore") as f:
-            link["svg_data"] = f.read()
+        link["svg_data"] = Path(STATIC_DIR, svg_path).read_text(encoding="utf-8", errors="ignore")
 
     return data
 
@@ -113,9 +112,7 @@ def render_template(template_name: str, export_path: Path, env: Environment, dat
     content = jinja_temp.render(**data)
 
     export_path.parent.mkdir(exist_ok=True, parents=True)
-
-    with export_path.open("w", encoding="utf-8") as f:
-        f.write(content)
+    export_path.write_text(content, encoding="utf-8")
 
 
 def render_posts() -> None:
