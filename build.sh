@@ -25,7 +25,7 @@ main(){
 
     case $USER_OPT in
         html) gen_html ;;
-        pdf) gen_pdf;;
+        pdf) gen_pdf ;;
         all) gen_html && gen_pdf ;;
         *) echo valid options are html, pdf, or all ;;
     esac
