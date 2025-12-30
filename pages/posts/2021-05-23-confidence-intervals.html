@@ -178,7 +178,7 @@ Confidence Interval</a> (Accessed on 2021-05-22)</p>
 <p>I just claimed this is false. What is the <em>correct</em> way to
 interpret a confidence interval then? I'm going to make use of the
 Central Limit Theorem, so if you're not familiar, check out my <a
-href="./2021-05-17-central-limit-theorem.html">previous post</a></p>
+href="./2021-05-17-central-limit-theorem.html">previous post</a>.</p>
 <h1 id="what-is-a-confidence-interval">What is a confidence
 interval?</h1>
 <p>There is a reason why this interval is called the confidence interval
@@ -256,7 +256,7 @@ parameter falls inside the interval. We’ll do this 10,000 times.</p>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>crit <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p=</span><span class="fl">0.995</span>, <span class="at">df=</span>n<span class="dv">-1</span>) <span class="co"># for 99% confidence interval</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># initialize result matrix</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nr=</span>numSim, <span class="at">nc=</span><span class="dv">4</span>) </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nr=</span>numSim, <span class="at">nc=</span><span class="dv">4</span>)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sample.mean&quot;</span>, <span class="st">&quot;ci.lower&quot;</span>, <span class="st">&quot;ci.upper&quot;</span>, <span class="st">&quot;capture&quot;</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>results[,<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
@@ -264,17 +264,17 @@ parameter falls inside the interval. We’ll do this 10,000 times.</p>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(pop, <span class="at">size=</span>n)</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  samp_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp)</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  samp_se <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp) <span class="sc">/</span> <span class="fu">sqrt</span>(n) <span class="co"># standard error</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># construct confidence interval</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  me <span class="ot">&lt;-</span> samp_se <span class="sc">*</span> crit <span class="co"># margin of error</span></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  ci_lower <span class="ot">&lt;-</span> samp_mean <span class="sc">-</span> me <span class="co"># lower bound</span></span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  ci_upper <span class="ot">&lt;-</span> samp_mean <span class="sc">+</span> me <span class="co"># upper bound</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># keep results for visualization</span></span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  results[i,<span class="dv">1</span>] <span class="ot">&lt;-</span> samp_mean</span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  results[i,<span class="dv">2</span>] <span class="ot">&lt;-</span> ci_lower</span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  results[i,<span class="dv">3</span>] <span class="ot">&lt;-</span> ci_upper</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># count up if the interval contains the population parameter</span></span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (ci_lower <span class="sc">&lt;=</span> param <span class="sc">&amp;&amp;</span> param <span class="sc">&lt;=</span> ci_upper){</span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    results[i,<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>

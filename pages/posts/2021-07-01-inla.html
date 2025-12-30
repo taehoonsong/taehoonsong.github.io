@@ -35,7 +35,9 @@
       white-space: pre;
     }
   </style>
-      
+      <script defer=""
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+type="text/javascript"></script>  
 </head>
 
 <body>
@@ -133,65 +135,59 @@ are other better resources online that explain the details of each
 algorithm much better than I can, so I’m going to simplify a bit
 here.</p>
 <p>Let <span
-class="math inline"><em>p</em>(<em>θ</em> ∣ <strong>y</strong>)</span>
-be the posterior distribution of interest, where <span
-class="math inline"><em>θ</em></span> is the hyperparameter and <span
-class="math inline"><strong>y</strong></span> represents the observed
-data. Then, from Bayes’ Rule, we know that <span
-class="math inline"><em>p</em>(<strong>y</strong> ∣ <em>θ</em>) ⋅ <em>p</em>(<em>θ</em>)</span>
-is proportional to the distribution of interest or the target
-distribution. The Metropolis-Hastings algorithm works in the following
-way:</p>
+class="math inline">\(p\lparen\theta\mid\mathbf{y}\rparen\)</span> be
+the posterior distribution of interest, where <span
+class="math inline">\(\theta\)</span> is the hyperparameter and <span
+class="math inline">\(\mathbf{y}\)</span> represents the observed data.
+Then, from Bayes’ Rule, we know that <span
+class="math inline">\(p\lparen\mathbf{y}\mid\theta\rparen \cdot
+p\lparen\theta\rparen\)</span> is proportional to the distribution of
+interest or the target distribution. The Metropolis-Hastings algorithm
+works in the following way:</p>
 <ol type="1">
 <li>Choose an arbitrary starting value <span
-class="math inline"><em>θ</em><sup>(0)</sup></span> and an arbitrary
-proposal density <span class="math inline"><em>q</em></span>.</li>
-<li>Draw a candidate value <span
-class="math inline"><em>θ</em><sup>*</sup></span> for the next iteration
-given the previous value <span
-class="math inline"><em>θ</em><sup>(<em>i</em> − 1)</sup></span> from
-the proposal density.</li>
+class="math inline">\(\theta^{(0)}\)</span> and an arbitrary proposal
+density <span class="math inline">\(q\)</span>.</li>
+<li>Draw a candidate value <span class="math inline">\(\theta^*\)</span>
+for the next iteration given the previous value <span
+class="math inline">\(\theta^{(i-1)}\)</span> from the proposal
+density.</li>
 <li>Calculate the acceptance ratio <span
-class="math inline"><em>α</em></span> (see below).</li>
-<li>Generate a random number <span class="math inline"><em>u</em></span>
-from <span
-class="math inline"><em>U</em> ∼ <em>U</em><em>n</em><em>i</em><em>f</em>(0, 1)</span>
-and compare to <span class="math inline"><em>α</em></span>.</li>
-<li>Reject <span class="math inline"><em>θ</em><sup>*</sup></span> if
-<span class="math inline"><em>u</em> &gt; <em>α</em></span> and set
-<span
-class="math inline"><em>θ</em><sup>(<em>i</em>)</sup> = <em>θ</em><sup>(<em>i</em> − 1)</sup></span>;
-otherwise, <span
-class="math inline"><em>θ</em><sup>(<em>i</em>)</sup> = <em>θ</em><sup>*</sup></span>.</li>
+class="math inline">\(\alpha\)</span> (see below).</li>
+<li>Generate a random number <span class="math inline">\(u\)</span> from
+<span class="math inline">\(U \sim Unif(0,1)\)</span> and compare to
+<span class="math inline">\(\alpha\)</span>.</li>
+<li>Reject <span class="math inline">\(\theta^*\)</span> if <span
+class="math inline">\(u &gt; \alpha\)</span> and set <span
+class="math inline">\(\theta^{(i)} = \theta^{(i-1)}\)</span>; otherwise,
+<span class="math inline">\(\theta^{(i)}=\theta^*\)</span>.</li>
 </ol>
-<p><span class="math display">$$\alpha =
+<p><span class="math display">\[\alpha =
 \frac{p\left(\mathbf{y}\mid\theta^*\right) \cdot
 p\left(\theta^*\right)\cdot
 q\left(\theta^{(i-1)}\mid\theta^*\right)}{p\left(\mathbf{y}\mid\theta^{(i-1)}\right)
 \cdot p\left(\theta^{(i-1)}\right) \cdot
-q\left(\theta^*\mid\theta^{(i-1)}\right)}$$</span></p>
+q\left(\theta^*\mid\theta^{(i-1)}\right)}\]</span></p>
 <p>A Gaussian distribution is commonly chosen as the proposal density,
 but there are other options as well.</p>
 <p>Gibbs Sampling works similarly but it always accepts the proposal
-<span class="math inline"><em>θ</em><sup>*</sup></span>. It makes use of
-the fact that it is easier to sample from a conditional distribution
-than to marginalize a joint distribution given a multivariate
-distribution. Let <span
-class="math inline"><strong>θ</strong> = (<em>θ</em><sub>1</sub>, …, <em>θ</em><sub><em>p</em></sub>)</span>
-be a multivariate parameter, where <span
-class="math inline"><em>p</em></span> is the number of parameters. The
-proposal density for <span
-class="math inline"><em>θ</em><sub><em>j</em></sub> ∈ {<em>θ</em><sub><em>k</em></sub>}<sub><em>k</em> = 1</sub><sup><em>p</em></sup></span>
-is the full conditional distribution <span
-class="math inline"><em>p</em>(<em>θ</em><sub><em>j</em></sub> ∣ <em>θ</em><sub>−<em>j</em></sub>, <strong>y</strong>)</span>
-and <span class="math inline"><em>θ</em><sub>−<em>j</em></sub></span>
-denotes the vector of <span class="math inline"><em>θ</em></span>’s not
-including <span
-class="math inline"><em>θ</em><sub><em>j</em></sub></span> from <span
-class="math inline"><strong>θ</strong></span>. This means that the
-acceptance ratio <span class="math inline"><em>α</em></span> for <span
-class="math inline"><em>θ</em><sub><em>j</em></sub></span> is:</p>
-<p><span class="math display">$$\begin{align*}
+<span class="math inline">\(\theta^*\)</span>. It makes use of the fact
+that it is easier to sample from a conditional distribution than to
+marginalize a joint distribution given a multivariate distribution. Let
+<span class="math inline">\(\boldsymbol{\theta} =
+\left(\theta_1,\dots,\theta_p\right)\)</span> be a multivariate
+parameter, where <span class="math inline">\(p\)</span> is the number of
+parameters. The proposal density for <span
+class="math inline">\(\theta_j \in \{\theta_k\}_{k=1}^{p}\)</span> is
+the full conditional distribution <span
+class="math inline">\(p\left(\theta_j\mid\theta_{-j},\mathbf{y}\right)\)</span>
+and <span class="math inline">\(\theta_{-j}\)</span> denotes the vector
+of <span class="math inline">\(\theta\)</span>’s not including <span
+class="math inline">\(\theta_j\)</span> from <span
+class="math inline">\(\boldsymbol{\theta}\)</span>. This means that the
+acceptance ratio <span class="math inline">\(\alpha\)</span> for <span
+class="math inline">\(\theta_j\)</span> is:</p>
+<p><span class="math display">\[\begin{align*}
 \alpha &amp;=
 \frac{\left[p\left(\mathbf{y}\mid\theta_j^*,\theta_{-j}^{(i-1)}\right)
 \cdot p\left(\theta_j^*,\theta_{-j}^{(i-1)}\right)\right] \cdot
@@ -208,7 +204,7 @@ p\left(\theta^{(i-1)}_{-j},\mathbf{y}\right) \right] \cdot
 p\left(\theta^*_j \mid \theta^{(i-1)}_{-j},\mathbf{y}\right)} \\
 \\
 &amp;= 1
-\end{align*}$$</span></p>
+\end{align*}\]</span></p>
 <p>Gibbs Sampling is much more computationally efficient compared to the
 regular Metropolis-Hasting algorithm for this reason. So, when sampling
 from a multivariate parameter space is necessary, such as the Gaussian
@@ -240,44 +236,43 @@ is often sufficient and substantially decreases the computation time.
 The main benefit of using Laplace approximation is that it converts an
 integration problem into an optimization problem, a relatively simpler
 problem. Here’s the gist of how Laplace approximation works.</p>
-<p>Let <span class="math inline"><em>f</em>(<em>x</em>)</span> be a
-well-behaved unimodal function that is twice-differentiable and achieves
-its maximum at <span class="math inline"><em>x</em><sub>0</sub></span>.
-Let <span
-class="math inline"><em>g</em>(<em>x</em>) = ln (<em>f</em>(<em>x</em>))</span>.
-The goal is to compute</p>
-<p><span
-class="math display">∫<sub><em>a</em></sub><sup><em>b</em></sup><em>f</em>(<em>x</em>) <em>d</em><em>x</em> = ∫<sub><em>a</em></sub><sup><em>b</em></sup>exp (<em>g</em>(<em>x</em>)) <em>d</em><em>x</em></span></p>
-<p>where <span class="math inline"><em>a</em>, <em>b</em></span> are
-potentially infinite. Then, using a Taylor approximation,</p>
-<p><span class="math display">$$\int_a^b \exp(g(x))\ dx \approx
+<p>Let <span class="math inline">\(f(x)\)</span> be a well-behaved
+unimodal function that is twice-differentiable and achieves its maximum
+at <span class="math inline">\(x_0\)</span>. Let <span
+class="math inline">\(g(x) = \ln(f(x))\)</span>. The goal is to
+compute</p>
+<p><span class="math display">\[\int_a^b f(x)\ dx = \int_a^b \exp(g(x))\
+dx\]</span></p>
+<p>where <span class="math inline">\(a, b\)</span> are potentially
+infinite. Then, using a Taylor approximation,</p>
+<p><span class="math display">\[\int_a^b \exp(g(x))\ dx \approx
 \int_a^b\exp\left(g(x_0) +
-g'(x_0)(x-x_0)+\frac{1}{2}g''(x_0)(x-x_0)^2\right)\ dx$$</span></p>
-<p>Notice that <span
-class="math inline"><em>g</em><sup>′</sup>(<em>x</em><sub>0</sub>) = 0</span>
+g&#39;(x_0)(x-x_0)+\frac{1}{2}g&#39;&#39;(x_0)(x-x_0)^2\right)\
+dx\]</span></p>
+<p>Notice that <span class="math inline">\(g&#39;(x_0) = 0\)</span>
 because the logarithm function is one-to-one and <span
-class="math inline"><em>f</em>(<em>x</em>)</span> achieves its maximum
-at <span class="math inline"><em>x</em><sub>0</sub></span> by
-definition. So,</p>
-<p><span class="math display">$$\begin{align*}
+class="math inline">\(f(x)\)</span> achieves its maximum at <span
+class="math inline">\(x_0\)</span> by definition. So,</p>
+<p><span class="math display">\[\begin{align*}
 \int_{a}^{b} f(x)\ dx &amp;\approx \int_{a}^{b} \exp\left(g(x_0)+
-\frac{1}{2}g''(x_0)(x-x_0)^2\right)\ dx\\
+\frac{1}{2}g&#39;&#39;(x_0)(x-x_0)^2\right)\ dx\\
 \\
 &amp;=\exp\left(g(x_0)\right)\cdot\int_{a}^{b}
-\exp\left(-\frac{1}{2}\frac{(x-x_0)^2}{-g''(x_0)^{-1}}\right)\ dx\\
+\exp\left(-\frac{1}{2}\frac{(x-x_0)^2}{-g&#39;&#39;(x_0)^{-1}}\right)\
+dx\\
 \\
 &amp;=\exp\left(g(x_0)\right) \cdot
-\sqrt{\frac{2\pi}{-g''(x_0)}}\cdot\left[\Phi\left(b \mid x_0,
--g''(x_0)^{-1}\right)-\Phi\left(a \mid x_0, -g''(x_0)^{-1}\right)\right]
-\end{align*}$$</span></p>
-<p>where <span
-class="math inline"><em>Φ</em>(<em>z</em> ∣ <em>μ</em>, <em>σ</em><sup>2</sup>)</span>
-is the cumulative distribution function for a Normal distribution with
-mean <span class="math inline"><em>μ</em></span> and variance <span
-class="math inline"><em>σ</em><sup>2</sup></span>. Notice that the
+\sqrt{\frac{2\pi}{-g&#39;&#39;(x_0)}}\cdot\left[\Phi\left(b \mid x_0,
+-g&#39;&#39;(x_0)^{-1}\right)-\Phi\left(a \mid x_0,
+-g&#39;&#39;(x_0)^{-1}\right)\right]
+\end{align*}\]</span></p>
+<p>where <span class="math inline">\(\Phi\left(z \mid \mu,\sigma^2
+\right)\)</span> is the cumulative distribution function for a Normal
+distribution with mean <span class="math inline">\(\mu\)</span> and
+variance <span class="math inline">\(\sigma^2\)</span>. Notice that the
 Normal distribution is centered at the mode <span
-class="math inline"><em>x</em><sub>0</sub></span>. The specifics of the
-INLA algorithm are well-explained <a
+class="math inline">\(x_0\)</span>. The specifics of the INLA algorithm
+are well-explained <a
 href="https://becarioprecario.bitbucket.io/inla-gitbook/ch-INLA.html">here</a>.</p>
 <p>One major benefit of INLA is that it is fully implemented in R. The
 code is converted to C++ at runtime, but the <code>INLA</code> package

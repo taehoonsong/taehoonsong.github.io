@@ -35,7 +35,9 @@
       white-space: pre;
     }
   </style>
-      
+      <script defer=""
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+type="text/javascript"></script>  
 </head>
 
 <body>
@@ -112,37 +114,34 @@ be negatively correlated.</p>
 <h2 id="binary-random-variable">Binary random variable</h2>
 <p>Let’s start with a binary (or Bernoulli) random variable. Consider
 the following sequence of 20 outcomes:</p>
-<p><span class="math display">$$\begin{gathered}
+<p><span class="math display">\[\begin{gathered}
 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1
-\end{gathered}$$</span></p>
+\end{gathered}\]</span></p>
 <p>In the above sequence, there are 5 runs, 3 of which are 1’s and the
 others are 0’s. Now, what’s the expected number of runs for a
 20-element-long sequence of binary outcomes? Let <span
-class="math inline"><em>I</em><sub><em>k</em></sub></span> be an
-indicator variable that is equal to 1 if a new run starts in position
-<span class="math inline"><em>k</em></span> and 0 otherwise. This
-suggests that <span
-class="math inline"><em>I</em><sub><em>k</em></sub> = 1</span> when the
-element in the <span class="math inline">(<em>k</em> − 1)</span>-th
-position is different from the <span
-class="math inline"><em>k</em></span>-th element. If the <span
-class="math inline">(<em>k</em> − 1)</span>-th element and the <span
-class="math inline"><em>k</em></span>-th are the same, then a run would
-not start at position <span class="math inline"><em>k</em></span> by
-definition. This means that the number of runs, <span
-class="math inline"><em>R</em></span>, can be written as</p>
-<p><span class="math display">$$\begin{gathered}
+class="math inline">\(I_k\)</span> be an indicator variable that is
+equal to 1 if a new run starts in position <span
+class="math inline">\(k\)</span> and 0 otherwise. This suggests that
+<span class="math inline">\(I_k=1\)</span> when the element in the <span
+class="math inline">\((k-1)\)</span>-th position is different from the
+<span class="math inline">\(k\)</span>-th element. If the <span
+class="math inline">\((k-1)\)</span>-th element and the <span
+class="math inline">\(k\)</span>-th are the same, then a run would not
+start at position <span class="math inline">\(k\)</span> by definition.
+This means that the number of runs, <span
+class="math inline">\(R\)</span>, can be written as</p>
+<p><span class="math display">\[\begin{gathered}
 R=1+I_2+I_3+\cdots+I_n
-\end{gathered}$$</span></p>
-<p>where <span
-class="math inline"><em>n</em> = <em>n</em><sub>1</sub> + <em>n</em><sub>2</sub></span>
-and <span class="math inline"><em>n</em><sub>1</sub></span> and <span
-class="math inline"><em>n</em><sub>2</sub></span> represent the number
-of 1’s and 0’s, respectively. There is a 1 because there is always at
-least 1 run even if all the element are the same and there are no new
-runs in the sequence. Then the probability that <span
-class="math inline"><em>I</em><sub><em>k</em></sub> = 1</span> is:</p>
-<p><span class="math display">$$\begin{aligned}
+\end{gathered}\]</span></p>
+<p>where <span class="math inline">\(n= n_1 + n_2\)</span> and <span
+class="math inline">\(n_1\)</span> and <span
+class="math inline">\(n_2\)</span> represent the number of 1’s and 0’s,
+respectively. There is a 1 because there is always at least 1 run even
+if all the element are the same and there are no new runs in the
+sequence. Then the probability that <span
+class="math inline">\(I_k=1\)</span> is:</p>
+<p><span class="math display">\[\begin{aligned}
 P(I_k=1)&amp;=\frac{\binom{2}{1}\binom{n-2}{n_1-1}}{\binom{n}{n_1}}\\
 \\
 &amp;=\frac{\frac{2(n-2)!}{(n_1-1)![n-2-(n_1-1)]!}}{\frac{n!}{n_1!(n-n_2)!}}\\
@@ -150,35 +149,32 @@ P(I_k=1)&amp;=\frac{\binom{2}{1}\binom{n-2}{n_1-1}}{\binom{n}{n_1}}\\
 &amp;=\frac{\frac{2(n-2)!}{(n_1-1)!(n_2-1)!}}{\frac{n!}{n_1!n_2!}}\\
 \\
 &amp;=\frac{2n_1n_2}{n(n-1)}
-\end{aligned}$$</span></p>
+\end{aligned}\]</span></p>
 <p>Notice that this is also the expected value of <span
-class="math inline"><em>I</em><sub><em>k</em></sub></span> because it is
-a binary variable. Let’s dissect the first fraction to understand why
-this is the correct probability. In the denominator, <span
-class="math display">$$\binom{n}{n_1}$$</span> represents the number of
+class="math inline">\(I_k\)</span> because it is a binary variable.
+Let’s dissect the first fraction to understand why this is the correct
+probability. In the denominator, <span
+class="math display">\[\binom{n}{n_1}\]</span> represents the number of
 ways you can arrange 1’s from the total number of elements. Since the
 location of 0’s depend on where the 1’s are, we cover all possible
 arrangements of all elements. In the numerator, <span
-class="math display">$$\binom{2}{1}$$</span> represents the number of
+class="math display">\[\binom{2}{1}\]</span> represents the number of
 ways you can arrange the 0 and 1 in the <span
-class="math inline"><em>k</em></span>-th position to start a new run so
-that <span
-class="math inline"><em>I</em><sub><em>k</em></sub> = 1</span>. Either
-you have a 1 in the <span class="math inline">(<em>k</em> − 1)</span>-th
-position and a 0 in the <span class="math inline"><em>k</em></span>-th
-position, or you have a 0 in the <span
-class="math inline">(<em>k</em> − 1)</span>-th position and a 1 in the
-<span class="math inline"><em>k</em></span>-th position. You have to
+class="math inline">\(k\)</span>-th position to start a new run so that
+<span class="math inline">\(I_k=1\)</span>. Either you have a 1 in the
+<span class="math inline">\((k-1)\)</span>-th position and a 0 in the
+<span class="math inline">\(k\)</span>-th position, or you have a 0 in
+the <span class="math inline">\((k-1)\)</span>-th position and a 1 in
+the <span class="math inline">\(k\)</span>-th position. You have to
 choose one element out of two possibilities (0 or 1). Then, <span
-class="math display">$$\binom{n-2}{n_1-1}$$</span> is the number of ways
+class="math display">\[\binom{n-2}{n_1-1}\]</span> is the number of ways
 to arrange the others. You’ve already used up two elements from the
-total (hence <span class="math inline"><em>n</em> − 2</span>) because
-you know there’s a new run in position <span
-class="math inline"><em>k</em></span> and you used up a single 1 from
-the total number of 1’s (hence <span
-class="math inline"><em>n</em><sub>1</sub> − 1</span>). Now we can
-calculate the expected number of runs:</p>
-<p><span class="math display">$$\begin{aligned}
+total (hence <span class="math inline">\(n-2\)</span>) because you know
+there’s a new run in position <span class="math inline">\(k\)</span> and
+you used up a single 1 from the total number of 1’s (hence <span
+class="math inline">\(n_1-1\)</span>). Now we can calculate the expected
+number of runs:</p>
+<p><span class="math display">\[\begin{aligned}
 E[R] &amp;= E[1+I_2+\cdots+I_n]\\
 \\
 &amp;= 1 + (n-1)E[I_k]\\
@@ -186,10 +182,10 @@ E[R] &amp;= E[1+I_2+\cdots+I_n]\\
 &amp;= 1 + (n-1)\frac{2n_1n_2}{n(n-1)}\\
 \\
 &amp;=1+\frac{2n_1n_2}{n}
-\end{aligned}$$</span></p>
-<p>The variance of <span class="math inline"><em>R</em></span> is a bit
-more involved, but it comes out to:</p>
-<p><span class="math display">$$\begin{aligned}
+\end{aligned}\]</span></p>
+<p>The variance of <span class="math inline">\(R\)</span> is a bit more
+involved, but it comes out to:</p>
+<p><span class="math display">\[\begin{aligned}
 Var[R] &amp;= Var[1+I_2+I_3+\cdots+I_n]\\
 \\
 &amp;= Var[I_2+I_3+\cdots+I_n]\\
@@ -204,32 +200,31 @@ Cov[I_j,I_k]\\
 &amp;=\frac{2n_1n_2(2n_1n_2-n)}{n^2(n-1)}\\
 \\
 &amp;=\frac{(E[R]-1)(E[R]-2)}{n-1}
-\end{aligned}$$</span></p>
-<p>where <span class="math inline">2 ≤ <em>j</em> ≤ <em>n</em></span>.
-Try deriving this result for yourself. You should breakout <span
-class="math inline"><em>E</em>[<em>I</em><sub><em>j</em></sub><em>I</em><sub><em>k</em></sub>]</span>
-into two scenarios: (1) <span
-class="math inline"><em>j</em> = <em>k</em> ± 1</span> and (2) <span
-class="math inline"><em>j</em> ≠ ±1</span>. Now that you have the
-expected number of runs, you can compare it to the observed number of
-runs to see how likely the observed number of runs is. You can calculate
-the exact p-value:</p>
-<p><span class="math display">$$\begin{aligned}
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(2 \leq j \leq n\)</span>. Try
+deriving this result for yourself. You should breakout <span
+class="math inline">\(E[I_jI_k]\)</span> into two scenarios: (1) <span
+class="math inline">\(j=k\pm1\)</span> and (2) <span
+class="math inline">\(j\neq\pm1\)</span>. Now that you have the expected
+number of runs, you can compare it to the observed number of runs to see
+how likely the observed number of runs is. You can calculate the exact
+p-value:</p>
+<p><span class="math display">\[\begin{aligned}
 P(|R-E[R]| \geq r) &amp;= P(R-E[R] \geq r) \cup P(R-E[R] \leq -r)\\
 \\
 &amp;=P(R \geq r + E[R]) \cup P(R \leq E[R] -r)
-\end{aligned}$$</span></p>
+\end{aligned}\]</span></p>
 <p>or use the following Normal approximation:</p>
-<p><span class="math display">$$\text{two-sided p-value} =
+<p><span class="math display">\[\text{two-sided p-value} =
 \begin{cases}
 2\Phi\left(\frac{r + 0.5 - E[R]}{\sqrt{Var[R]}}\right), &amp;r &gt;
 E[R]\\
 \\
 2\Phi\left(\frac{E[R]+ 0.5 -r}{\sqrt{Var[R]}}\right), &amp;r \leq E[R]
-\end{cases}$$</span></p>
-<p>where <span class="math inline"><em>r</em></span> is the observed
-number of runs and <span class="math inline"><em>Φ</em></span> is the
-cumulative distribution function of a standard Normal distribution.</p>
+\end{cases}\]</span></p>
+<p>where <span class="math inline">\(r\)</span> is the observed number
+of runs and <span class="math inline">\(\Phi\)</span> is the cumulative
+distribution function of a standard Normal distribution.</p>
 <h2 id="non-binary-random-variable">Non-binary random variable</h2>
 <p>What if your random variable is a numerical? Well, you can
 dichotomize your numerical observations by checking if they are above or
@@ -238,51 +233,48 @@ case.</p>
 <h1 id="rank-von-neumann-test">Rank von Neumann Test</h1>
 <p>Yet another test of randomness is called the rank von Neumann test.
 As you can tell from the name, this test uses ranks. Suppose that <span
-class="math inline"><em>X</em><sub><em>i</em></sub></span> where <span
-class="math inline"><em>i</em> ∈ {1, 2, …, <em>n</em>}</span> are
-independent and identically distributed (i.i.d.) continuous random
-variables with mean <span class="math inline"><em>μ</em></span> and
-variance <span class="math inline"><em>σ</em><sup>2</sup></span>. If
-<span class="math inline"><em>X</em><sub><em>i</em></sub></span>’s are
-truly i.i.d.,</p>
-<p><span class="math display">$$E\left[\sum_{i=1}^{n-1}[rank(X_i) -
-rank(X_{i+1})]^2 \right] = \frac{(n-1)(n^2+n)}{6}$$</span></p>
+class="math inline">\(X_i\)</span> where <span class="math inline">\(i
+\in \{1,2,\dots,n\}\)</span> are independent and identically distributed
+(i.i.d.) continuous random variables with mean <span
+class="math inline">\(\mu\)</span> and variance <span
+class="math inline">\(\sigma^2\)</span>. If <span
+class="math inline">\(X_i\)</span>’s are truly i.i.d.,</p>
+<p><span class="math display">\[E\left[\sum_{i=1}^{n-1}[rank(X_i) -
+rank(X_{i+1})]^2 \right] = \frac{(n-1)(n^2+n)}{6}\]</span></p>
 <p>If there are no ties in the data (guaranteed if the random variables
 are continuous),</p>
-<p><span class="math display">$$\begin{aligned}
+<p><span class="math display">\[\begin{aligned}
 \sum_{i=1}^n\left[ rank(X_i) - \overline{rank(X)}\right]^2 &amp;=
 \sum_{i=1}^n\left[rank(X_i) - \frac{n+1}{2}\right]\\
 \\
 &amp;= \sum_{i=1}^n \left[i - \frac{n+1}{2} \right]^2 \\
 \\
 &amp;=\frac{(n-1)(n^2+n)}{12}
-\end{aligned}$$</span></p>
+\end{aligned}\]</span></p>
 <p>Therefore, the test statistic <span
-class="math inline"><em>V</em></span>:</p>
-<p><span class="math display">$$V = \frac{\sum_{i=1}^{n-1}[rank(X_i) -
+class="math inline">\(V\)</span>:</p>
+<p><span class="math display">\[V = \frac{\sum_{i=1}^{n-1}[rank(X_i) -
 rank(X_{i+1})]^2}{\sum_{i=1}^n\left[ rank(X_i) -
-\overline{rank(X)}\right]^2}$$</span></p>
-<p>has an expectation of 2 if <span
-class="math inline"><em>X</em><sub><em>i</em></sub></span>’s are
-i.i.d.</p>
-<p><span class="math display">$$E[V] =
+\overline{rank(X)}\right]^2}\]</span></p>
+<p>has an expectation of 2 if <span class="math inline">\(X_i\)</span>’s
+are i.i.d.</p>
+<p><span class="math display">\[E[V] =
 E\left[\frac{\sum_{i=1}^{n-1}[rank(X_i) -
 rank(X_{i+1})]^2}{\sum_{i=1}^n\left[ rank(X_i) -
 \overline{rank(X)}\right]^2} \right]=
-\frac{\frac{(n-1)(n^2+n)}{6}}{\frac{(n-1)(n^2+n)}{12}} = 2$$</span></p>
+\frac{\frac{(n-1)(n^2+n)}{6}}{\frac{(n-1)(n^2+n)}{12}} = 2\]</span></p>
 <p>Under the null hypothesis that the <span
-class="math inline"><em>X</em><sub><em>i</em></sub></span>’s are i.i.d.,
-the distribution of <span class="math inline">$B=\frac{V}{4}$</span> can
-be approximated by a Beta distribution where both shape parameters
-are</p>
-<p><span class="math display">$$\alpha =
-\frac{1}{2}\left[\frac{5n(n+1)(n-1)^2}{(n-2)(5n^2-2n-9)}-1\right]$$</span></p>
-<p>If you’d rather stick to <span class="math inline"><em>V</em></span>,
-the distribution of <span class="math inline"><em>V</em></span> can be
+class="math inline">\(X_i\)</span>’s are i.i.d., the distribution of
+<span class="math inline">\(B=\frac{V}{4}\)</span> can be approximated
+by a Beta distribution where both shape parameters are</p>
+<p><span class="math display">\[\alpha =
+\frac{1}{2}\left[\frac{5n(n+1)(n-1)^2}{(n-2)(5n^2-2n-9)}-1\right]\]</span></p>
+<p>If you’d rather stick to <span class="math inline">\(V\)</span>, the
+distribution of <span class="math inline">\(V\)</span> can be
 approximated by a Normal distribution with mean 2 (remember that <span
-class="math inline"><em>E</em>[<em>V</em>] = 2</span>), and variance</p>
+class="math inline">\(E[V]=2\)</span>), and variance</p>
 <p><span
-class="math display">$$\frac{4(n-2)(5n^2-2n-9)}{5n(n+1)(n-1)^2}$$</span></p>
+class="math display">\[\frac{4(n-2)(5n^2-2n-9)}{5n(n+1)(n-1)^2}\]</span></p>
 <h1 id="conclusion">Conclusion</h1>
 <p>There are other tests of randomness but these are the popular
 nonparametric tests. These may look intimidating at first, but the

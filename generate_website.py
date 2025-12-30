@@ -133,7 +133,7 @@ def render_posts() -> None:
             to="html5",
             format="gfm",
             filters=lua_filters,
-            extra_args=(f"--template={t}", "--toc"),
+            extra_args=(f"--template={t}", "--toc", "--mathjax"),
             outputfile=out_path / f"{get_blog_metadata(file).get('file_path')}",
         )
         for file in SRC_PATH.iterdir()
