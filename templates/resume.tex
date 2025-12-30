@@ -121,7 +121,7 @@
 
 \begin{small}
   <BLOCK>for edu in education</BLOCK>
-  \textbf{<VAR>edu.institution</VAR>} \hfill
+  \textbf{<VAR>edu.institution|replace("-","--")|safe</VAR>} \hfill
   \textcolor{gray}{<VAR>edu.location</VAR>}
 
   \textit{<VAR>edu.degree|replace("-","--")|safe</VAR>} \hfill
