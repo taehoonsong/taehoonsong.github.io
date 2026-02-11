@@ -1,0 +1,319 @@
+<!doctype html>
+<html  dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Log Python apps to SQL Server</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css" />
+  
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+  <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+  <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css" />
+  <link rel="stylesheet" href="/css/posts.css" />
+  <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <!-- <script src="uikit.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+  <!-- <script src="scripts.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+  <!-- <script src="jquery.sticky-kit.js "></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+  <meta name="generator" content="pandoc-uikit" />
+     <meta name="date" content="2026-02-11" />
+    <title>Log Python apps to SQL Server</title>
+  <style type="text/css">
+    code {
+      white-space: pre;
+    }
+  </style>
+     <style type="text/css">
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+     
+</head>
+
+<body>
+    <header class="page-header">
+    <div class="container">
+      <div class="header-top flex-responsive">
+        <h1 class="header-info">Log Python apps to SQL Server</h1>
+        <br />
+                <h2 class="header-label">2026-02-11</h2>
+                 <p class="header-summary">When deploying a Python
+function app on Azure or AWS, collecting logs on your database may be
+better than relying on third-party solutions.</p>
+              </div>
+    </div>
+  </header>
+  
+  <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="uk-grid" data-uk-grid-margin>
+      <div class="uk-width-medium-1-4">
+        <div class="uk-overflow-container" data-uk-sticky="{top:25,media: 768}">
+                    <div class="uk-panel uk-panel-box menu-begin">
+            <ul>
+            <li><a href="#why-log-to-a-database"
+            id="toc-why-log-to-a-database">Why log to a
+            database?</a></li>
+            <li><a href="#create-a-custom-logger"
+            id="toc-create-a-custom-logger">Create a custom
+            logger</a></li>
+            <li><a href="#next-steps" id="toc-next-steps">Next
+            steps</a></li>
+            </ul>
+          </div>
+                  </div>
+      </div>
+
+      <div class="uk-width-medium-3-4">
+         <h1 id="why-log-to-a-database">Why log to a database?</h1>
+<p>If you already have a database set up, having a dedicated table for
+logging seems like a no-brainer. You don't have to rely on external
+tools for logging nor do you need to pay extra for those tools. There
+are a few things you may want to consider before proceeding with this
+method, however.</p>
+<ol type="1">
+<li>What if your database is down. Do you have the necessary redundancy
+measures in place so that logs are not lost?</li>
+<li>How sensitive are the log messages? Do you have proper read/write
+policies for all tables/schemas? If you think your log messages are
+sensitive, you may want to implement a custom logger anyway, but you
+should make sure all security measures are in place.</li>
+<li>How many log messages are you expecting to send? For extremely high
+throughput operations, SQL could become a bottleneck. You could look for
+faster databases such as Redis, or simply opt for another logging
+service.</li>
+</ol>
+<h1 id="create-a-custom-logger">Create a custom logger</h1>
+<p>With the caveats aside, how do you actually set up the Python to send
+logs to the SQL database instead of to <code>stdout</code> or to a log
+file? We need to write a custom <code>Handler</code> class, but it's
+pretty simple. First, we need to set up some classes for SQLAlchemy.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode Python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># database.py</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> enum <span class="im">import</span> StrEnum</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sqlalchemy <span class="im">import</span> Column, DateTime, Enum, Integer, String, create_engine</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sqlalchemy.ext.declarative <span class="im">import</span> declarative_base</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>DB_ENGINE <span class="op">=</span> create_engine(<span class="st">&quot;sqlite:///example.db&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LogLevel(StrEnum):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    DEBUG <span class="op">=</span> <span class="st">&quot;DEBUG&quot;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    INFO <span class="op">=</span> <span class="st">&quot;INFO&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    WARNING <span class="op">=</span> <span class="st">&quot;WARNING&quot;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    ERROR <span class="op">=</span> <span class="st">&quot;ERROR&quot;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    CRITICAL <span class="op">=</span> <span class="st">&quot;CRITICAL&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Base <span class="op">=</span> declarative_base()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Record(Base):</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    __tablename__ <span class="op">=</span> <span class="st">&quot;python_logs&quot;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span> <span class="op">=</span> Column(Integer, primary_key<span class="op">=</span><span class="va">True</span>, autoincrement<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    file_name <span class="op">=</span> Column(String(<span class="dv">50</span>), nullable<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    function_name <span class="op">=</span> Column(String(<span class="dv">100</span>), nullable<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    log_level <span class="op">=</span> Column(Enum(LogLevel), nullable<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    log_message <span class="op">=</span> Column(String(<span class="dv">1000</span>), nullable<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    timestamp <span class="op">=</span> Column(DateTime, nullable<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Base.metadata.create_all(DB_ENGINE)</span></code></pre></div>
+<p>Here, we're using a local SQLite database. In reality, you will need
+to edit the connection string to your database with the proper
+authentication methods. The <code>LogLevel</code> enum is just a helper
+class that ensures that we only accept Python's log level names. Now we
+can set up the custom log handler:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode Python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># logger.py</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime <span class="im">as</span> dt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> logging <span class="im">import</span> Handler, Logger, LogRecord, getLevelName, getLogger</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sqlalchemy.orm <span class="im">import</span> Session</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> database <span class="im">import</span> DB_ENGINE, Record</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SQLHandler(Handler):</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, level: <span class="bu">int</span> <span class="op">|</span> <span class="bu">str</span> <span class="op">=</span> <span class="dv">0</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._sesh <span class="op">=</span> Session(DB_ENGINE)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(level)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> emit(<span class="va">self</span>, record: LogRecord) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">        Custom emit function to send log record to SQL database.</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">        Assumes the target SQL table has the following schema:</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">            file_name: name of .py file that triggered the log record.</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">            function_name: function that emitted the log record.</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">            log_level: one of DEBUG, INFO, </span><span class="al">WARNING</span><span class="co">, ERROR, CRITICAL.</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">            message: log message.</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">            timestamp: timestamp of log message</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        new_record <span class="op">=</span> Record(</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            file_name<span class="op">=</span>record.filename,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>            function_name<span class="op">=</span>record.funcName,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>            log_level<span class="op">=</span>getLevelName(record.levelno),</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>            log_message<span class="op">=</span>record.getMessage(),</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>            timestamp<span class="op">=</span>dt.datetime.now(),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._sesh.add(new_record)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._sesh.commit()</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_sql_logger(logger_name: <span class="bu">str</span>, log_level: <span class="bu">str</span> <span class="op">|</span> <span class="bu">int</span>) <span class="op">-&gt;</span> Logger:</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    logger <span class="op">=</span> getLogger(logger_name)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    logger.setLevel(log_level)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    handler <span class="op">=</span> SQLHandler(log_level)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    logger.addHandler(handler)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> logger</span></code></pre></div>
+<p>You can see that we're connecting to the database when we initialize
+the handler. Another way is to inject the depedency into the class
+instead of creating one at initialization. The most important part of
+this exercise is the custom <code>emit</code> function. As you can see,
+all we're doing is creating a new record in the database when we receive
+a new log record. It's really that simple. The
+<code>get_sql_logger</code> function is just for convenience. So, in the
+rest of the code, we can use our custom logger like so:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode Python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main.py</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sqlalchemy.orm <span class="im">import</span> Session</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> database <span class="im">import</span> DB_ENGINE, Record</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> logger <span class="im">import</span> get_sql_logger</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main() <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    sql_logger <span class="op">=</span> get_sql_logger(<span class="st">&quot;custom_logger&quot;</span>, logging.INFO)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    sql_logger.debug(<span class="st">&quot;This will not be sent to SQL.&quot;</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    sql_logger.info(<span class="st">&quot;This will be sent to SQL.&quot;</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    sql_logger.critical(<span class="st">&quot;Big mistake, huge!&quot;</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print all logs</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    session <span class="op">=</span> Session(bind<span class="op">=</span>DB_ENGINE)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    records <span class="op">=</span> session.query(Record).<span class="bu">all</span>()</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> record <span class="kw">in</span> records:</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>record<span class="sc">.</span>timestamp<span class="sc">}</span><span class="ss">: (</span><span class="sc">{</span>record<span class="sc">.</span>log_level<span class="sc">}</span><span class="ss">) </span><span class="sc">{</span>record<span class="sc">.</span>log_message<span class="sc">}</span><span class="ss">&quot;</span>)  <span class="co"># noqa: T201</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div>
+<p>If everything is set up properly, you'll see the following
+outputs:</p>
+<pre><code>&gt;&gt;&gt; 2026-02-11 14:48:51.326668: (INFO) This will be sent to SQL.
+&gt;&gt;&gt; 2026-02-11 14:48:51.328932: (CRITICAL) Big mistake, huge!</code></pre>
+<p>The code for this blog post can be found in my <a
+href="https://github.com/taehoonsong/blog-examples/tree/log-to-sql">blog-example
+repo</a>.</p>
+<h1 id="next-steps">Next steps</h1>
+<p>As I've shown in this example, setting up a logging system on SQL can
+be extremely easy and flexible. You can set up the table schema to only
+include the columns you care about. You can send the record to multiple
+tables across multiple databases, if you so choose. For your next Python
+app, I hope this encourages you to save your logs to a database for your
+next project. I can't count the number of times my log table saved me
+when diagnosing a long-running Python app on Azure. Good luck!</p>
+      </div>
+    </div>
+    <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+  </div>
+
+  <div id="mySidenav">
+    <a href="/index.html" id="home">Home</a>
+    <a href="/posts/index.html" id="blog">Blog</a>
+    <a href="/resume.pdf" id="resume">Resume</a>
+    <a href="/pets.html" id="pets">Pets</a>
+  </div>
+
+  <footer class="page-footer">
+    <div class="container">
+      This work is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img
+        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+        src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"></div>
+  </footer>
+</body>
+
+</html>
