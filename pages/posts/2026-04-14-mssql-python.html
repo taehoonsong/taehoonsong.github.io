@@ -1,0 +1,426 @@
+<!doctype html>
+<html  dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bcp now has a Python package</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.gradient.css" />
+  
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png" />
+  <link rel="icon" size="32x32" href="/img/favicon-32x32.png" />
+  <link rel="icon" size="16x16" href="/img/favicon-16x16.png" />
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/style.css" />
+  <link rel="stylesheet" href="/css/posts.css" />
+  <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <!-- <script src="uikit.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/uikit.js"></script>
+  <!-- <script src="scripts.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/scripts.js"></script>
+  <!-- <script src="jquery.sticky-kit.js "></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-uikit@master/jquery.sticky-kit.js"></script>
+
+  <meta name="generator" content="pandoc-uikit" />
+     <meta name="date" content="2026-04-14" />
+    <title>bcp now has a Python package</title>
+  <style type="text/css">
+    code {
+      white-space: pre;
+    }
+  </style>
+     <style type="text/css">
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+     
+</head>
+
+<body>
+    <header class="page-header">
+    <div class="container">
+      <div class="header-top flex-responsive">
+        <h1 class="header-info">bcp now has a Python package</h1>
+        <br />
+                <h2 class="header-label">2026-04-14</h2>
+                 <p class="header-summary">There is now a Python package
+from Microsoft that lets you use bcp without having to install the
+binary. But it's not all sunshine and rainbows just yet.</p>
+              </div>
+    </div>
+  </header>
+  
+  <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="uk-grid" data-uk-grid-margin>
+      <div class="uk-width-medium-1-4">
+        <div class="uk-overflow-container" data-uk-sticky="{top:25,media: 768}">
+                    <div class="uk-panel uk-panel-box menu-begin">
+            <ul>
+            <li><a href="#whats-the-problem-with-bcp"
+            id="toc-whats-the-problem-with-bcp">What's the problem with
+            bcp?</a></li>
+            <li><a href="#python-package" id="toc-python-package">Python
+            package?</a></li>
+            <li><a href="#whats-the-catch"
+            id="toc-whats-the-catch">What's the catch?</a>
+            <ul>
+            <li><a href="#bugs" id="toc-bugs">Bugs</a></li>
+            <li><a href="#no-sqlalchemy-support-yet"
+            id="toc-no-sqlalchemy-support-yet">No SQLAlchemy support
+            yet</a></li>
+            <li><a href="#authentication"
+            id="toc-authentication">Authentication</a></li>
+            </ul></li>
+            <li><a href="#so-what-should-i-do"
+            id="toc-so-what-should-i-do">So what should I do?</a></li>
+            </ul>
+          </div>
+                  </div>
+      </div>
+
+      <div class="uk-width-medium-3-4">
+         <h1 id="whats-the-problem-with-bcp">What's the problem with
+bcp?</h1>
+<p>Check out my <a href="./2025-12-29-sql-dataload-bcp.html">previous
+post about bcp</a>, if you're curious about the details. For this post,
+what's important is that bcp is a CLI tool from Microsoft that massively
+speeds up bulk copying data to and from a SQL database. In the past,
+this tool had to be installed separately and invoked from Python using
+<code>subprocess</code>. I wrote a custom class that would help me use
+bcp in a more Pythonic way in the past; however, this also meant I had
+to make sure my users also had bcp installed on their machines. It
+wasn't the end of the world, but it was less ideal.</p>
+<h1 id="python-package">Python package?</h1>
+<p>Well, it turns out, Microsoft has been working on a native Python
+solution for bcp! Starting v1.4.0 of <a
+href="https://pypi.org/project/mssql-python/">mssql-python</a>, you can
+use the <code>bulkcopy</code> API. This library is meant to be
+Microsoft's official Python driver for SQL Server. Let's look at an
+example.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode Python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mssql_python <span class="im">as</span> mssql</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>connection_string <span class="op">=</span> <span class="st">&quot;SERVER=&lt;server address&gt;;DATABASE=&lt;database name&gt;;Authentication=ActiveDirectoryDefault;Encrypt=yes;&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> mssql.<span class="ex">connect</span>(connection_string)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Data to load</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assume the target table named TestTable has two columns: col_a [int], col_b [varchar](5)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span>, <span class="st">&#39;ABC&#39;</span>),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">2</span>, <span class="st">&#39;DEF&#39;</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">3</span>, <span class="va">None</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>cursor <span class="op">=</span> conn.cursor()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>cursor.bulkcopy(table_name<span class="op">=</span><span class="st">&quot;TestTable&quot;</span>, data<span class="op">=</span>data)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Close connection</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>conn.commit()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>conn.close()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Your table should now contain:</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># col_a | col_b</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 1     | &#39;ABC&#39;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 2     | &#39;DEF&#39;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 3     | NULL</span></span></code></pre></div>
+<p>As you can see, this library follows Python's DBAPI (see <a
+href="https://peps.python.org/pep-0249/">PEP 249</a>), so it should look
+familiar if you've ever connected to a database using Python. There are
+a lot of options that this Python API exposes to the user. You can check
+out the documentation <a
+href="https://github.com/microsoft/mssql-python/wiki/Bulk-Copy-(BCP)-API-Reference">here</a>.
+Some of my favorites are <code>table_lock</code> and
+<code>column_mappings</code>. I generally like to lock the entire table
+for inserts for less overhead, but you should check if you can afford to
+do this, because all other reads will be waiting until
+<code>bulkcopy</code> is finished. You can, of course, bypass this by
+using a <code>(NOLOCK)</code> hint, but I'm talking about general reads
+here.</p>
+<p>The <code>column_mappings</code> option is super helpful because it
+was a bit annoying to set up table schemas for the bcp CLI tool. With
+this Python implementation, you can either pass a list of column names
+(in order), or the a list of tuples containing the column index of your
+<code>data</code> and the target column in the database. For instance,
+if you wanted to only insert data to <code>col_b</code> in the above
+example, you would use the following syntax:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode Python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cursor.bulkcopy(table_name<span class="op">=</span><span class="st">&quot;TestTable&quot;</span>, data<span class="op">=</span>data, column_mappings<span class="op">=</span>[(<span class="dv">1</span>, <span class="st">&quot;col_b&quot;</span>)])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<h1 id="whats-the-catch">What's the catch?</h1>
+<h2 id="bugs">Bugs</h2>
+<p>Because this API was made public only a couple of months ago
+(February 2026) as of writing this post, there are certain issues that
+need to be ironed out. One issue I encountered is that the driver
+doesn't gracefully handle timeouts. I already reported <a
+href="https://github.com/microsoft/mssql-python/issues/513">this</a> and
+they're working on a fix. The gist is that the connection can panic
+instead of raising a <code>TimeoutException</code>, as you would expect,
+when the timeout is reached. You could get around this by setting the
+<code>timeout</code> parameter to a high value, but this is still
+unexpected so Microsoft will be implementing a fix. For now, make sure
+to set a high enough <code>timeout</code> value. The default is 30
+seconds, which might not be long enough if your data is particularly
+large or if you have a lot of columns. Based on some testing, I found
+that the number of columns have a noticeable impact on throughput.
+Here's what I found (this is also in the bug report I filed):</p>
+<table>
+<thead>
+<tr>
+<th>Test Data Size</th>
+<th>rows_copied</th>
+<th>batch_count</th>
+<th>elapsed_time</th>
+<th>rows_per_second</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1m rows, 1 col</td>
+<td>1,000,000</td>
+<td>1</td>
+<td>6.2116232</td>
+<td>160,988.515852024</td>
+</tr>
+<tr>
+<td>5m rows, 1 col</td>
+<td>5,000,000</td>
+<td>1</td>
+<td>30.1131109</td>
+<td>166,040.63315158847</td>
+</tr>
+<tr>
+<td>1m rows, 10 cols</td>
+<td>1,000,000</td>
+<td>1</td>
+<td>6.290492</td>
+<td>158,970.07738027486</td>
+</tr>
+<tr>
+<td>5m rows, 10 cols</td>
+<td>5,000,000</td>
+<td>1</td>
+<td>37.8730692</td>
+<td>132,019.93146095483</td>
+</tr>
+<tr>
+<td>1m rows, 20 cols</td>
+<td>1,000,000</td>
+<td>1</td>
+<td>9.2570929</td>
+<td>108,025.27432775359</td>
+</tr>
+<tr>
+<td>5m rows, 20 cols</td>
+<td>5,000,000</td>
+<td>1</td>
+<td>45.5451105</td>
+<td>109,781.26839762524</td>
+</tr>
+<tr>
+<td>1m rows, 30 cols</td>
+<td>1,000,000</td>
+<td>1</td>
+<td>13.6634428</td>
+<td>73,187.99622010347</td>
+</tr>
+<tr>
+<td>5m rows, 30 cols</td>
+<td>5,000,000</td>
+<td>1</td>
+<td>68.4133351</td>
+<td>73,085.16669581279</td>
+</tr>
+<tr>
+<td>1m rows, 50 cols</td>
+<td>1,000,000</td>
+<td>1</td>
+<td>22.805045</td>
+<td>43,849.94636055311</td>
+</tr>
+<tr>
+<td>5m rows, 50 cols</td>
+<td>5,000,000</td>
+<td>1</td>
+<td>113.1195291</td>
+<td>44,201.03265794094</td>
+</tr>
+<tr>
+<td>1m rows, 100 cols</td>
+<td>1,000,000</td>
+<td>1</td>
+<td>45.144546</td>
+<td>22,151.070031804065</td>
+</tr>
+<tr>
+<td>5m rows, 100 cols</td>
+<td>5,000,000</td>
+<td>1</td>
+<td>225.6622574</td>
+<td>22,157.006039061278</td>
+</tr>
+<tr>
+<td>1m rows, 200 cols</td>
+<td>1,000,000</td>
+<td>1</td>
+<td>90.6763206</td>
+<td>11,028.23750879014</td>
+</tr>
+<tr>
+<td>5m rows, 200 cols</td>
+<td>5,000,000</td>
+<td>1</td>
+<td>453.4855953</td>
+<td>11,025.70853808992</td>
+</tr>
+</tbody>
+</table>
+<p>Another bug I saw is that <code>DATETIME</code> is rounded
+inconsistently. See <a
+href="https://github.com/microsoft/mssql-python/issues/516">issue
+516</a>. This is not relevant for my workflow, but it might be for
+yours. And who knows what other bugs are waiting to be discovered?</p>
+<h2 id="no-sqlalchemy-support-yet">No SQLAlchemy support yet</h2>
+<p>Another issue is that <a
+href="https://pypi.org/project/SQLAlchemy/">SQLAlchemy</a> does not
+support this new driver (<code>mssql-python</code>) at the moment. I
+know that the team is working on adding support for the 2.1 release. If
+you're using SQLAlchemy or relying on it, you should probably wait. <a
+href="https://pypi.org/project/pandas/">Pandas</a> and <a
+href="https://pypi.org/project/polars/">Polars</a> rely on SQLAlchemy
+for writing to the database as well. I'm not sure when 2.1 will be
+released, but it's not difficult to write a custom wrapper around
+<code>bulkcopy</code> to easily load data frames. Here's an example
+involving a Polars data frame:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode Python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mssql_python <span class="im">as</span> mssql</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Same data as previous example, but as a polars dataframe.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pl.DataFrame({<span class="st">&quot;col_a&quot;</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], <span class="st">&quot;col_b&quot;</span>: [<span class="st">&quot;ABC&quot;</span>, <span class="st">&quot;DEF&quot;</span>, <span class="va">None</span>]})</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create connection</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>connection_string <span class="op">=</span> <span class="st">&quot;SERVER=&lt;server address&gt;;DATABASE=&lt;database name&gt;;Authentication=ActiveDirectoryDefault;Encrypt=yes;&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> mssql.<span class="ex">connect</span>(connection_string)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>cursor <span class="op">=</span> conn.cursor()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data using bulkcopy</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure the dataframe column names match the column names in the database!</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>cursor.bulkcopy(table_name<span class="op">=</span><span class="st">&quot;TestTable&quot;</span>, data<span class="op">=</span>df.iterrows(), column_mappings<span class="op">=</span>df.columns)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Close connection</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>conn.commit()</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>conn.close()</span></code></pre></div>
+<p>As long as your data frame column names match the database column
+names, you can easily provide the column mappings without worrying about
+column order! This is a huge usability win compared to bcp where we had
+to make sure the column order was identical or fiddle with the
+convoluted table schema option in the CLI.</p>
+<h2 id="authentication">Authentication</h2>
+<p>I mentioned this in my <a
+href="./2025-12-29-sql-dataload-bcp.html">previous post about bcp</a>,
+but bcp does not support token based authentication on Windows. I don't
+know if Microsoft will eventually support it (the CLI tool supports
+tokens for MacOS/Linux), but I hope they eventually do. The list of
+supported methods can be found <a
+href="https://github.com/microsoft/mssql-python/wiki/Microsoft-Entra-ID-support#authentication-methods">here</a>.</p>
+<h1 id="so-what-should-i-do">So what should I do?</h1>
+<p>If you have a relatively simple tech stack or you can afford to swap
+out existing APIs, I would say the speed benefit of
+<code>bulkcopy</code> is worth the hassle. In my current role, I have a
+monthly ETL process that used to take a little over an hour to finish.
+With this new <code>bulkcopy</code> API, the entire load took only 15
+minutes. A 4x speed improvement is nothing to scoff at! However, for the
+majority of codebases, I think waiting for the SQLAlchemy support is the
+safer bet, especially if you have a lot of SQLAlchemy code already.</p>
+      </div>
+    </div>
+    <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+  </div>
+
+  <div id="mySidenav">
+    <a href="/index.html" id="home">Home</a>
+    <a href="/posts/index.html" id="blog">Blog</a>
+    <a href="/resume.pdf" id="resume">Resume</a>
+    <a href="/pets.html" id="pets">Pets</a>
+  </div>
+
+  <footer class="page-footer">
+    <div class="container">
+      This work is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img
+        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+        src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt=""
+        style="max-width: 1em;max-height:1em;margin-left: .2em;"></div>
+  </footer>
+</body>
+
+</html>
