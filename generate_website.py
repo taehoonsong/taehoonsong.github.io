@@ -1,4 +1,5 @@
 import datetime as dt
+import itertools
 import json
 import shutil
 from pathlib import Path
@@ -35,6 +36,7 @@ class BlogPost(TypedDict):
 
 class BlogPostIndex(TypedDict):
     posts: list[BlogPost]
+    posts_by_year: list[tuple[int, list[BlogPost]]]
 
 
 class PetImage(TypedDict):
@@ -43,6 +45,24 @@ class PetImage(TypedDict):
 
 class PetGallery(TypedDict):
     pet_images: list[PetImage]
+
+
+def latex_escape(value: str) -> str:
+    replacements = [
+        ("\\", r"\textbackslash{}"),
+        ("&", r"\&"),
+        ("%", r"\%"),
+        ("$", r"\$"),
+        ("#", r"\#"),
+        ("_", r"\_"),
+        ("{", r"\{"),
+        ("}", r"\}"),
+        ("~", r"\textasciitilde{}"),
+        ("^", r"\textasciicircum{}"),
+    ]
+    for char, escaped in replacements:
+        value = value.replace(char, escaped)
+    return value
 
 
 def clean_output_path() -> None:
@@ -74,7 +94,12 @@ def get_blog_post_data() -> BlogPostIndex:
     post_list = [get_blog_metadata(post) for post in SRC_PATH.iterdir() if _valid_blog_post(post)]
     post_list.sort(key=lambda x: x.get("date"), reverse=True)
 
-    return {"posts": post_list}
+    posts_by_year = [
+        (year, list(posts))
+        for year, posts in itertools.groupby(post_list, key=lambda x: x["date"].year)
+    ]
+
+    return {"posts": post_list, "posts_by_year": posts_by_year}
 
 
 def get_pet_data() -> PetGallery:
@@ -124,18 +149,16 @@ def render_posts() -> None:
     # Copy figures needed for posts
     shutil.copytree(SRC_PATH / "figures", out_path / "figures")
 
-    [
-        pypandoc.convert_file(
-            source_file=file,
-            to="html5",
-            format="gfm",
-            filters=lua_filters,
-            extra_args=(f"--template={t}", "--toc", "--mathjax"),
-            outputfile=out_path / f"{get_blog_metadata(file).get('file_path')}",
-        )
-        for file in SRC_PATH.iterdir()
-        if _valid_blog_post(file)
-    ]
+    for file in SRC_PATH.iterdir():
+        if _valid_blog_post(file):
+            pypandoc.convert_file(
+                source_file=file,
+                to="html5",
+                format="gfm",
+                filters=lua_filters,
+                extra_args=(f"--template={t}", "--toc", "--mathjax"),
+                outputfile=out_path / f"{get_blog_metadata(file).get('file_path')}",
+            )
 
 
 def main() -> None:
@@ -175,8 +198,9 @@ def main() -> None:
         block_end_string="</BLOCK>",
         variable_start_string="<VAR>",
         variable_end_string="</VAR>",
-        autoescape=True,
+        autoescape=False,
     )
+    resume_env.filters["latex_escape"] = latex_escape
     render_template("resume.tex", OUTPUT_PATH / "resume.tex", resume_env, data)
 
     # Render markdown posts to html using pypandoc

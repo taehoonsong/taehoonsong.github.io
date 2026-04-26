@@ -84,73 +84,47 @@
     </div>
   </header>
 
+  {% macro render_work_section(heading, jobs) %}
+  {% if jobs %}
+  <section>
+    <h2 class="section-heading">{{ heading }}</h2>
+    {% for job in jobs %}
+    <section>
+      <h3>
+        <span class="left">{% if job.url %}
+          <a href="{{ job.url }}">{{ job.company }}</a> {% else %} {{
+          job.company }} {% endif %}</span>
+        <span class="section-label right">{{ job.location }}</span>
+        <br />
+      </h3>
+      {% for position in job.positions %}
+      <p>
+        <span class="section-label left"><i>{{ position.title }}</i></span>
+        {% if position.start_date != position.end_date %}
+        <span class="section-label right">{{ position.start_date }} - {{ position.end_date }}</span>
+        {% else %}<span class="section-label right">{{ position.start_date }}</span>
+        {% endif %}
+      </p><br />
+      {% endfor %}
+      {% if job.highlights %}
+      <ul>
+        {% for highlight in job.highlights %}
+        <li>{{ highlight }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+    {% endfor %}
+  </section>
+  {% endif %}
+  {% endmacro %}
+
   <!-- Resume body -->
   <div class="page-content">
     <div class="container">
       <main>
-        {% if current_work %}
-        <section>
-          <h2 class="section-heading">Current Work Experience</h2>
-          {% for job in current_work %}
-          <section>
-            <h3>
-              <span class="left">{% if job.url %}
-                <a href="{{ job.url }}">{{ job.company }}</a> {% else %} {{
-                job.company }} {% endif %}</span>
-              <span class="section-label right">{{ job.location }}</span>
-              <br />
-            </h3>
-            {% for position in job.positions %}
-            <p>
-              <span class="section-label left"><i>{{ position.title }}</i></span>
-              {% if position.start_date != position.end_date %}
-              <span class="section-label right">{{ position.start_date }} - {{ position.end_date }}</span>
-              {% else %}<span class="section-label right">{{ position.start_date }}</span>
-              {% endif %}
-            </p><br />
-            {% endfor %}
-            {% if job.highlights %}
-            <ul>
-              {% for highlight in job.highlights %}
-              <li>{{ highlight }}</li>
-              {% endfor %}
-            </ul>
-            {% endif %}
-          </section>
-          {% endfor %}
-        </section>
-        {% endif %} {% if relevant_work %}
-        <section>
-          <h2 class="section-heading">Relevant Work Experience</h2>
-          {% for job in relevant_work %}
-          <section>
-            <h3>
-              <span class="left">{% if job.url %}
-                <a href="{{ job.url }}">{{ job.company }}</a> {% else %} {{
-                job.company }} {% endif %}</span>
-              <span class="section-label right">{{ job.location }}</span>
-              <br />
-            </h3>
-            {% for position in job.positions %}
-            <p>
-              <span class="section-label left"><i>{{ position.title }}</i></span>
-              {% if position.start_date != position.end_date %}
-              <span class="section-label right">{{ position.start_date }} - {{ position.end_date }}</span>
-              {% else %}<span class="section-label right">{{ position.start_date }}</span>
-              {% endif %}
-            </p><br />
-            {% endfor %}
-            {% if job.highlights %}
-            <ul>
-              {% for highlight in job.highlights %}
-              <li>{{ highlight }}</li>
-              {% endfor %}
-            </ul>
-            {% endif %}
-          </section>
-          {% endfor %}
-        </section>
-        {% endif %}
+        {{ render_work_section("Current Work Experience", current_work) }}
+        {{ render_work_section("Relevant Work Experience", relevant_work) }}
       </main>
 
       <!-- Sidebar -->

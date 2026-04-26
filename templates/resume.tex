@@ -19,6 +19,42 @@
   urlcolor=black,
 }
 
+<BLOCK>macro render_work(heading, jobs)</BLOCK>
+<BLOCK>if jobs</BLOCK>
+\hrulefill
+
+\begin{large}
+  \textsc{\textbf{<VAR>heading</VAR>}}
+  \vspace{-3mm}
+\end{large}
+
+\textcolor{lightgray}{\hrulefill}\\
+
+\begin{small}
+  <BLOCK>for job in jobs</BLOCK>
+  \textbf{<VAR>job.company|latex_escape</VAR>} \hfill \textcolor{gray}{<VAR>job.location</VAR>}
+  <BLOCK>for position in job.positions</BLOCK>
+  \textit{<VAR>position.title|latex_escape|replace("-","--")</VAR>} \hfill <BLOCK>if position.start_date != position.end_date</BLOCK>
+  \textcolor{gray}{<VAR>position.start_date</VAR> -- <VAR>position.end_date</VAR>}
+  <BLOCK>else</BLOCK>
+  \textcolor{gray}{<VAR>position.start_date</VAR>}
+  <BLOCK>endif</BLOCK>
+  <BLOCK>endfor</BLOCK>
+  \vspace{-2mm}
+
+  \begin{itemize}[leftmargin=0.5cm]
+      \setlength\itemsep{-1mm}
+      <BLOCK>for highlight in job.highlights</BLOCK>
+    \item <VAR>highlight|latex_escape</VAR>
+      <BLOCK>endfor</BLOCK>
+  \end{itemize}
+  \vspace{-2mm}
+  <BLOCK>endfor</BLOCK>
+\end{small}
+\vspace{-2mm}
+<BLOCK>endif</BLOCK>
+<BLOCK>endmacro</BLOCK>
+
 \begin{document}
 \noindent
 \centering
@@ -41,73 +77,8 @@
 
 \vspace{1mm}
 
-<BLOCK>if current_work</BLOCK>
-\hrulefill
-
-\begin{large}
-  \textsc{\textbf{Current Work Experience}}
-  \vspace{-3mm}
-\end{large}
-
-\textcolor{lightgray}{\hrulefill}\\
-
-\begin{small}
-  <BLOCK>for job in current_work</BLOCK>
-  \textbf{<VAR>job.company|replace("&","\\&")|safe</VAR>} \hfill \textcolor{gray}{<VAR>job.location</VAR>}
-  <BLOCK>for position in job.positions</BLOCK>
-  \textit{<VAR>position.title|replace("-","--")</VAR>} \hfill <BLOCK>if position.start_date != position.end_date</BLOCK>
-  \textcolor{gray}{<VAR>position.start_date</VAR> -- <VAR>position.end_date</VAR>}
-  <BLOCK>else</BLOCK>
-  \textcolor{gray}{<VAR>position.start_date</VAR>}
-  <BLOCK>endif</BLOCK>
-  <BLOCK>endfor</BLOCK>
-  \vspace{-2mm}
-
-  \begin{itemize}[leftmargin=0.5cm]
-      \setlength\itemsep{-1mm}
-      <BLOCK>for highlight in job.highlights</BLOCK>
-    \item <VAR>highlight|replace("$","\\$")|replace("&","\\&")|safe</VAR>
-      <BLOCK>endfor</BLOCK>
-  \end{itemize}
-  \vspace{-2mm}
-  <BLOCK>endfor</BLOCK>
-\end{small}
-\vspace{-2mm}
-<BLOCK>endif</BLOCK>
-
-<BLOCK>if relevant_work</BLOCK>
-\hrulefill
-
-\begin{large}
-  \textsc{\textbf{Relevant Work Experience}}
-  \vspace{-3mm}
-\end{large}
-
-\textcolor{lightgray}{\hrulefill}\\
-
-\begin{small}
-  <BLOCK>for job in relevant_work</BLOCK>
-  \textbf{<VAR>job.company|replace("&","\\&")|safe</VAR>} \hfill \textcolor{gray}{<VAR>job.location</VAR>}
-  <BLOCK>for position in job.positions</BLOCK>
-  \textit{<VAR>position.title|replace("-","--")</VAR>} \hfill <BLOCK>if position.start_date != position.end_date</BLOCK>
-  \textcolor{gray}{<VAR>position.start_date</VAR> -- <VAR>position.end_date</VAR>}
-  <BLOCK>else</BLOCK>
-  \textcolor{gray}{<VAR>position.start_date</VAR>}
-  <BLOCK>endif</BLOCK>
-  <BLOCK>endfor</BLOCK>
-  \vspace{-2mm}
-
-  \begin{itemize}[leftmargin=0.5cm]
-      \setlength\itemsep{-1mm}
-      <BLOCK>for highlight in job.highlights</BLOCK>
-    \item <VAR>highlight|replace("$","\\$")|replace("&","\\&")|safe</VAR>
-      <BLOCK>endfor</BLOCK>
-  \end{itemize}
-  \vspace{-2mm}
-  <BLOCK>endfor</BLOCK>
-\end{small}
-\vspace{-2mm}
-<BLOCK>endif</BLOCK>
+<VAR>render_work("Current Work Experience", current_work)</VAR>
+<VAR>render_work("Relevant Work Experience", relevant_work)</VAR>
 
 <BLOCK>if education</BLOCK>
 \hrulefill
@@ -121,11 +92,11 @@
 
 \begin{small}
   <BLOCK>for edu in education</BLOCK>
-  \textbf{<VAR>edu.institution|replace("-","--")|safe</VAR>} \hfill
+  \textbf{<VAR>edu.institution|latex_escape|replace("-","--")</VAR>} \hfill
   \textcolor{gray}{<VAR>edu.location</VAR>}
 
-  \textit{<VAR>edu.degree|replace("-","--")|safe</VAR>} \hfill
-  \textcolor{gray}{Gradudated <VAR>edu.graduation_date</VAR>}
+  \textit{<VAR>edu.degree|latex_escape|replace("-","--")</VAR>} \hfill
+  \textcolor{gray}{Graduated <VAR>edu.graduation_date</VAR>}
 
   \vspace{1mm}
   <BLOCK>endfor</BLOCK>
@@ -152,4 +123,3 @@
 <BLOCK>endif</BLOCK>
 
 \end{document}
-
