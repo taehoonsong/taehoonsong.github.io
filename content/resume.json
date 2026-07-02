@@ -47,10 +47,10 @@
       "location": "Washington, DC",
       "url": "https://www.cohenmilstein.com",
       "highlights": [
-        "Develop Python solutions that help find new case opportunities, streamline ETL processes, or provide user interfaces for various scripts; create and maintain data solutions for litigation support.",
-        "Refactor or replace legacy Python, SQL, and VBA code to keep up with modern security and coding standards; migrate all authentication systems to use SSO.",
-        "Design, implement, maintain, and optimize data pipelines, databases, and cloud infrastructures.",
-        "Evaluate AI solutions for the Firm with respect to data privacy, security, and impact as a member of the Firm's AI Committee."
+        "Create and maintain custom ETL library written in Python, speeding up data processing times by 10x and data loading times by 50x.",
+        "Refactor legacy SQL scripts and procedures to leverage newer SQL Server features and follow modern coding standards; the most CPU intensive job now runs in a quarter of the time on a 4-core Azure Managed Instance, down from an 8-core Azure VM, saving over $10,000 per year in compute costs.",
+        "Build and maintain a suite of Azure Function Apps in Python that automate case intelligence workflows, including a daily SEC filing monitor that populates a database of filings used by downstream applications for faster lookup.",
+        "Serve as the technical representative on the Firm's AI Committee alongside senior attorneys and partners; organize AI trainings and submit recommendations on AI tool adoption to the Executive Committee."
       ]
     }
   ],
@@ -72,9 +72,9 @@
       "location": "Washington, DC",
       "url": "https://www.grantthornton.com",
       "highlights": [
-        "Designed efficient statistical samples for federal and state taxes, audits, and other program analytic purposes, saving hundreds to thousands of staff hours per engagement.",
+        "Designed dozens of statistical samples across a variety of federal and state tax engagements, including R&D tax credits, depreciation studies, and domestic activity tests, saving hundreds to thousands of staff hours per engagement.",
         "Helped win over $8 million in government contract awards in 2022 by authoring technical sections related to statistical sampling and data analytics in RFPs.",
-        "Researched and implemented efficient sampling methodologies and automated internal processes via R and Python scripting; conducted simulation studies to estimate sampling efficiency, statistical inference and prediction performance, and confidence coverage."
+        "As part of the Washington National Tax Office, researched and implemented efficient sampling methodologies and automated internal processes via R and Python scripting; conducted simulation studies to validate sampling efficiency, statistical inference and prediction performance, and confidence coverage."
       ]
     },
     {
@@ -92,23 +92,6 @@
         "Researched securities frauds and market manipulation involving various financial instruments; frequently worked with Antitrust or ERISA practice group attorneys to assist with financial data analysis.",
         "Analyzed trading data sets, recognized trends and patterns, validated data integrity; audited and monitored investment data for institutional investors to calculate potential damages relating to securities class actions.",
         "Developed custom data pipelines by integrating Bloomberg API, VBA, SQL, and Python to automate and assist with efficient data analysis, formatting, and validation."
-      ]
-    },
-    {
-      "company": "RiskEcon Lab, New York University Courant Institute",
-      "positions": [
-        {
-          "title": "Research Intern",
-          "start_date": "Oct 2015",
-          "end_date": "May 2016"
-        }
-      ],
-      "location": "New York, NY",
-      "url": "https://wp.nyu.edu/riskeconlab",
-      "highlights": [
-        "Aggregated and analyzed biodiversity data from proprietary and federal databases; reviewed literature on biodiversity data collection methods.",
-        "Analyzed quantitative data from the railroad transportation industry to implement a financial model that considers potential economic and environmental losses due to derailments.",
-        "Impacted policies and legislation at the state level by identifying challenges and problems through data-driven analysis; prepared and presented statistical reports to advocacy groups."
       ]
     }
   ],
@@ -133,11 +116,12 @@
   "skills": [
     {
       "name": "Python",
+      "note": "Polars, SQLAlchemy, httpx, NiceGUI",
       "proficiency": 100,
       "proficiency_label": "Expert"
     },
     {
-      "name": "SQL",
+      "name": "SQL Server",
       "proficiency": 90,
       "proficiency_label": "Advanced"
     },
@@ -173,6 +157,7 @@
     },
     {
       "name": "Azure",
+      "note": "SQL Managed Instance, Function App, Key Vault",
       "proficiency": 50,
       "proficiency_label": "Intermediate"
     },
