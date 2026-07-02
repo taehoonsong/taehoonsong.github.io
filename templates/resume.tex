@@ -61,16 +61,16 @@
 
 \begin{LARGE}
 
-  \textsc{\textbf{<VAR>first_name</VAR><BLOCK>if nickname</BLOCK>
-  (<VAR>nickname</VAR>) <BLOCK>endif</BLOCK><VAR>last_name</VAR>}}
+	\textsc{\textbf{<VAR>first_name</VAR><BLOCK>if nickname</BLOCK>
+			(<VAR>nickname</VAR>) <BLOCK>endif</BLOCK><VAR>last_name</VAR>}}
 
 \end{LARGE}
 
 \vspace{1mm}
 
 \begin{small}
-  \qquad
-  \href{<VAR>base_url</VAR>}{<VAR>base_url_label</VAR>}\qquad\textbar\qquad\href{mailto:<VAR>contact.email</VAR>}{<VAR>contact.email</VAR>}\qquad\textbar\qquad{<VAR>contact.location</VAR>}\ \qquad
+	\qquad
+	\href{<VAR>base_url</VAR>}{<VAR>base_url_label</VAR>}\qquad\textbar\qquad\href{mailto:<VAR>contact.email</VAR>}{<VAR>contact.email</VAR>}\qquad\textbar\qquad{<VAR>contact.location</VAR>}\ \qquad
 \end{small}
 
 \raggedright
@@ -84,23 +84,23 @@
 \hrulefill
 
 \begin{large}
-  \textsc{\textbf{Education}}
-  \vspace{-3mm}
+	\textsc{\textbf{Education}}
+	\vspace{-3mm}
 \end{large}
 
 \textcolor{lightgray}{\hrulefill}\\
 
 \begin{small}
-  <BLOCK>for edu in education</BLOCK>
-  \textbf{<VAR>edu.institution|latex_escape|replace("-","--")</VAR>} \hfill
-  \textcolor{gray}{<VAR>edu.location</VAR>}
+	<BLOCK>for edu in education</BLOCK>
+	\textbf{<VAR>edu.institution|latex_escape|replace("-","--")</VAR>} \hfill
+	\textcolor{gray}{<VAR>edu.location</VAR>}
 
-  \textit{<VAR>edu.degree|latex_escape|replace("-","--")</VAR>} \hfill
-  \textcolor{gray}{Graduated <VAR>edu.graduation_date</VAR>}
+	\textit{<VAR>edu.degree|latex_escape|replace("-","--")</VAR>} \hfill
+	\textcolor{gray}{Graduated <VAR>edu.graduation_date</VAR>}
 
-  \vspace{1mm}
-  <BLOCK>endfor</BLOCK>
-  \vspace{-2mm}
+	\vspace{1mm}
+	<BLOCK>endfor</BLOCK>
+	\vspace{-2mm}
 \end{small}
 <BLOCK>endif</BLOCK>
 
@@ -108,16 +108,16 @@
 \hrulefill
 
 \begin{large}
-  \textsc{\textbf{Technical Skills}}
-  \vspace{-3mm}
+	\textsc{\textbf{Technical Skills}}
+	\vspace{-3mm}
 \end{large}
 
 \textcolor{lightgray}{\hrulefill}\\
 
 \begin{small}
-  <BLOCK>for skill in skills -</BLOCK>
-  <VAR>skill.name</VAR><BLOCK>if not loop.last</BLOCK>, <BLOCK>endif</BLOCK>
-  <BLOCK>- endfor</BLOCK>
+	<BLOCK>for skill in skills -</BLOCK>
+	<VAR>skill.name</VAR><BLOCK>if skill.note</BLOCK> (<VAR>skill.note</VAR>)<BLOCK>endif</BLOCK><BLOCK>if not loop.last</BLOCK>, <BLOCK>endif</BLOCK>
+	<BLOCK>- endfor</BLOCK>
 \end{small}
 
 <BLOCK>endif</BLOCK>
