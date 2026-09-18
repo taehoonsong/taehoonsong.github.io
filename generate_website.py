@@ -1,3 +1,4 @@
+import contextlib
 import datetime as dt
 import itertools
 import json
@@ -48,6 +49,8 @@ class PetGallery(TypedDict):
 
 
 def latex_escape(value: str) -> str:
+    # Order matters: backslash must be first so already-escaped sequences
+    # don't get double-escaped when the replacement text is processed.
     replacements = [
         ("\\", r"\textbackslash{}"),
         ("&", r"\&"),
@@ -66,10 +69,8 @@ def latex_escape(value: str) -> str:
 
 
 def clean_output_path() -> None:
-    if not OUTPUT_PATH.exists():
-        return
-
-    shutil.rmtree(OUTPUT_PATH)
+    with contextlib.suppress(FileNotFoundError):
+        shutil.rmtree(OUTPUT_PATH)
 
 
 def copy_static_to_output() -> None:
@@ -91,20 +92,18 @@ def _valid_blog_post(path: Path) -> bool:
 
 
 def get_blog_post_data() -> BlogPostIndex:
-    post_list = [get_blog_metadata(post) for post in SRC_PATH.iterdir() if _valid_blog_post(post)]
-    post_list.sort(key=lambda x: x.get("date"), reverse=True)
+    post_list = [get_blog_metadata(post) for post in sorted(SRC_PATH.iterdir()) if _valid_blog_post(post)]
+    post_list.sort(key=lambda x: x.get("date") or dt.datetime.min, reverse=True)
 
-    posts_by_year = [
-        (year, list(posts))
-        for year, posts in itertools.groupby(post_list, key=lambda x: x["date"].year)
-    ]
+    posts_by_year = [(year, list(posts)) for year, posts in itertools.groupby(post_list, key=lambda x: x["date"].year)]
 
     return {"posts": post_list, "posts_by_year": posts_by_year}
 
 
 def get_pet_data() -> PetGallery:
+    static_str = str(STATIC_DIR)
     return {
-        "pet_images": [{"img_path": str(path).replace("static", "")} for path in PET_DIR.iterdir()],
+        "pet_images": [{"img_path": str(path)[len(static_str) :]} for path in sorted(PET_DIR.iterdir())],
     }
 
 
@@ -116,7 +115,7 @@ def get_portfolio_data() -> dict:
     # Make fullname
     data["name"] = f"{data['first_name']} {data['last_name']}"
 
-    if "social_media_links" not in data:
+    if not data.get("social_media_links"):
         return data
 
     # Add svg data for each social link
@@ -127,6 +126,8 @@ def get_portfolio_data() -> dict:
         if svg_path is None:
             continue
 
+        # errors="ignore" drops invalid bytes
+        # acceptable because the SVG files are known to be valid UTF-8.
         link["svg_data"] = Path(STATIC_DIR, svg_path).read_text(encoding="utf-8", errors="ignore")
 
     return data
@@ -146,8 +147,9 @@ def render_posts() -> None:
     out_path = OUTPUT_PATH / "posts"
     out_path.mkdir(exist_ok=True)
 
-    # Copy figures needed for posts
-    shutil.copytree(SRC_PATH / "figures", out_path / "figures")
+    figures_src = SRC_PATH / "figures"
+    if figures_src.exists():
+        shutil.copytree(figures_src, out_path / "figures")
 
     for file in SRC_PATH.iterdir():
         if _valid_blog_post(file):
@@ -198,7 +200,7 @@ def main() -> None:
         block_end_string="</BLOCK>",
         variable_start_string="<VAR>",
         variable_end_string="</VAR>",
-        autoescape=False,
+        autoescape=False,  # ruff: ignore[jinja2-autoescape-false]
     )
     resume_env.filters["latex_escape"] = latex_escape
     render_template("resume.tex", OUTPUT_PATH / "resume.tex", resume_env, data)
